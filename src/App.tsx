@@ -1,6 +1,6 @@
 import { ThemeProvider } from '@mui/material/styles';
 import { Normalize } from 'styled-normalize';
-import BaseLayout from './components/base-layout';
+import Router from './routes';
 import theme from './theme';
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className="App">
         <Normalize />
-        <BaseLayout />
+        <Router />
       </div>
     </ThemeProvider>
   );
