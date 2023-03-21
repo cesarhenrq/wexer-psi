@@ -23,7 +23,7 @@ const TopBar = () => {
           <IconButton>
             <Typography color="primary">
               Bem vindo(a), <b>Daniel</b>
-            </Typography>{' '}
+            </Typography>
             <ArrowDropDownIcon />
           </IconButton>
         </Toolbar>
