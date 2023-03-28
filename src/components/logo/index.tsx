@@ -9,6 +9,7 @@ const Logo = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: 'secondary.main',
       }}
     >
       <svg
