@@ -7,6 +7,13 @@ const theme = createTheme({
     },
     secondary: {
       main: '#FFFFFF',
+      dark: '#616161',
+    },
+  },
+  typography: {
+    fontFamily: 'Montserrat',
+    h6: {
+      fontSize: 18,
     },
   },
 });
