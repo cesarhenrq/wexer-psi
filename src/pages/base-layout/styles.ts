@@ -8,6 +8,7 @@ export const BaseLayout = styled.div`
     'header header'
     'sidebar content';
   height: 100vh;
+  background-color: #f2f2f2;
 `;
 
 export const Header = styled.div`
