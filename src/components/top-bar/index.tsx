@@ -8,7 +8,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 const TopBar = () => {
   return (
-    <Box sx={{ heigth: 80, width: 1435 }}>
+    <Box sx={{ heigth: 80, flex: 1 }}>
       <AppBar position="static" color="secondary">
         <Toolbar
           sx={{
