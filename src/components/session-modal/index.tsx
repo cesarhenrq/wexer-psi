@@ -1,8 +1,9 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import TitleModal from '../title-modal';
+import ModalFooter from '../modal-footer';
 
 const style = {
   position: 'absolute',
@@ -14,7 +15,7 @@ const style = {
   border: '2px solid secondary.dark',
   boxShadow: 24,
   borderRadius: 2,
-  p: 4,
+  p: '24px 32px 0 32px',
 };
 
 const SessionModal = () => {
@@ -31,25 +32,8 @@ const SessionModal = () => {
         aria-labelledby="session-modal-title"
       >
         <Box sx={style}>
-          <Typography
-            id="session-modal-title"
-            variant="h5"
-            color="primary.main"
-            sx={{ fontWeight: 'bold' }}
-          >
-            Nova Sessão
-          </Typography>
-          <Box
-            sx={{
-              width: 32,
-              height: 32,
-              borderRadius: '50%',
-              backgroundColor: 'primary.main',
-              textAlign: 'center',
-            }}
-          >
-            1
-          </Box>
+          <TitleModal title="Nova Sessão" />
+          <ModalFooter />
         </Box>
       </Modal>
     </div>
