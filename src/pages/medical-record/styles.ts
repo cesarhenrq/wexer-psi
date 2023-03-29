@@ -24,10 +24,10 @@ export const Card = styled.div`
   width: 100%;
 `;
 
-export const Container = styled.div`
+export const ModalToolBarContainer = styled.div`
   grid-area: container;
 `;
 
-export const Content = styled.div`
+export const ContentContainer = styled.div`
   grid-area: content;
 `;
