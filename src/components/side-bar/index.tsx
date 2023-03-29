@@ -11,7 +11,7 @@ const SideBar = () => {
         <PeopleIcon />
       </S.Icon>
       <S.Icon>
-        <ClipboardIcon />
+        <ClipboardIcon color="white" width="24" height="24" />
       </S.Icon>
       <S.Icon>
         <AddCircleIcon color="secondary" />
