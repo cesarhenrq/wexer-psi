@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react';
 import { Box, Divider, Typography } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -12,7 +13,18 @@ import PinIcon from '../pin-icon';
 import ClipIcon from '../clip-icon';
 import ClipboardIcon from '../clipboard-icon';
 
-const ModalToolBar = () => {
+type ModalToolBarProps = {
+  setModalsState: Dispatch<SetStateAction<ModalsStateT>>;
+};
+
+const ModalToolBar = ({ setModalsState }: ModalToolBarProps) => {
+  const handleClick = <Keys extends ModalsStateKeys>(key: Keys) => {
+    setModalsState((prevValue) => ({
+      ...prevValue,
+      [key]: true,
+    }));
+  };
+
   return (
     <Box
       sx={{
@@ -68,6 +80,7 @@ const ModalToolBar = () => {
             variant="text"
             startIcon={<SessionIcon />}
             sx={{ textTransform: 'none' }}
+            onClick={() => handleClick('isSessionModalOpen')}
           >
             <Typography sx={{ fontWeight: 'bold' }} color="black">
               Sessão
@@ -77,6 +90,7 @@ const ModalToolBar = () => {
             variant="text"
             startIcon={<PinIcon />}
             sx={{ textTransform: 'none' }}
+            onClick={() => handleClick('isPertinentFactModalOpen')}
           >
             <Typography sx={{ fontWeight: 'bold' }} color="black">
               Fato importante
@@ -86,6 +100,7 @@ const ModalToolBar = () => {
             variant="text"
             startIcon={<ClipIcon />}
             sx={{ textTransform: 'none' }}
+            onClick={() => handleClick('isAttachmentModalOpen')}
           >
             <Typography sx={{ fontWeight: 'bold' }} color="black">
               Anexo
@@ -97,6 +112,7 @@ const ModalToolBar = () => {
               <ClipboardIcon color="#EA1E61" width="24" height="29.33" />
             }
             sx={{ textTransform: 'none' }}
+            onClick={() => handleClick('isPsychologicalAssessmentModalOpen')}
           >
             <Typography sx={{ fontWeight: 'bold' }} color="black">
               Avaliação Psicológica
