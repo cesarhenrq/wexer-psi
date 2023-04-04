@@ -1,0 +1,1 @@
+type ModalsStateKeys = keyof ModalsStateT;
