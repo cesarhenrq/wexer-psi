@@ -5,4 +5,5 @@ type ModalsStateT = {
   isPsychologicalAssessmentModalOpen: boolean;
   isGoalsRequirementsModalOpen: boolean;
   isPersonalNotesModalOpen: boolean;
+  isDeleteModalOpen: boolean;
 };
