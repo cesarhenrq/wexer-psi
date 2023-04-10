@@ -1,17 +1,20 @@
 import Box from '@mui/material/Box';
 
+const styles = {
+  heigth: 80.75,
+  width: 80,
+  position: 'relative',
+  zIndex: 3,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: 'secondary.main',
+  boxShadow: '4px 0px 20px rgba(0, 0, 0, 0.1)',
+};
+
 const Logo = () => {
   return (
-    <Box
-      sx={{
-        heigth: 80,
-        width: 80,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'secondary.main',
-      }}
-    >
+    <Box sx={styles}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="29"
