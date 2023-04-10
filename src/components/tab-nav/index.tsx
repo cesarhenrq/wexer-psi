@@ -1,14 +1,19 @@
 import { useState, SyntheticEvent } from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import TabPanel from '../tab-panel';
-import Box from '@mui/material/Box';
-import Input from '@mui/material/Input';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormControl from '@mui/material/FormControl';
+import { Tabs, Tab, Box, InputAdornment, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { Outlet, useNavigate, Navigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import * as S from './styles';
+import TabPanel from '../tab-panel';
+
+const TabStyles = {
+  mt: 1,
+  borderBottom: 1,
+  borderRight: 1,
+  borderColor: 'divider',
+  textTransform: 'none',
+  width: 251,
+  fontSize: '16px',
+};
 
 const TabNav = () => {
   const [value, setValue] = useState(0);
@@ -34,7 +39,7 @@ const TabNav = () => {
       <Box sx={{ width: '100%' }}>
         <Box
           sx={{
-            borderRadius: 1,
+            borderRadius: 2,
             backgroundColor: 'secondary.main',
             display: 'flex',
             justifyContent: 'space-between',
@@ -45,50 +50,47 @@ const TabNav = () => {
             value={value}
             onChange={handleChange}
             aria-label="navigation tabs"
+            sx={{ m: 1 }}
           >
             <Tab
               label="Dados Cadastrais"
               {...a11yProps(0)}
               onClick={() => handleClick('dados-cadastrais')}
-              sx={{
-                borderBottom: 1,
-                borderRight: 1,
-                borderColor: 'divider',
-                textTransform: 'none',
-                width: 251,
-              }}
+              sx={TabStyles}
             />
 
             <Tab
               label="Prontuário"
               {...a11yProps(1)}
               onClick={() => handleClick('prontuário')}
-              sx={{
-                borderBottom: 1,
-                borderRight: 1,
-                borderColor: 'divider',
-                textTransform: 'none',
-                width: 251,
-              }}
+              sx={TabStyles}
             />
           </Tabs>
-          <S.SearchInputContainer>
-            <FormControl variant="standard" fullWidth>
-              <Input
-                id="search-bar"
-                placeholder="O que você está procurando?"
-                disableUnderline
-                endAdornment={
+          <Box
+            component="form"
+            noValidate
+            autoComplete="off"
+            sx={{
+              width: '386px',
+              height: 48,
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <TextField
+              placeholder="O que você está procurando?"
+              InputProps={{
+                endAdornment: (
                   <InputAdornment position="end">
                     <SearchIcon />
                   </InputAdornment>
-                }
-              />
-            </FormControl>
-          </S.SearchInputContainer>
+                ),
+              }}
+              sx={{ width: '100%', p: 1 }}
+            />
+          </Box>
         </Box>
         <TabPanel value={value} index={0}>
-          <Navigate to="/dados-cadastrais" replace={true} />
           <Outlet />
         </TabPanel>
         <TabPanel value={value} index={1}>
