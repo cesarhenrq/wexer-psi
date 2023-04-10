@@ -2,12 +2,13 @@ import styled from 'styled-components';
 
 export const BaseLayout = styled.div`
   display: grid;
-  grid-template-columns: 80px 1fr;
+  grid-template-columns: 80px minmax(0, 1fr);
   grid-template-rows: auto 1fr;
   grid-template-areas:
     'header header'
-    'sidebar content';
-  height: 100vh;
+    'sidebar content ';
+  height: 100%;
+  min-height: 100vh;
   background-color: #f2f2f2;
 `;
 
