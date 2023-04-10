@@ -1,10 +1,10 @@
-import { Dispatch, SetStateAction } from 'react';
+import { useContext } from 'react';
+import { ModalContext } from '../../contexts/ModalContext';
 import { Box, Divider, Typography } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { ButtonContainer } from './styles';
-import EditButton from '../edit-button';
 import DeleteButton from '../delete-button';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
@@ -12,12 +12,11 @@ import SessionIcon from '../session-icon';
 import PinIcon from '../pin-icon';
 import ClipIcon from '../clip-icon';
 import ClipboardIcon from '../clipboard-icon';
+import EditButton from '../edit-button';
 
-type ModalToolBarProps = {
-  setModalsState: Dispatch<SetStateAction<ModalsStateT>>;
-};
+const ModalToolBar = () => {
+  const { setModalsState } = useContext(ModalContext);
 
-const ModalToolBar = ({ setModalsState }: ModalToolBarProps) => {
   const handleClick = <Keys extends ModalsStateKeys>(key: Keys) => {
     setModalsState((prevValue) => ({
       ...prevValue,
@@ -31,6 +30,7 @@ const ModalToolBar = ({ setModalsState }: ModalToolBarProps) => {
         backgroundColor: 'secondary.main',
         marginLeft: 3,
         padding: 2,
+        borderRadius: 2,
       }}
     >
       <Box
@@ -53,7 +53,7 @@ const ModalToolBar = ({ setModalsState }: ModalToolBarProps) => {
             Serviço:
           </Typography>
           <Select
-            sx={{ width: 300 }}
+            sx={{ width: '495px', height: '48px' }}
             displayEmpty
             inputProps={{ 'aria-label': 'Without label' }}
           >
@@ -65,11 +65,11 @@ const ModalToolBar = ({ setModalsState }: ModalToolBarProps) => {
         </Typography>
 
         <ButtonContainer>
-          <EditButton />
+          <EditButton modal="isSessionModalOpen" />
           <DeleteButton />
         </ButtonContainer>
       </Box>
-      <Divider />
+      <Divider sx={{ m: 1.5 }} />
       <Box>
         <Stack
           direction="row"
@@ -82,7 +82,7 @@ const ModalToolBar = ({ setModalsState }: ModalToolBarProps) => {
             sx={{ textTransform: 'none' }}
             onClick={() => handleClick('isSessionModalOpen')}
           >
-            <Typography sx={{ fontWeight: 'bold' }} color="black">
+            <Typography sx={{ fontWeight: 'bold' }} color="secondary.dark">
               Sessão
             </Typography>
           </Button>
@@ -92,7 +92,7 @@ const ModalToolBar = ({ setModalsState }: ModalToolBarProps) => {
             sx={{ textTransform: 'none' }}
             onClick={() => handleClick('isPertinentFactModalOpen')}
           >
-            <Typography sx={{ fontWeight: 'bold' }} color="black">
+            <Typography sx={{ fontWeight: 'bold' }} color="secondary.dark">
               Fato importante
             </Typography>
           </Button>
@@ -102,7 +102,7 @@ const ModalToolBar = ({ setModalsState }: ModalToolBarProps) => {
             sx={{ textTransform: 'none' }}
             onClick={() => handleClick('isAttachmentModalOpen')}
           >
-            <Typography sx={{ fontWeight: 'bold' }} color="black">
+            <Typography sx={{ fontWeight: 'bold' }} color="secondary.dark">
               Anexo
             </Typography>
           </Button>
@@ -114,7 +114,7 @@ const ModalToolBar = ({ setModalsState }: ModalToolBarProps) => {
             sx={{ textTransform: 'none' }}
             onClick={() => handleClick('isPsychologicalAssessmentModalOpen')}
           >
-            <Typography sx={{ fontWeight: 'bold' }} color="black">
+            <Typography sx={{ fontWeight: 'bold' }} color="secondary.dark">
               Avaliação Psicológica
             </Typography>
           </Button>
