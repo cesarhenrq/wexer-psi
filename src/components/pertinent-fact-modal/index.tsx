@@ -41,7 +41,7 @@ const PertinentFactModal = () => {
       modal="isPertinentFactModalOpen"
     >
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{ mb: 3 }}>
           <Grid item xs={12} sm={3}>
             <FormGroup>
               <InputLabel htmlFor="date-input">Data*</InputLabel>
