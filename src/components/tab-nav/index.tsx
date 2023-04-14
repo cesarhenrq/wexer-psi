@@ -11,8 +11,8 @@ const TabStyles = {
   borderRight: 1,
   borderColor: 'divider',
   textTransform: 'none',
-  width: 251,
-  fontSize: '16px',
+  width: '50%',
+  fontSize: '1em',
 };
 
 const TabNav = () => {
@@ -43,6 +43,7 @@ const TabNav = () => {
             backgroundColor: 'secondary.main',
             display: 'flex',
             justifyContent: 'space-between',
+            flexWrap: 'wrap',
             alignItems: 'center',
           }}
         >
@@ -50,7 +51,7 @@ const TabNav = () => {
             value={value}
             onChange={handleChange}
             aria-label="navigation tabs"
-            sx={{ m: 1 }}
+            sx={{ m: 1, width: '41.8%', fontSize: '1em' }}
           >
             <Tab
               label="Dados Cadastrais"
@@ -71,9 +72,10 @@ const TabNav = () => {
             noValidate
             autoComplete="off"
             sx={{
-              width: '386px',
+              width: '32.1%',
               height: 48,
               display: 'flex',
+              fontSize: '1em',
               alignItems: 'center',
             }}
           >
