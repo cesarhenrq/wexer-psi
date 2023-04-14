@@ -14,6 +14,7 @@ const PersonalNotesModal = () => {
       title="Anotações Pessoais"
       modalState={modalsState.isPersonalNotesModalOpen}
       modal="isPersonalNotesModalOpen"
+      buttonTitle="Criar"
     >
       <ReactQuill value={text} onChange={(content) => setText(content)} />
     </ModalBaseLayout>

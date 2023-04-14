@@ -39,6 +39,7 @@ const PertinentFactModal = () => {
       title="Nova Fato Relevante"
       modalState={modalsState.isPertinentFactModalOpen}
       modal="isPertinentFactModalOpen"
+      buttonTitle="Criar"
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2} sx={{ mb: 3 }}>

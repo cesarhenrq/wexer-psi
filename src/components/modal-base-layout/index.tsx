@@ -22,6 +22,7 @@ type ModalBaseLayoutProps = {
   children: ReactNode;
   modalState: boolean;
   modal: ModalsStateKeys;
+  buttonTitle: 'Criar' | 'Prosseguir';
 };
 
 const ModalBaseLayout = ({
@@ -29,6 +30,7 @@ const ModalBaseLayout = ({
   children,
   modalState,
   modal,
+  buttonTitle,
 }: ModalBaseLayoutProps) => {
   const { setModalsState } = useContext(ModalContext);
 
@@ -86,7 +88,7 @@ const ModalBaseLayout = ({
                   color="secondary.main"
                   sx={{ textTransform: 'none', fontWeight: '700' }}
                 >
-                  Criar
+                  {buttonTitle}
                 </Typography>
               </Button>
             </div>

@@ -9,6 +9,7 @@ const GoalsRequirementsModal = () => {
       title="Demandas e Objetivos"
       modalState={modalsState.isGoalsRequirementsModalOpen}
       modal="isGoalsRequirementsModalOpen"
+      buttonTitle="Criar"
     >
       <p>Modal Objetivos e Demandas</p>
     </ModalBaseLayout>

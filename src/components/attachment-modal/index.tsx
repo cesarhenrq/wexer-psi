@@ -55,6 +55,7 @@ const AttachmentModal = () => {
       title="Novo Anexo"
       modalState={modalsState.isAttachmentModalOpen}
       modal="isAttachmentModalOpen"
+      buttonTitle="Criar"
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2} sx={{ mb: 3 }}>
