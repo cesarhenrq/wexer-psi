@@ -10,7 +10,7 @@ type GenericCardProps = {
 
 const GenericCard = ({ title, content, modal }: GenericCardProps) => {
   return (
-    <Card>
+    <Card sx={{ width: 340 }}>
       <CardContent>
         <S.Title>
           <Typography variant="h6">{title}</Typography>
