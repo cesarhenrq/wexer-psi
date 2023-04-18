@@ -78,7 +78,7 @@ const ModalToolBar = () => {
         >
           <Button
             variant="text"
-            startIcon={<SessionIcon />}
+            startIcon={<SessionIcon filled={true} />}
             sx={{ textTransform: 'none' }}
             onClick={() => handleClick('isSessionModalOpen')}
           >

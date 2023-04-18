@@ -2,6 +2,7 @@ import DataPatientCard from '../../components/data-patient-card';
 import GenericCard from '../../components/generic-card';
 import ModalToolBar from '../../components/modal-tool-bar';
 import Modals from '../../components/modals';
+import PacientTimeLine from '../../components/pacient-time-line';
 import * as S from './styles';
 
 const MedicalRecord = () => {
@@ -26,6 +27,7 @@ const MedicalRecord = () => {
         <ModalToolBar />
       </S.ModalToolBarContainer>
       <S.ContentContainer>
+        <PacientTimeLine />
         <Modals />
       </S.ContentContainer>
     </S.Grid>
