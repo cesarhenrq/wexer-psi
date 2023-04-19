@@ -1,11 +1,9 @@
 import TimeLineItem from '../time-line-item';
-import VerticalDivider from '../vertical-divider';
 
 const PacientTimeLine = () => {
   return (
     <>
-      <VerticalDivider />
-      <TimeLineItem type="session" />
+      <TimeLineItem type="psychological-assessment" />
     </>
   );
 };
