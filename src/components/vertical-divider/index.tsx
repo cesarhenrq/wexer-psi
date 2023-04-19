@@ -1,13 +1,24 @@
 import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
+import PinIcon from '../pin-icon';
 import SessionIcon from '../session-icon';
+import ClipIcon from '../clip-icon';
+import ClipboardIcon from '../clipboard-icon';
 import { VerticalLine } from './styles';
 
-const VerticalDivider = () => {
+type VerticalDividerProps = {
+  color: '#00995D' | '#2F80ED' | '#9D28AC' | '#EA1E61';
+  type:
+    | 'session'
+    | 'attachment'
+    | 'pertinent-fact'
+    | 'psychological-assessment';
+};
+
+const VerticalDivider = ({ color, type }: VerticalDividerProps) => {
   return (
     <>
       <Box sx={{ position: 'relative' }}>
-        <VerticalLine />
+        <VerticalLine color={color} />
         <Box
           sx={{
             position: 'absolute',
@@ -17,14 +28,22 @@ const VerticalDivider = () => {
             width: '48px',
             height: '48px',
             borderRadius: '50%',
-            backgroundColor: 'primary.main',
+            backgroundColor: `${color}`,
             zIndex: 1,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
           }}
         >
-          <SessionIcon filled={false} />
+          {type === 'session' ? (
+            <SessionIcon filled={false} />
+          ) : type === 'attachment' ? (
+            <PinIcon filled={false} />
+          ) : type === 'pertinent-fact' ? (
+            <ClipIcon filled={false} />
+          ) : (
+            <ClipboardIcon color="#fff" width="24" height="29.33" />
+          )}
         </Box>
       </Box>
     </>

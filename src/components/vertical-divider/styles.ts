@@ -7,6 +7,6 @@ export const VerticalLine = styled.div`
   z-index: 1;
   width: 2px;
   height: 50px;
-  background-color: black;
+  background-color: ${(props) => props.color};
   transform: rotate(180deg);
 `;
