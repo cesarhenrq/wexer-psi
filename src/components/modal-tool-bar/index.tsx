@@ -88,7 +88,7 @@ const ModalToolBar = () => {
           </Button>
           <Button
             variant="text"
-            startIcon={<PinIcon />}
+            startIcon={<PinIcon filled={true} />}
             sx={{ textTransform: 'none' }}
             onClick={() => handleClick('isPertinentFactModalOpen')}
           >
@@ -98,7 +98,7 @@ const ModalToolBar = () => {
           </Button>
           <Button
             variant="text"
-            startIcon={<ClipIcon />}
+            startIcon={<ClipIcon filled={true} />}
             sx={{ textTransform: 'none' }}
             onClick={() => handleClick('isAttachmentModalOpen')}
           >
