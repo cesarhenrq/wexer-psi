@@ -1,21 +1,8 @@
 import { ReactNode, useContext } from 'react';
 import { ModalContext } from '../../contexts/ModalContext';
-import { Modal, Box, Typography, IconButton, Button } from '@mui/material';
+import { Modal, Typography, IconButton, Button, useTheme } from '@mui/material';
 import CloseIcon from '../close-icon';
 import * as S from './styles';
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 674,
-  bgcolor: 'background.paper',
-  border: '2px solid secondary.dark',
-  boxShadow: 24,
-  borderRadius: 2,
-  p: '24px 32px 0 32px',
-};
 
 type ModalBaseLayoutProps = {
   title: string;
@@ -23,6 +10,7 @@ type ModalBaseLayoutProps = {
   modalState: boolean;
   modal: ModalsStateKeys;
   buttonTitle: 'Criar' | 'Prosseguir';
+  isFieldsRequired?: boolean;
 };
 
 const ModalBaseLayout = ({
@@ -31,8 +19,11 @@ const ModalBaseLayout = ({
   modalState,
   modal,
   buttonTitle,
+  isFieldsRequired,
 }: ModalBaseLayoutProps) => {
   const { setModalsState } = useContext(ModalContext);
+
+  const theme = useTheme();
 
   const handleClose = <Keys extends ModalsStateKeys>(key: Keys) => {
     setModalsState((prevValue) => ({
@@ -44,7 +35,7 @@ const ModalBaseLayout = ({
   return (
     <div>
       <Modal open={modalState} onClose={() => handleClose(`${modal}`)}>
-        <Box sx={style}>
+        <S.ModalBox theme={theme}>
           <S.TitleModalContainer>
             <Typography
               variant="h5"
@@ -62,9 +53,10 @@ const ModalBaseLayout = ({
             <Typography
               color="secondary.dark"
               sx={{
-                fontStyle: 'italic',
                 display: 'flex',
+                fontStyle: 'italic',
                 alignItems: 'center',
+                visibility: isFieldsRequired ? 'visible' : 'hidden',
               }}
             >
               *Campos Obrigatórios
@@ -93,7 +85,7 @@ const ModalBaseLayout = ({
               </Button>
             </div>
           </S.ModalFooterContainer>
-        </Box>
+        </S.ModalBox>
       </Modal>
     </div>
   );
