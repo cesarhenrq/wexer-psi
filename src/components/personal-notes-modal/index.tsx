@@ -6,7 +6,6 @@ import ModalBaseLayout from '../modal-base-layout';
 
 const PersonalNotesModal = () => {
   const { modalsState } = useContext(ModalContext);
-
   const [text, setText] = useState('');
 
   return (
@@ -16,7 +15,7 @@ const PersonalNotesModal = () => {
       modal="isPersonalNotesModalOpen"
       buttonTitle="Criar"
     >
-      <ReactQuill value={text} onChange={(content) => setText(content)} />
+      <ReactQuill value={text} onChange={setText} />
     </ModalBaseLayout>
   );
 };
