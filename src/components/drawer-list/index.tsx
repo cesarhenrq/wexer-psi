@@ -32,7 +32,9 @@ const DrawerList = () => {
   };
 
   return (
-    <Box sx={{ backgroundColor: 'primary.main', height: '100%' }}>
+    <Box
+      sx={{ backgroundColor: 'primary.main', height: '100%', width: '263px' }}
+    >
       <List>
         <ListItemButton sx={{ mb: 1 }}>
           <ListItemIcon sx={{ mr: -2 }}>
