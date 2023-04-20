@@ -1,17 +1,7 @@
 import { useContext } from 'react';
 import { ModalContext } from '../../contexts/ModalContext';
-import { Modal, Box, Typography, Button, useTheme } from '@mui/material';
+import { Modal, Box, Typography, useTheme } from '@mui/material';
 import * as S from './styles';
-
-const buttonsStyle = {
-  width: '215px',
-  heigth: '48px',
-  borderRadius: 5,
-  color: 'secondary.main',
-  textTransform: 'none',
-  fontSize: '16px',
-  fontWeigth: '700',
-};
 
 const DeleteModal = () => {
   const { modalsState, setModalsState } = useContext(ModalContext);
@@ -44,12 +34,12 @@ const DeleteModal = () => {
               mr: 7,
             }}
           >
-            <S.Buttons onClick={handleClose} theme={theme}>
+            <S.Buttons onClick={handleClose} theme={theme} variant="contained">
               Voltar
             </S.Buttons>
-            <Button sx={{ ...buttonsStyle, bgcolor: 'error.main' }}>
+            <S.Buttons theme={theme} variant="contained" color="error">
               Apagar
-            </Button>
+            </S.Buttons>
           </Box>
         </S.OutterBox>
       </Modal>
