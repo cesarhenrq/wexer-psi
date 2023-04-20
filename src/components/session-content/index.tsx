@@ -5,7 +5,7 @@ type SessionContentProps = {
 };
 
 const SessionContent = ({ content }: SessionContentProps) => (
-  <Typography>{content}</Typography>
+  <Typography variant="body1">{content}</Typography>
 );
 
 export default SessionContent;
