@@ -13,10 +13,7 @@ const Router = () => (
           <Route path="dados-cadastrais" element={<RegistrationData />} />
           <Route path="prontuário" element={<MedicalRecord />} />
         </Route>
-        <Route
-          path="entrevista-psicologica"
-          element={<PsychologicalAssessment />}
-        />
+        <Route path="entrevista-psicologica" element={<PsychologicalAssessment />} />
       </Route>
     </Routes>
   </BrowserRouter>
