@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import PinIcon from '../pin-icon';
 import SessionIcon from '../session-icon';
 import ClipIcon from '../clip-icon';
-import ClipboardIcon from '../clipboard-icon';
+import ClipboardLinedIcon from '../clipboard-lined-icon';
 import { VerticalLine } from './styles';
 
 type VerticalDividerProps = {
@@ -38,11 +38,11 @@ const VerticalDivider = ({ color, type }: VerticalDividerProps) => {
           {type === 'session' ? (
             <SessionIcon filled={false} />
           ) : type === 'attachment' ? (
-            <PinIcon filled={false} />
-          ) : type === 'pertinent-fact' ? (
             <ClipIcon filled={false} />
+          ) : type === 'pertinent-fact' ? (
+            <PinIcon filled={false} />
           ) : (
-            <ClipboardIcon color="#fff" width="24" height="29.33" />
+            <ClipboardLinedIcon />
           )}
         </Box>
       </Box>
