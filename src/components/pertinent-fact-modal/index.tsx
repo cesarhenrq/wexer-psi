@@ -31,9 +31,8 @@ const PertinentFactModal = () => {
     mode: 'onBlur',
   });
 
-  const onSubmit = (data: PertinentFactFormType) => {
-    return data;
-  };
+  const onSubmit = (data: PertinentFactFormType) => data;
+
   return (
     <ModalBaseLayout
       title="Nova Fato Relevante"
