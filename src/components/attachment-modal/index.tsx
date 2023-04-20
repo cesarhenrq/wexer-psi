@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import { ModalContext } from '../../contexts/ModalContext';
 import ModalBaseLayout from '../modal-base-layout';
-
+import { ButtonContainer } from './styles';
 type AttachmentModalFormType = {
   date: string;
   title: string;
@@ -100,7 +100,7 @@ const AttachmentModal = () => {
               <InputLabel htmlFor="attachment-input">
                 Anexar arquivos*
               </InputLabel>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
+              <ButtonContainer>
                 <Button
                   variant="contained"
                   component="label"
@@ -117,7 +117,7 @@ const AttachmentModal = () => {
                   />
                 </Button>
                 <Typography color="secondary.dark">{fileName}</Typography>
-              </div>
+              </ButtonContainer>
             </FormGroup>
           </Grid>
         </Grid>
