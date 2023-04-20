@@ -5,7 +5,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import * as S from './styles';
 import TabPanel from '../tab-panel';
 
-const TabStyles = {
+const tabStyles = {
   mt: 1,
   borderBottom: 1,
   borderRight: 1,
@@ -19,16 +19,14 @@ const TabNav = () => {
   const [value, setValue] = useState(0);
   const navigate = useNavigate();
 
-  function handleClick(route: string) {
+  const handleClick = (route: string) => {
     navigate(`/${route}`);
-  }
-
-  const a11yProps = (index: number) => {
-    return {
-      id: `tab-${index}`,
-      'aria-controls': `tabpanel-${index}`,
-    };
   };
+
+  const a11yProps = (index: number) => ({
+    id: `tab-${index}`,
+    'aria-controls': `tabpanel-${index}`,
+  });
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -57,14 +55,14 @@ const TabNav = () => {
               label="Dados Cadastrais"
               {...a11yProps(0)}
               onClick={() => handleClick('dados-cadastrais')}
-              sx={TabStyles}
+              sx={tabStyles}
             />
 
             <Tab
               label="Prontuário"
               {...a11yProps(1)}
               onClick={() => handleClick('prontuário')}
-              sx={TabStyles}
+              sx={tabStyles}
             />
           </Tabs>
           <Box
