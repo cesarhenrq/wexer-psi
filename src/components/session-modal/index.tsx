@@ -64,6 +64,8 @@ const SessionModal = () => {
       title="Nova Sessão"
       modalState={modalsState.isSessionModalOpen}
       modal="isSessionModalOpen"
+      buttonTitle="Criar"
+      isFieldsRequired={true}
     >
       <Box sx={{ maxHeight: 'calc(100vh - 250px)', overflowY: 'scroll' }}>
         <form onSubmit={handleSubmit(onSubmit)}>

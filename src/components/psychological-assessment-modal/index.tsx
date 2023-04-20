@@ -46,6 +46,7 @@ const PsychologicalAssessmentModal = () => {
       modalState={modalsState.isPsychologicalAssessmentModalOpen}
       modal="isPsychologicalAssessmentModalOpen"
       buttonTitle="Prosseguir"
+      isFieldsRequired={true}
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2} sx={{ mb: 3 }}>
