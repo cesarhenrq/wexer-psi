@@ -14,6 +14,7 @@ import {
 import { ModalContext } from '../../contexts/ModalContext';
 import ModalBaseLayout from '../modal-base-layout';
 import { ButtonContainer } from './styles';
+
 type AttachmentModalFormType = {
   date: string;
   title: string;
@@ -28,12 +29,11 @@ const defaultValues: DefaultValues<AttachmentModalFormType> = {
 
 const AttachmentModal = () => {
   const { modalsState } = useContext(ModalContext);
-
   const [fileName, setFileName] = useState('');
 
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
-    files ? setFileName(files[0].name) : setFileName('');
+    setFileName(files ? files[0].name : '');
   };
 
   const {
@@ -46,9 +46,7 @@ const AttachmentModal = () => {
     mode: 'onBlur',
   });
 
-  const onSubmit = (data: AttachmentModalFormType) => {
-    return data;
-  };
+  const onSubmit = (data: AttachmentModalFormType) => data;
 
   return (
     <ModalBaseLayout
@@ -66,7 +64,7 @@ const AttachmentModal = () => {
               <TextField
                 id="date-input"
                 {...register('date')}
-                error={Boolean(errors.date)}
+                error={!!errors.date}
               />
             </FormGroup>
           </Grid>
@@ -77,7 +75,7 @@ const AttachmentModal = () => {
                 id="title-input"
                 placeholder="Digite"
                 {...register('title')}
-                error={Boolean(errors.title)}
+                error={!!errors.title}
               />
             </FormGroup>
           </Grid>
@@ -91,7 +89,7 @@ const AttachmentModal = () => {
                   rows={5}
                   placeholder="Text"
                   {...register('description')}
-                  error={Boolean(errors.description)}
+                  error={!!errors.description}
                 />
               </FormGroup>
             </Box>
