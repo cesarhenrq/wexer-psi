@@ -17,6 +17,7 @@ const theme = createTheme({
     h6: {
       fontSize: 18,
     },
+    caption: { fontSize: 14 },
   },
 });
 
