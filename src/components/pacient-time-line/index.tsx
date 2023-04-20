@@ -1,9 +1,6 @@
 import { useState } from 'react';
-import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
+import { Box, Divider, Typography, MenuItem } from '@mui/material';
 import TimeLineItem from '../time-line-item';
-import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 const PacientTimeLine = () => {
