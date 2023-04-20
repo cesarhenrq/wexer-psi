@@ -1,21 +1,7 @@
 import { useContext } from 'react';
 import { ModalContext } from '../../contexts/ModalContext';
-import { Modal, Box, Typography, Button } from '@mui/material';
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 557,
-  height: 444,
-  bgcolor: 'background.paper',
-  border: '2px solid secondary.dark',
-  boxShadow: 24,
-  borderRadius: 2,
-  p: '0 32px 24px 32px',
-  textAlign: 'center',
-};
+import { Modal, Box, Typography, Button, useTheme } from '@mui/material';
+import * as S from './styles';
 
 const buttonsStyle = {
   width: '215px',
@@ -30,6 +16,8 @@ const buttonsStyle = {
 const DeleteModal = () => {
   const { modalsState, setModalsState } = useContext(ModalContext);
 
+  const theme = useTheme();
+
   const handleClose = () => {
     setModalsState((prevValue) => ({
       ...prevValue,
@@ -40,7 +28,7 @@ const DeleteModal = () => {
   return (
     <div>
       <Modal open={modalsState.isDeleteModalOpen} onClose={handleClose}>
-        <Box sx={style}>
+        <S.OutterBox theme={theme}>
           <Typography
             variant="h4"
             color="primary.main"
@@ -56,17 +44,14 @@ const DeleteModal = () => {
               mr: 7,
             }}
           >
-            <Button
-              sx={{ ...buttonsStyle, bgcolor: 'primary.main' }}
-              onClick={handleClose}
-            >
+            <S.Buttons onClick={handleClose} theme={theme}>
               Voltar
-            </Button>
+            </S.Buttons>
             <Button sx={{ ...buttonsStyle, bgcolor: 'error.main' }}>
               Apagar
             </Button>
           </Box>
-        </Box>
+        </S.OutterBox>
       </Modal>
     </div>
   );
