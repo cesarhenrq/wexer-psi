@@ -1,10 +1,13 @@
 import { useContext } from 'react';
 import { ModalContext } from '../../contexts/ModalContext';
-import Button from '@mui/material/Button';
+import { Button } from './styles';
+import { useTheme } from '@mui/material';
 import DeleteIcon from '../delete-icon';
 
 const DeleteButton = () => {
   const { setModalsState } = useContext(ModalContext);
+
+  const theme = useTheme();
 
   const handleDeleteClick = () => {
     setModalsState((prevValue) => ({
@@ -14,7 +17,7 @@ const DeleteButton = () => {
   };
 
   return (
-    <Button variant="outlined" color="error" onClick={handleDeleteClick}>
+    <Button onClick={handleDeleteClick} theme={theme}>
       <DeleteIcon />
     </Button>
   );
