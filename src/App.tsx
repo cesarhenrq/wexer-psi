@@ -6,7 +6,7 @@ import Router from './routes';
 import theme from './theme';
 
 function App() {
-  const [modalsState, setModalsState] = useState<ModalsStateT>({
+  const [modalsState, setModalsState] = useState({
     isSessionModalOpen: false,
     isPertinentFactModalOpen: false,
     isAttachmentModalOpen: false,
