@@ -1,9 +1,18 @@
-import { createContext } from 'react';
-import { Dispatch, SetStateAction } from 'react';
+import { createContext, Dispatch, SetStateAction } from 'react';
+
+type ModalType = {
+  isSessionModalOpen: boolean;
+  isPertinentFactModalOpen: boolean;
+  isAttachmentModalOpen: boolean;
+  isPsychologicalAssessmentModalOpen: boolean;
+  isGoalsRequirementsModalOpen: boolean;
+  isPersonalNotesModalOpen: boolean;
+  isDeleteModalOpen: boolean;
+};
 
 type ModalContextType = {
-  modalsState: ModalsStateT;
-  setModalsState: Dispatch<SetStateAction<ModalsStateT>>;
+  modalsState: ModalType;
+  setModalsState: Dispatch<SetStateAction<ModalType>>;
 };
 
 export const ModalContext = createContext<ModalContextType>({
