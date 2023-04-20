@@ -1,10 +1,6 @@
 import { useState } from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { Card, CardContent, Menu, MenuItem, Typography } from '@mui/material';
+import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
 import SessionContent from '../session-content';
 import VerticalDivider from '../vertical-divider';
 import * as S from './styles';
@@ -14,34 +10,50 @@ import MenuEditIcon from '../menu-edit-icon';
 import MenuDeleteIcon from '../menu-delete-icon';
 import MenuExportIcon from '../menu-export-icon';
 
+type TimeLineItemType =
+  | 'session'
+  | 'attachment'
+  | 'pertinent-fact'
+  | 'psychological-assessment';
+
 type TimeLineItemProps = {
-  type:
-    | 'session'
-    | 'attachment'
-    | 'pertinent-fact'
-    | 'psychological-assessment';
+  type: TimeLineItemType;
 };
 
 const TimeLineItem = ({ type }: TimeLineItemProps) => {
   const handleColor = () => {
-    let color = '';
-    type === 'session'
-      ? (color = '#00995D')
-      : type === 'attachment'
-      ? (color = '#9D28AC')
-      : type === 'pertinent-fact'
-      ? (color = '#2F80ED')
-      : (color = '#EA1E61');
-    return color;
+    switch (type) {
+      case 'session':
+        return '#00995D';
+      case 'attachment':
+        return '#9D28AC';
+      case 'pertinent-fact':
+        return '#2F80ED';
+      default:
+        return '#EA1E61';
+    }
   };
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const renderContent = () => {
+    switch (type) {
+      case 'session':
+        return <SessionContent content="it works" />;
+      case 'attachment':
+        return <AttachmentContent text="text" numberOfAttachments={2} />;
+      case 'pertinent-fact':
+        return <PertinentFactContent content="it works 3!" />;
+      default:
+        return <div> it works 4!</div>;
+    }
   };
 
   return (
@@ -97,15 +109,7 @@ const TimeLineItem = ({ type }: TimeLineItemProps) => {
           <Typography variant="caption" color="secondary.dark">
             22 de setembro de 2022
           </Typography>
-          {type === 'session' ? (
-            <SessionContent content="it works" />
-          ) : type === 'attachment' ? (
-            <AttachmentContent text="text" numberOfAttachments={2} />
-          ) : type === 'pertinent-fact' ? (
-            <PertinentFactContent content="it works 3!" />
-          ) : (
-            <div> it works 4!</div>
-          )}
+          {renderContent()}
         </CardContent>
       </Card>
     </S.TimeLineItemContainer>
