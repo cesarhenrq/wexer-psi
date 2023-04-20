@@ -10,13 +10,17 @@ import { SideBarContext } from '../../contexts/SideBarContext';
 const TopBar = () => {
   const { setIsOpen } = useContext(SideBarContext);
 
+  const handleMenuButtonClick = () => {
+    setIsOpen(true);
+  };
+
   return (
     <AppBar
       position="static"
       color="secondary"
       elevation={0}
       sx={{
-        heigth: 80,
+        height: 80,
         flex: 1,
         boxShadow: '0px 10px 10px -10px rgba(0, 0, 0, 0.1)',
       }}
@@ -24,16 +28,16 @@ const TopBar = () => {
       <Toolbar
         sx={{
           display: 'flex',
-          alignItens: 'center',
+          alignItems: 'center',
           justifyContent: 'space-between',
         }}
       >
-        <IconButton onClick={() => setIsOpen(true)}>
+        <IconButton onClick={handleMenuButtonClick}>
           <MenuIcon color="primary" />
         </IconButton>
         <IconButton>
           <Typography color="primary">
-            Bem vindo(a), <b>Daniel</b>
+            Bem-vindo(a), <b>Daniel</b>
           </Typography>
           <ArrowDropDownIcon />
         </IconButton>
