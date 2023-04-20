@@ -11,18 +11,22 @@ const SideBar = () => {
   const { setIsOpen } = useContext(SideBarContext);
   const theme = useTheme();
 
+  const handleIconClick = () => {
+    setIsOpen(true);
+  };
+
   return (
     <S.SideBar theme={theme}>
-      <S.Icon style={{ marginTop: 25 }} onClick={() => setIsOpen(true)}>
+      <S.Icon style={{ marginTop: 25 }} onClick={handleIconClick}>
         <PeopleIcon />
       </S.Icon>
-      <S.Icon onClick={() => setIsOpen(true)}>
+      <S.Icon onClick={handleIconClick}>
         <ClipboardIcon color="white" width="24" height="24" />
       </S.Icon>
-      <S.Icon onClick={() => setIsOpen(true)}>
+      <S.Icon onClick={handleIconClick}>
         <AddCircleIcon color="secondary" />
       </S.Icon>
-      <S.Icon onClick={() => setIsOpen(true)}>
+      <S.Icon onClick={handleIconClick}>
         <ConfigureIcon />
       </S.Icon>
     </S.SideBar>
