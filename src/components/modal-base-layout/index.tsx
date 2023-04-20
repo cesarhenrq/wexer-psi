@@ -25,7 +25,7 @@ const ModalBaseLayout = ({
 
   const theme = useTheme();
 
-  const handleClose = <Keys extends ModalsStateKeys>(key: Keys) => {
+  const handleClose = (key: ModalsStateKeys) => {
     setModalsState((prevValue) => ({
       ...prevValue,
       [key]: false,
@@ -33,61 +33,56 @@ const ModalBaseLayout = ({
   };
 
   return (
-    <div>
-      <Modal open={modalState} onClose={() => handleClose(`${modal}`)}>
-        <S.ModalBox theme={theme}>
-          <S.TitleModalContainer>
-            <Typography
-              variant="h5"
-              color="primary.main"
-              sx={{ fontWeight: 'bold' }}
-            >
-              {title}
-            </Typography>
-            <IconButton onClick={() => handleClose(`${modal}`)}>
-              <CloseIcon />
-            </IconButton>
-          </S.TitleModalContainer>
-          <div className="modal-content-container">{children}</div>
-          <S.ModalFooterContainer>
-            <Typography
-              color="secondary.dark"
-              sx={{
-                display: 'flex',
-                fontStyle: 'italic',
-                alignItems: 'center',
-                visibility: isFieldsRequired ? 'visible' : 'hidden',
-              }}
-            >
-              *Campos Obrigatórios
-            </Typography>
+    <Modal open={modalState} onClose={() => handleClose(modal)}>
+      <S.ModalBox theme={theme}>
+        <S.TitleModalContainer>
+          <Typography
+            variant="h5"
+            color="primary.main"
+            sx={{ fontWeight: 'bold' }}
+          >
+            {title}
+          </Typography>
+          <IconButton onClick={() => handleClose(modal)}>
+            <CloseIcon />
+          </IconButton>
+        </S.TitleModalContainer>
+        <div className="modal-content-container">{children}</div>
+        <S.ModalFooterContainer>
+          <Typography
+            color="secondary.dark"
+            sx={{
+              display: 'flex',
+              fontStyle: 'italic',
+              alignItems: 'center',
+              visibility: isFieldsRequired ? 'visible' : 'hidden',
+            }}
+          >
+            *Campos Obrigatórios
+          </Typography>
 
-            <div>
-              <Button size="large" onClick={() => handleClose(`${modal}`)}>
-                <Typography
-                  color="secondary.dark"
-                  sx={{ textTransform: 'none' }}
-                >
-                  Cancelar
-                </Typography>
-              </Button>
-              <Button
-                size="large"
-                variant="contained"
-                sx={{ borderRadius: 8, width: 147 }}
+          <div>
+            <Button size="large" onClick={() => handleClose(modal)}>
+              <Typography color="secondary.dark" sx={{ textTransform: 'none' }}>
+                Cancelar
+              </Typography>
+            </Button>
+            <Button
+              size="large"
+              variant="contained"
+              sx={{ borderRadius: 8, width: 147 }}
+            >
+              <Typography
+                color="secondary.main"
+                sx={{ textTransform: 'none', fontWeight: '700' }}
               >
-                <Typography
-                  color="secondary.main"
-                  sx={{ textTransform: 'none', fontWeight: '700' }}
-                >
-                  {buttonTitle}
-                </Typography>
-              </Button>
-            </div>
-          </S.ModalFooterContainer>
-        </S.ModalBox>
-      </Modal>
-    </div>
+                {buttonTitle}
+              </Typography>
+            </Button>
+          </div>
+        </S.ModalFooterContainer>
+      </S.ModalBox>
+    </Modal>
   );
 };
 
