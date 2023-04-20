@@ -1,7 +1,8 @@
 import { useContext } from 'react';
 import { ModalContext } from '../../contexts/ModalContext';
-import Button from '@mui/material/Button';
+import { Button } from './styles';
 import EditIcon from '../edit-icon';
+import { useTheme } from '@mui/material';
 
 type EditButtonProps = {
   modal: ModalsStateKeys;
@@ -9,6 +10,8 @@ type EditButtonProps = {
 
 const EditButton = ({ modal }: EditButtonProps) => {
   const { setModalsState } = useContext(ModalContext);
+
+  const theme = useTheme();
 
   const handleClick = <Keys extends ModalsStateKeys>(key: Keys) => {
     setModalsState((prevValue) => ({
@@ -18,11 +21,7 @@ const EditButton = ({ modal }: EditButtonProps) => {
   };
 
   return (
-    <Button
-      variant="outlined"
-      sx={{ width: 32, height: 24, padding: 0 }}
-      onClick={() => handleClick(modal)}
-    >
+    <Button onClick={() => handleClick(modal)} theme={theme}>
       <EditIcon />
     </Button>
   );
