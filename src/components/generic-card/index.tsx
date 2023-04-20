@@ -16,7 +16,7 @@ const GenericCard = ({ title, content, modal }: GenericCardProps) => {
           <Typography variant="h6">{title}</Typography>
           <EditButton modal={modal} />
         </S.Title>
-        <div>{content}</div>
+        <Typography variant="body1"> {content}</Typography>
       </CardContent>
     </Card>
   );
