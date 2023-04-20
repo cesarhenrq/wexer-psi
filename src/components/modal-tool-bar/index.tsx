@@ -1,13 +1,17 @@
 import { useContext } from 'react';
 import { ModalContext } from '../../contexts/ModalContext';
-import { Box, Divider, Typography } from '@mui/material';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import {
+  Box,
+  Divider,
+  Typography,
+  Select,
+  MenuItem,
+  FormControl,
+  Button,
+  Stack,
+} from '@mui/material';
 import { ButtonContainer } from './styles';
 import DeleteButton from '../delete-button';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
 import SessionIcon from '../session-icon';
 import PinIcon from '../pin-icon';
 import ClipIcon from '../clip-icon';
@@ -125,7 +129,3 @@ const ModalToolBar = () => {
 };
 
 export default ModalToolBar;
-
-/*meanwhile it's without backend integration, these props will be removed:  
-value={age}
-onChange={handleChange}*/
