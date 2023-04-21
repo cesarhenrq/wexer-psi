@@ -3,17 +3,16 @@ import { useForm, DefaultValues } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from './schema';
 import {
-  TextField,
   InputLabel,
   FormGroup,
   Grid,
   Box,
-  Button,
   Typography,
+  useTheme,
 } from '@mui/material';
 import { ModalContext } from '../../contexts/ModalContext';
 import ModalBaseLayout from '../modal-base-layout';
-import { ButtonContainer } from './styles';
+import * as S from './styles';
 
 type AttachmentModalFormType = {
   date: string;
@@ -29,7 +28,10 @@ const defaultValues: DefaultValues<AttachmentModalFormType> = {
 
 const AttachmentModal = () => {
   const { modalsState } = useContext(ModalContext);
+
   const [fileName, setFileName] = useState('');
+
+  const theme = useTheme();
 
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -60,8 +62,10 @@ const AttachmentModal = () => {
         <Grid container spacing={2} sx={{ mb: 3 }}>
           <Grid item xs={12} sm={3}>
             <FormGroup>
-              <InputLabel htmlFor="date-input">Data*</InputLabel>
-              <TextField
+              <InputLabel htmlFor="date-input">
+                <Typography variant="caption">Data*</Typography>
+              </InputLabel>
+              <S.AttachmentTextField
                 id="date-input"
                 {...register('date')}
                 error={!!errors.date}
@@ -70,8 +74,10 @@ const AttachmentModal = () => {
           </Grid>
           <Grid item xs={12} sm={9}>
             <FormGroup>
-              <InputLabel htmlFor="title-input">Título*</InputLabel>
-              <TextField
+              <InputLabel htmlFor="title-input">
+                <Typography variant="caption">Título*</Typography>
+              </InputLabel>
+              <S.AttachmentTextField
                 id="title-input"
                 placeholder="Digite"
                 {...register('title')}
@@ -82,8 +88,10 @@ const AttachmentModal = () => {
           <Grid item xs={12}>
             <Box sx={{ width: '100%' }}>
               <FormGroup>
-                <InputLabel htmlFor="description-input">Descrição*</InputLabel>
-                <TextField
+                <InputLabel htmlFor="description-input">
+                  <Typography variant="caption">Descrição*</Typography>
+                </InputLabel>
+                <S.AttachmentTextField
                   id="description-input"
                   multiline
                   rows={5}
@@ -97,15 +105,10 @@ const AttachmentModal = () => {
           <Grid item xs={12}>
             <FormGroup>
               <InputLabel htmlFor="attachment-input">
-                Anexar arquivos*
+                <Typography variant="caption">Anexar arquivos*</Typography>
               </InputLabel>
-              <ButtonContainer>
-                <Button
-                  variant="contained"
-                  component="label"
-                  sx={{ textTransform: 'none', width: 'fit-content', mr: 2 }}
-                >
-                  Escolher arquivos...
+              <S.ButtonContainer>
+                <S.InputFileButton variant="contained" theme={theme}>
                   <input
                     id="attachment-input"
                     hidden
@@ -114,9 +117,14 @@ const AttachmentModal = () => {
                     type="file"
                     onChange={handleFileUpload}
                   />
-                </Button>
-                <Typography color="secondary.dark">{fileName}</Typography>
-              </ButtonContainer>
+                  <Typography variant="subtitle1">
+                    Escolher arquivos...
+                  </Typography>
+                </S.InputFileButton>
+                <Typography color="secondary.dark" variant="subtitle1">
+                  {fileName}
+                </Typography>
+              </S.ButtonContainer>
             </FormGroup>
           </Grid>
         </Grid>
