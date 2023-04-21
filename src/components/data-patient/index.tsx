@@ -8,16 +8,18 @@ type DataPatientProps = {
   data: string;
 };
 
-const DataPatient = ({ children, label, data }: DataPatientProps) => {
-  return (
-    <S.Container>
-      <S.IconContainer>{children}</S.IconContainer>
-      <div>
-        <Typography color="primary.main">{label}</Typography>
-        <Typography color="secondary.dark">{data}</Typography>
-      </div>
-    </S.Container>
-  );
-};
+const DataPatient = ({ children, label, data }: DataPatientProps) => (
+  <S.Container>
+    <S.IconContainer>{children}</S.IconContainer>
+    <div>
+      <Typography color="primary.main" variant="body1">
+        {label}
+      </Typography>
+      <Typography color="secondary.dark" variant="body1">
+        {data}
+      </Typography>
+    </div>
+  </S.Container>
+);
 
 export default DataPatient;
