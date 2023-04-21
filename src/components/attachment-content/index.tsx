@@ -1,4 +1,5 @@
-import { Typography, Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
+import * as S from './styles';
 import PdfIcon from '../pdf-icon';
 
 type AttachmentContentProps = {
@@ -10,27 +11,24 @@ const AttachmentContent = ({
   text,
   numberOfAttachments,
 }: AttachmentContentProps) => {
+  const theme = useTheme();
   const filePath = 'caminho_do_arquivo.pdf';
   const fileSize = '233 KB';
 
   return (
     <Box>
-      <Typography variant="body1" mt={1} mb={1}>
+      <S.TextTypography variant="body1" theme={theme}>
         {text}
-      </Typography>
-      <Typography variant="caption" mb={1}>
-        <b>{`${numberOfAttachments} Anexos`}</b>
-      </Typography>
-      <a
-        href={filePath}
-        download
-        style={{ display: 'flex', alignItems: 'center', color: '#2F80ED' }}
-      >
+      </S.TextTypography>
+      <S.AttachmentTypography variant="caption" theme={theme}>
+        {`${numberOfAttachments} Anexos`}
+      </S.AttachmentTypography>
+      <S.FileLink href={filePath} download theme={theme}>
         <PdfIcon />
-        <Typography ml={0.5} variant="subtitle2">
-          <b>{`${filePath} (${fileSize})`}</b>
-        </Typography>
-      </a>
+        <S.FileNameTypography variant="subtitle2" theme={theme}>
+          {`${filePath} (${fileSize})`}
+        </S.FileNameTypography>
+      </S.FileLink>
     </Box>
   );
 };
