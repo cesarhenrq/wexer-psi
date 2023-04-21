@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { ModalContext } from '../../contexts/ModalContext';
-import { Modal, Box, Typography, useTheme } from '@mui/material';
+import { Modal, useTheme } from '@mui/material';
 import * as S from './styles';
 
 const DeleteModal = () => {
@@ -13,28 +13,22 @@ const DeleteModal = () => {
   return (
     <Modal open={modalsState.isDeleteModalOpen} onClose={handleClose}>
       <S.OutterBox theme={theme}>
-        <Typography
-          variant="h4"
-          color="primary.main"
-          sx={{ ml: 6, mr: 6, mb: 3, mt: '50%' }}
-        >
+        <S.TitleTypography variant="h4" color="primary.main" theme={theme}>
           Tem certeza que deseja excluir esse serviço?
-        </Typography>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            ml: 7,
-            mr: 7,
-          }}
-        >
-          <S.Buttons onClick={handleClose} theme={theme} variant="contained">
+        </S.TitleTypography>
+        <S.InnerBox theme={theme}>
+          <S.Buttons
+            onClick={handleClose}
+            theme={theme}
+            color="info"
+            variant="contained"
+          >
             Voltar
           </S.Buttons>
           <S.Buttons theme={theme} variant="contained" color="error">
             Apagar
           </S.Buttons>
-        </Box>
+        </S.InnerBox>
       </S.OutterBox>
     </Modal>
   );
