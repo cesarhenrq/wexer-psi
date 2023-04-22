@@ -23,6 +23,15 @@ const theme = createTheme({
     caption: { fontSize: 14 },
     subtitle1: { fontSize: 12 },
   },
+  components: {
+    MuiDrawer: {
+      styleOverrides: {
+        paperAnchorLeft: {
+          top: '80px',
+        },
+      },
+    },
+  },
 });
 
 export default theme;
