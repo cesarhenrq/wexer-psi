@@ -1,22 +1,15 @@
 import { useState, SyntheticEvent } from 'react';
-import { Tabs, Tab, Box, InputAdornment, TextField } from '@mui/material';
+import { InputAdornment, FormControl, useTheme } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { Outlet, useNavigate } from 'react-router-dom';
 import * as S from './styles';
 import TabPanel from '../tab-panel';
 
-const tabStyles = {
-  mt: 1,
-  borderBottom: 1,
-  borderRight: 1,
-  borderColor: 'divider',
-  textTransform: 'none',
-  width: '50%',
-  fontSize: '1em',
-};
-
 const TabNav = () => {
   const [value, setValue] = useState(0);
+
+  const theme = useTheme();
+
   const navigate = useNavigate();
 
   const handleClick = (route: string) => {
@@ -34,50 +27,30 @@ const TabNav = () => {
 
   return (
     <S.Container>
-      <Box sx={{ width: '100%' }}>
-        <Box
-          sx={{
-            borderRadius: 2,
-            backgroundColor: 'secondary.main',
-            display: 'flex',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            alignItems: 'center',
-          }}
-        >
-          <Tabs
+      <S.OutterBox>
+        <S.InnerBox theme={theme}>
+          <S.StyledTabs
+            theme={theme}
             value={value}
             onChange={handleChange}
             aria-label="navigation tabs"
-            sx={{ m: 1, width: '41.8%', fontSize: '1em' }}
           >
-            <Tab
+            <S.StyledTab
+              theme={theme}
               label="Dados Cadastrais"
               {...a11yProps(0)}
               onClick={() => handleClick('dados-cadastrais')}
-              sx={tabStyles}
             />
-
-            <Tab
+            <S.StyledTab
+              theme={theme}
               label="Prontuário"
               {...a11yProps(1)}
               onClick={() => handleClick('prontuário')}
-              sx={tabStyles}
             />
-          </Tabs>
-          <Box
-            component="form"
-            noValidate
-            autoComplete="off"
-            sx={{
-              width: '32.1%',
-              height: 48,
-              display: 'flex',
-              fontSize: '1em',
-              alignItems: 'center',
-            }}
-          >
-            <TextField
+          </S.StyledTabs>
+          <FormControl>
+            <S.TabNavTextField
+              theme={theme}
               placeholder="O que você está procurando?"
               InputProps={{
                 endAdornment: (
@@ -86,17 +59,16 @@ const TabNav = () => {
                   </InputAdornment>
                 ),
               }}
-              sx={{ width: '100%', p: 1 }}
             />
-          </Box>
-        </Box>
+          </FormControl>
+        </S.InnerBox>
         <TabPanel value={value} index={0}>
           <Outlet />
         </TabPanel>
         <TabPanel value={value} index={1}>
           <Outlet />
         </TabPanel>
-      </Box>
+      </S.OutterBox>
     </S.Container>
   );
 };
