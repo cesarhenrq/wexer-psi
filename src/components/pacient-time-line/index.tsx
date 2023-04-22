@@ -1,21 +1,22 @@
 import { useState } from 'react';
-import { Box, Divider, Typography, MenuItem } from '@mui/material';
+import { Typography, MenuItem, useTheme } from '@mui/material';
 import TimeLineItem from '../time-line-item';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import * as S from './styles';
 
 const PacientTimeLine = () => {
   const [selectedFilter, setSelectedFilter] = useState('all');
+
+  const theme = useTheme();
 
   const handleChange = (event: SelectChangeEvent) => {
     setSelectedFilter(event.target.value);
   };
   return (
-    <Box sx={{ marginLeft: 3 }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-        <Divider sx={{ mr: 1, flex: 1 }} />
-        <Typography sx={{ mr: 1, color: 'secondary.dark' }}>
-          Filtrar por:{' '}
-        </Typography>
+    <S.OutterBox theme={theme}>
+      <S.InnerBox theme={theme}>
+        <S.TimeLineDivider theme={theme} />
+        <Typography color="secondary.dark">Filtrar por: </Typography>
         <Select value={selectedFilter} onChange={handleChange}>
           <MenuItem value="all">
             <b>Todos</b>
@@ -33,11 +34,11 @@ const PacientTimeLine = () => {
             <b>Avialiação Psigológica</b>
           </MenuItem>
         </Select>
-      </Box>
+      </S.InnerBox>
 
       <TimeLineItem type="attachment" />
       <TimeLineItem type="psychological-assessment" />
-    </Box>
+    </S.OutterBox>
   );
 };
 
