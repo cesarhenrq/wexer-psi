@@ -17,7 +17,7 @@ const SideBar = () => {
 
   return (
     <S.SideBar theme={theme}>
-      <S.Icon style={{ marginTop: 25 }} onClick={handleIconClick}>
+      <S.Icon onClick={handleIconClick}>
         <PeopleIcon />
       </S.Icon>
       <S.Icon onClick={handleIconClick}>

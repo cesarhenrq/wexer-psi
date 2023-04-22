@@ -10,5 +10,6 @@ export const SideBar = styled.div`
 `;
 
 export const Icon = styled.div`
-  margin: 0 0 33.17px 0;
+  margin: 25px 0 33.17px 0;
+  cursor: pointer;
 `;
