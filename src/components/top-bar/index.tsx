@@ -23,6 +23,9 @@ const TopBar = () => {
         height: 80,
         flex: 1,
         boxShadow: '0px 10px 10px -10px rgba(0, 0, 0, 0.1)',
+        display: 'flex',
+        alignItems: 'space-between',
+        justifyContent: 'center',
       }}
     >
       <Toolbar
