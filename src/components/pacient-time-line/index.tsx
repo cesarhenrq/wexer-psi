@@ -3,6 +3,7 @@ import { Typography, MenuItem, useTheme } from '@mui/material';
 import TimeLineItem from '../time-line-item';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import * as S from './styles';
+import TopButton from '../top-button';
 
 const PacientTimeLine = () => {
   const [selectedFilter, setSelectedFilter] = useState('all');
@@ -38,6 +39,7 @@ const PacientTimeLine = () => {
 
       <TimeLineItem type="attachment" />
       <TimeLineItem type="psychological-assessment" />
+      <TopButton />
     </S.OutterBox>
   );
 };

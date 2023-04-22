@@ -33,7 +33,7 @@ const TimeLineItem = ({ type }: TimeLineItemProps) => {
       case 'psychological-assessment':
         return '#EA1E61';
       default:
-        return null;
+        return '#00995D';
     }
   };
 
@@ -57,7 +57,7 @@ const TimeLineItem = ({ type }: TimeLineItemProps) => {
       case 'psychological-assessment':
         return <PsychologicalAssessmentContent />;
       default:
-        return null;
+        return '#00995D';
     }
   };
 
