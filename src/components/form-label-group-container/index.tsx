@@ -1,15 +1,15 @@
-import { Box } from '@mui/material';
+import { useTheme } from '@mui/material';
 import { ReactNode } from 'react';
+import * as S from './styles';
 
 type GroupLabelContainerProps = {
   children: ReactNode;
 };
 
 const GroupLabelContainer = ({ children }: GroupLabelContainerProps) => {
+  const theme = useTheme();
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', mb: 3, mt: 3 }}>
-      {children}
-    </Box>
+    <S.GroupLabelContainer theme={theme}>{children}</S.GroupLabelContainer>
   );
 };
 
