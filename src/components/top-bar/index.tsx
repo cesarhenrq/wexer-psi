@@ -1,11 +1,10 @@
 import { useContext } from 'react';
-import AppBar from '@mui/material/AppBar';
 import Typography from '@mui/material/Typography';
-import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { SideBarContext } from '../../contexts/SideBarContext';
+import * as S from './styles';
 
 const TopBar = () => {
   const { setIsOpen } = useContext(SideBarContext);
@@ -15,26 +14,8 @@ const TopBar = () => {
   };
 
   return (
-    <AppBar
-      position="static"
-      color="secondary"
-      elevation={0}
-      sx={{
-        height: 80,
-        flex: 1,
-        boxShadow: '0px 10px 10px -10px rgba(0, 0, 0, 0.1)',
-        display: 'flex',
-        alignItems: 'space-between',
-        justifyContent: 'center',
-      }}
-    >
-      <Toolbar
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
-      >
+    <S.StyledAppBar position="static" color="secondary" elevation={0}>
+      <S.StyledToolBar>
         <IconButton onClick={handleMenuButtonClick}>
           <MenuIcon color="primary" />
         </IconButton>
@@ -44,8 +25,8 @@ const TopBar = () => {
           </Typography>
           <ArrowDropDownIcon />
         </IconButton>
-      </Toolbar>
-    </AppBar>
+      </S.StyledToolBar>
+    </S.StyledAppBar>
   );
 };
 
