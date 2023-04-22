@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import {
-  Box,
+  Typography,
   List,
   ListItemButton,
-  ListItemIcon,
   ListItemText,
-  Collapse,
+  useTheme,
 } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ClipboardIcon from '../clipboard-icon';
 import ConfigureIcon from '../configure-icon';
 import PeopleIcon from '../people-icon';
+import * as S from './styles';
 
 type CollapsesStateType = {
   isModelsCollapseOpen: boolean;
@@ -24,6 +24,8 @@ const DrawerList = () => {
     isRegistrationsCollapseOpen: false,
   });
 
+  const theme = useTheme();
+
   const handleClick = (key: keyof CollapsesStateType) => {
     setCollapsesState((prevState) => ({
       ...prevState,
@@ -32,135 +34,149 @@ const DrawerList = () => {
   };
 
   return (
-    <Box
-      sx={{ backgroundColor: 'primary.main', height: '100%', width: '263px' }}
-    >
+    <S.DrawerBox theme={theme}>
       <List>
-        <ListItemButton sx={{ mb: 1 }}>
-          <ListItemIcon sx={{ mr: -2 }}>
+        <S.DrawerListItemButton theme={theme}>
+          <S.DrawerListItemIcon theme={theme}>
             <PeopleIcon />
-          </ListItemIcon>
-          <ListItemText
-            primary="Meus pacientes"
-            sx={{ color: 'secondary.main' }}
-          />
-        </ListItemButton>
+          </S.DrawerListItemIcon>
+          <ListItemText>
+            <Typography color="secondary.main" variant="caption">
+              Meus pacientes
+            </Typography>
+          </ListItemText>
+        </S.DrawerListItemButton>
         {collapsesState.isModelsCollapseOpen ? (
-          <Collapse
+          <S.DrawerCollapse
+            theme={theme}
             in={collapsesState.isModelsCollapseOpen}
-            sx={{ bgcolor: 'primary.dark', mb: 1 }}
           >
             <List>
               <ListItemButton
                 onClick={() => handleClick('isModelsCollapseOpen')}
               >
-                <ListItemIcon sx={{ mr: -2 }}>
+                <S.DrawerListItemIcon theme={theme}>
                   <ClipboardIcon color="white" width="24" height="24" />
-                </ListItemIcon>
-                <ListItemText
-                  primary="Modelos"
-                  sx={{ color: 'secondary.main' }}
-                />
+                </S.DrawerListItemIcon>
+                <ListItemText>
+                  <Typography color="secondary.main" variant="caption">
+                    Modelos
+                  </Typography>
+                </ListItemText>
                 <ArrowBackIosNewIcon color="secondary" />
               </ListItemButton>
-              <ListItemButton sx={{ pl: 7 }}>
-                <ListItemText
-                  primary="Entrevistas"
-                  sx={{ color: 'secondary.main' }}
-                />
-              </ListItemButton>
-              <ListItemButton sx={{ pl: 7 }}>
-                <ListItemText
-                  primary="Roteiro de testes"
-                  sx={{ color: 'secondary.main' }}
-                />
-              </ListItemButton>
-              <ListItemButton sx={{ pl: 7 }}>
-                <ListItemText
-                  primary="Documentos"
-                  sx={{ color: 'secondary.main' }}
-                />
-              </ListItemButton>
+              <S.DrawerListItemButton theme={theme} isCollapsed={true}>
+                <ListItemText>
+                  <Typography color="secondary.main" variant="caption">
+                    Entrevistas
+                  </Typography>
+                </ListItemText>
+              </S.DrawerListItemButton>
+              <S.DrawerListItemButton theme={theme} isCollapsed={true}>
+                <ListItemText>
+                  <Typography color="secondary.main" variant="caption">
+                    Roteiro de testes
+                  </Typography>
+                </ListItemText>
+              </S.DrawerListItemButton>
+              <S.DrawerListItemButton theme={theme} isCollapsed={true}>
+                <ListItemText>
+                  <Typography color="secondary.main" variant="caption">
+                    Documentos
+                  </Typography>
+                </ListItemText>
+              </S.DrawerListItemButton>
             </List>
-          </Collapse>
+          </S.DrawerCollapse>
         ) : (
-          <ListItemButton
+          <S.DrawerListItemButton
             onClick={() => handleClick('isModelsCollapseOpen')}
-            sx={{ mb: 1 }}
+            theme={theme}
           >
-            <ListItemIcon sx={{ mr: -2 }}>
+            <S.DrawerListItemIcon theme={theme}>
               <ClipboardIcon color="white" width="24" height="24" />
-            </ListItemIcon>
-            <ListItemText primary="Modelos" sx={{ color: 'secondary.main' }} />
+            </S.DrawerListItemIcon>
+
+            <ListItemText>
+              <Typography color="secondary.main" variant="caption">
+                Modelos
+              </Typography>
+            </ListItemText>
             <ArrowBackIosNewIcon color="secondary" />
-          </ListItemButton>
+          </S.DrawerListItemButton>
         )}
 
         {collapsesState.isRegistrationsCollapseOpen ? (
-          <Collapse
+          <S.DrawerCollapse
+            theme={theme}
             in={collapsesState.isRegistrationsCollapseOpen}
-            sx={{ bgcolor: 'primary.dark', mb: 1 }}
           >
             <List>
               <ListItemButton
                 onClick={() => handleClick('isRegistrationsCollapseOpen')}
               >
-                <ListItemIcon sx={{ mr: -2 }}>
+                <S.DrawerListItemIcon theme={theme}>
                   <AddCircleIcon color="secondary" />
-                </ListItemIcon>
-                <ListItemText
-                  primary="Cadastros"
-                  sx={{ color: 'secondary.main' }}
-                />
+                </S.DrawerListItemIcon>
+                <ListItemText>
+                  <Typography color="secondary.main" variant="caption">
+                    Cadastros
+                  </Typography>
+                </ListItemText>
                 <ArrowBackIosNewIcon color="secondary" />
               </ListItemButton>
-              <ListItemButton sx={{ pl: 7 }}>
-                <ListItemText
-                  primary="Perguntas"
-                  sx={{ color: 'secondary.main' }}
-                />
-              </ListItemButton>
-              <ListItemButton sx={{ pl: 7 }}>
-                <ListItemText
-                  primary="Testes"
-                  sx={{ color: 'secondary.main' }}
-                />
-              </ListItemButton>
-              <ListItemButton sx={{ pl: 7 }}>
-                <ListItemText
-                  primary="Tipos de Avaliações"
-                  sx={{ color: 'secondary.main' }}
-                />
-              </ListItemButton>
+              <S.DrawerListItemButton theme={theme} isCollapsed={true}>
+                <ListItemText>
+                  <Typography color="secondary.main" variant="caption">
+                    Perguntas
+                  </Typography>
+                </ListItemText>
+              </S.DrawerListItemButton>
+              <S.DrawerListItemButton theme={theme} isCollapsed={true}>
+                <ListItemText>
+                  <Typography color="secondary.main" variant="caption">
+                    Testes
+                  </Typography>
+                </ListItemText>
+              </S.DrawerListItemButton>
+              <S.DrawerListItemButton theme={theme} isCollapsed={true}>
+                <ListItemText>
+                  <Typography color="secondary.main" variant="caption">
+                    Tipos de Avaliações
+                  </Typography>
+                </ListItemText>
+              </S.DrawerListItemButton>
             </List>
-          </Collapse>
+          </S.DrawerCollapse>
         ) : (
-          <ListItemButton
+          <S.DrawerListItemButton
+            theme={theme}
             onClick={() => handleClick('isRegistrationsCollapseOpen')}
-            sx={{ mb: 1 }}
           >
-            <ListItemIcon sx={{ mr: -2 }}>
+            <S.DrawerListItemIcon theme={theme}>
               <AddCircleIcon color="secondary" />
-            </ListItemIcon>
-            <ListItemText
-              primary="Cadastros"
-              sx={{ color: 'secondary.main' }}
-            />
+            </S.DrawerListItemIcon>
+            <ListItemText>
+              <Typography color="secondary.main" variant="caption">
+                Cadastros
+              </Typography>
+            </ListItemText>
             <ArrowBackIosNewIcon color="secondary" />
-          </ListItemButton>
+          </S.DrawerListItemButton>
         )}
 
-        <ListItemButton sx={{ mb: 1 }}>
-          <ListItemIcon sx={{ mr: -2 }}>
+        <S.DrawerListItemButton theme={theme}>
+          <S.DrawerListItemIcon theme={theme}>
             <ConfigureIcon />
-          </ListItemIcon>
-          <ListItemText
-            primary="Preferências"
-            sx={{ color: 'secondary.main' }}
-          />
-        </ListItemButton>
+          </S.DrawerListItemIcon>
+          <ListItemText>
+            <Typography color="secondary.main" variant="caption">
+              Preferências
+            </Typography>
+          </ListItemText>
+        </S.DrawerListItemButton>
       </List>
-    </Box>
+    </S.DrawerBox>
   );
 };
 
