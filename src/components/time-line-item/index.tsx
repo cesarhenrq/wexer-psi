@@ -9,6 +9,7 @@ import AttachmentContent from '../attachment-content';
 import MenuEditIcon from '../menu-edit-icon';
 import MenuDeleteIcon from '../menu-delete-icon';
 import MenuExportIcon from '../menu-export-icon';
+import PsychologicalAssessmentContent from '../psychological-assessment-content';
 
 type TimeLineItemType =
   | 'session'
@@ -29,8 +30,10 @@ const TimeLineItem = ({ type }: TimeLineItemProps) => {
         return '#9D28AC';
       case 'pertinent-fact':
         return '#2F80ED';
-      default:
+      case 'psychological-assessment':
         return '#EA1E61';
+      default:
+        return null;
     }
   };
 
@@ -51,8 +54,10 @@ const TimeLineItem = ({ type }: TimeLineItemProps) => {
         return <AttachmentContent text="text" numberOfAttachments={2} />;
       case 'pertinent-fact':
         return <PertinentFactContent content="it works 3!" />;
+      case 'psychological-assessment':
+        return <PsychologicalAssessmentContent />;
       default:
-        return <div> it works 4!</div>;
+        return null;
     }
   };
 
@@ -70,9 +75,9 @@ const TimeLineItem = ({ type }: TimeLineItemProps) => {
             }}
           >
             Sessão 02
-            <button onClick={handleClick}>
+            <S.MoreButton onClick={handleClick}>
               <MoreHorizIcon />
-            </button>
+            </S.MoreButton>
             <Menu
               anchorEl={anchorEl}
               open={open}
