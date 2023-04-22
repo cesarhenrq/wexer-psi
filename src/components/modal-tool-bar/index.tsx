@@ -1,16 +1,7 @@
 import { useContext } from 'react';
 import { ModalContext } from '../../contexts/ModalContext';
-import {
-  Box,
-  Divider,
-  Typography,
-  Select,
-  MenuItem,
-  FormControl,
-  Button,
-  Stack,
-} from '@mui/material';
-import { ButtonContainer } from './styles';
+import { Box, Typography, MenuItem, useTheme } from '@mui/material';
+import * as S from './styles';
 import DeleteButton from '../delete-button';
 import SessionIcon from '../session-icon';
 import PinIcon from '../pin-icon';
@@ -21,6 +12,8 @@ import EditButton from '../edit-button';
 const ModalToolBar = () => {
   const { setModalsState } = useContext(ModalContext);
 
+  const theme = useTheme();
+
   const handleClick = <Keys extends ModalsStateKeys>(key: Keys) => {
     setModalsState((prevValue) => ({
       ...prevValue,
@@ -29,102 +22,70 @@ const ModalToolBar = () => {
   };
 
   return (
-    <Box
-      sx={{
-        backgroundColor: 'secondary.main',
-        marginLeft: 3,
-        padding: 2,
-        borderRadius: 2,
-      }}
-    >
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
-      >
-        <FormControl
-          sx={{
-            m: 1,
-            minWidth: 120,
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}
-        >
-          <Typography sx={{ fontWeight: 'bold', marginRight: 2 }}>
-            Serviço:
-          </Typography>
-          <Select
-            sx={{ width: '495px', height: '48px' }}
+    <S.OutterBox theme={theme}>
+      <S.InnerBox>
+        <S.ServiceFormControl theme={theme}>
+          <S.ServiceTypography theme={theme}>Serviço:</S.ServiceTypography>
+          <S.ServiceSelect
             displayEmpty
             inputProps={{ 'aria-label': 'Without label' }}
           >
             <MenuItem value="">None</MenuItem>
-          </Select>
-        </FormControl>
+          </S.ServiceSelect>
+        </S.ServiceFormControl>
         <Typography>
           <b>Data inicial:</b> 18/10/2022
         </Typography>
-
-        <ButtonContainer>
+        <S.ButtonContainer>
           <EditButton modal="isSessionModalOpen" />
           <DeleteButton />
-        </ButtonContainer>
-      </Box>
-      <Divider sx={{ m: 1.5 }} />
+        </S.ButtonContainer>
+      </S.InnerBox>
+      <S.ToolBarDivider theme={theme} />
       <Box>
-        <Stack
-          direction="row"
-          spacing={2}
-          sx={{ display: 'flex', justifyContent: 'space-between' }}
-        >
-          <Button
+        <S.ToolBarStack direction="row" spacing={2}>
+          <S.ActionButton
             variant="text"
             startIcon={<SessionIcon filled={true} />}
-            sx={{ textTransform: 'none' }}
+
             onClick={() => handleClick('isSessionModalOpen')}
           >
-            <Typography sx={{ fontWeight: 'bold' }} color="secondary.dark">
+            <S.ActionButtonTypography color="secondary.dark">
               Sessão
-            </Typography>
-          </Button>
-          <Button
+            </S.ActionButtonTypography>
+          </S.ActionButton>
+          <S.ActionButton
             variant="text"
             startIcon={<PinIcon filled={true} />}
-            sx={{ textTransform: 'none' }}
             onClick={() => handleClick('isPertinentFactModalOpen')}
           >
-            <Typography sx={{ fontWeight: 'bold' }} color="secondary.dark">
+            <S.ActionButtonTypography color="secondary.dark">
               Fato importante
-            </Typography>
-          </Button>
-          <Button
+            </S.ActionButtonTypography>
+          </S.ActionButton>
+          <S.ActionButton
             variant="text"
             startIcon={<ClipIcon filled={true} />}
-            sx={{ textTransform: 'none' }}
             onClick={() => handleClick('isAttachmentModalOpen')}
           >
-            <Typography sx={{ fontWeight: 'bold' }} color="secondary.dark">
+            <S.ActionButtonTypography color="secondary.dark">
               Anexo
-            </Typography>
-          </Button>
-          <Button
+            </S.ActionButtonTypography>
+          </S.ActionButton>
+          <S.ActionButton
             variant="text"
             startIcon={
               <ClipboardIcon color="#EA1E61" width="24" height="29.33" />
             }
-            sx={{ textTransform: 'none' }}
             onClick={() => handleClick('isPsychologicalAssessmentModalOpen')}
           >
-            <Typography sx={{ fontWeight: 'bold' }} color="secondary.dark">
+            <S.ActionButtonTypography color="secondary.dark">
               Avaliação Psicológica
-            </Typography>
-          </Button>
-        </Stack>
+            </S.ActionButtonTypography>
+          </S.ActionButton>
+        </S.ToolBarStack>
       </Box>
-    </Box>
+    </S.OutterBox>
   );
 };
 
