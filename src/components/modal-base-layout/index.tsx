@@ -1,6 +1,6 @@
 import { ReactNode, useContext } from 'react';
 import { ModalContext } from '../../contexts/ModalContext';
-import { Modal, Typography, IconButton, Button, useTheme } from '@mui/material';
+import { Modal, IconButton, Button, useTheme } from '@mui/material';
 import CloseIcon from '../close-icon';
 import * as S from './styles';
 
@@ -36,49 +36,33 @@ const ModalBaseLayout = ({
     <Modal open={modalState} onClose={() => handleClose(modal)}>
       <S.ModalBox theme={theme}>
         <S.TitleModalContainer>
-          <Typography
-            variant="h5"
-            color="primary.main"
-            sx={{ fontWeight: 'bold' }}
-          >
+          <S.TitleTypography variant="h5" color="primary.main">
             {title}
-          </Typography>
+          </S.TitleTypography>
           <IconButton onClick={() => handleClose(modal)}>
             <CloseIcon />
           </IconButton>
         </S.TitleModalContainer>
         <div className="modal-content-container">{children}</div>
         <S.ModalFooterContainer>
-          <Typography
+          <S.RequiredTypography
+            isFieldsRequired={isFieldsRequired}
             color="secondary.dark"
-            sx={{
-              display: 'flex',
-              fontStyle: 'italic',
-              alignItems: 'center',
-              visibility: isFieldsRequired ? 'visible' : 'hidden',
-            }}
+            variant="caption"
           >
             *Campos Obrigatórios
-          </Typography>
-
+          </S.RequiredTypography>
           <div>
             <Button size="large" onClick={() => handleClose(modal)}>
-              <Typography color="secondary.dark" sx={{ textTransform: 'none' }}>
+              <S.CancelTypography color="secondary.dark">
                 Cancelar
-              </Typography>
+              </S.CancelTypography>
             </Button>
-            <Button
-              size="large"
-              variant="contained"
-              sx={{ borderRadius: 8, width: 147 }}
-            >
-              <Typography
-                color="secondary.main"
-                sx={{ textTransform: 'none', fontWeight: '700' }}
-              >
+            <S.ActionButton theme={theme} size="large" variant="contained">
+              <S.ActionButtonTypography color="secondary.main">
                 {buttonTitle}
-              </Typography>
-            </Button>
+              </S.ActionButtonTypography>
+            </S.ActionButton>
           </div>
         </S.ModalFooterContainer>
       </S.ModalBox>

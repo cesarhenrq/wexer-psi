@@ -1,9 +1,34 @@
 import styled from 'styled-components';
-import Box from '@mui/material/Box';
+import { Box, Typography, Button } from '@mui/material';
+
+type TypographyProps = {
+  isFieldsRequired: boolean;
+};
 
 export const TitleModalContainer = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+export const TitleTypography = styled(Typography)`
+  font-weight: bold !important;
+`;
+
+export const CancelTypography = styled(Typography)`
+  text-transform: none;
+`;
+
+export const RequiredTypography = styled(Typography)<TypographyProps>`
+  display: flex;
+  font-style: italic;
+  align-items: center;
+  visibility: ${({ isFieldsRequired }) =>
+    isFieldsRequired ? 'visible' : 'hidden'};
+`;
+
+export const ActionButtonTypography = styled(Typography)`
+  text-transform: none;
+  font-weight: bold !important;
 `;
 
 export const ModalFooterContainer = styled.div`
@@ -25,4 +50,9 @@ export const ModalBox = styled(Box)`
   box-shadow: 24px;
   border-radius: 8px;
   padding: 24px 32px 0 32px;
+`;
+
+export const ActionButton = styled(Button)`
+  border-radius: ${({ theme }) => theme.spacing(8)} !important;
+  width: 147px;
 `;
