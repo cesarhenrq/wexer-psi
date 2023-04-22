@@ -4,7 +4,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from './schema';
 import { ModalContext } from '../../contexts/ModalContext';
 import {
-  TextField,
   InputLabel,
   FormGroup,
   Grid,
@@ -15,11 +14,12 @@ import {
   FormControlLabel,
   Radio,
   Typography,
+  useTheme,
 } from '@mui/material';
 import ModalBaseLayout from '../modal-base-layout';
 import Circle from '../circle';
 import GroupLabelContainer from '../form-label-group-container';
-import Divider from '@mui/material/Divider';
+import * as S from './styles';
 
 type SessionFormType = {
   date: string;
@@ -46,6 +46,8 @@ const defaultValues: DefaultValues<SessionFormType> = {
 const SessionModal = () => {
   const { modalsState } = useContext(ModalContext);
 
+  const theme = useTheme();
+
   const {
     handleSubmit,
     register,
@@ -67,7 +69,7 @@ const SessionModal = () => {
       buttonTitle="Criar"
       isFieldsRequired={true}
     >
-      <Box sx={{ maxHeight: 'calc(100vh - 250px)', overflowY: 'scroll' }}>
+      <S.OutterBox>
         <form onSubmit={handleSubmit(onSubmit)}>
           <GroupLabelContainer>
             <Circle>
@@ -78,8 +80,10 @@ const SessionModal = () => {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={4}>
               <FormGroup>
-                <InputLabel htmlFor="date-input">Data*</InputLabel>
-                <TextField
+                <InputLabel htmlFor="date-input">
+                  <Typography variant="caption">Data*</Typography>
+                </InputLabel>
+                <S.SessionTextField
                   id="date-input"
                   {...register('date')}
                   error={Boolean(errors.date)}
@@ -89,9 +93,9 @@ const SessionModal = () => {
             <Grid item xs={12} sm={4}>
               <FormGroup>
                 <InputLabel htmlFor="initial-hour-input">
-                  Hora de início*
+                  <Typography variant="caption">Hora de início*</Typography>
                 </InputLabel>
-                <TextField
+                <S.SessionTextField
                   id="initial-hour-input"
                   {...register('initialHour')}
                   error={Boolean(errors.initialHour)}
@@ -100,8 +104,10 @@ const SessionModal = () => {
             </Grid>
             <Grid item xs={12} sm={4}>
               <FormGroup>
-                <InputLabel htmlFor="final-hour-input">Hora fim*</InputLabel>
-                <TextField
+                <InputLabel htmlFor="final-hour-input">
+                  <Typography variant="caption">Hora fim*</Typography>
+                </InputLabel>
+                <S.SessionTextField
                   id="final-hour-input"
                   {...register('finalHour')}
                   error={Boolean(errors.finalHour)}
@@ -109,7 +115,7 @@ const SessionModal = () => {
               </FormGroup>
             </Grid>
           </Grid>
-          <Divider sx={{ mt: 3 }} />
+          <S.SessionDivider theme={theme} />
           <GroupLabelContainer>
             <Circle>
               <Typography variant="h6">2</Typography>
@@ -119,8 +125,10 @@ const SessionModal = () => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <FormGroup>
-                <InputLabel htmlFor="title-input">Título*</InputLabel>
-                <TextField
+                <InputLabel htmlFor="title-input">
+                  <Typography variant="caption">Título*</Typography>
+                </InputLabel>
+                <S.SessionTextField
                   id="title-input"
                   {...register('title')}
                   error={Boolean(errors.title)}
@@ -131,9 +139,9 @@ const SessionModal = () => {
               <Box sx={{ width: '100%' }}>
                 <FormGroup>
                   <InputLabel htmlFor="session-resume-input">
-                    Resumo da sessão*
+                    <Typography variant="caption">Resumo da sessão*</Typography>
                   </InputLabel>
-                  <TextField
+                  <S.SessionTextField
                     id="session-resume-input"
                     multiline
                     rows={5}
@@ -145,7 +153,7 @@ const SessionModal = () => {
               </Box>
             </Grid>
           </Grid>
-          <Divider sx={{ mt: 3 }} />
+          <S.SessionDivider theme={theme} />
           <GroupLabelContainer>
             <Circle>
               <Typography variant="h6">3</Typography>
@@ -155,19 +163,20 @@ const SessionModal = () => {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={4}>
               <FormGroup>
-                <InputLabel htmlFor="price-input">Valor</InputLabel>
-                <TextField
+                <InputLabel htmlFor="price-input">
+                  <Typography variant="caption">Valor</Typography>
+                </InputLabel>
+                <S.SessionTextField
                   id="price-input"
                   {...register('price')}
                   error={Boolean(errors.price)}
                 />
               </FormGroup>
             </Grid>
-
             <Grid item xs={12} sm={4}>
               <FormGroup>
                 <InputLabel htmlFor="payment-method-input">
-                  Forma de pagamento
+                  <Typography variant="caption">Forma de Pagamento</Typography>
                 </InputLabel>
                 <Select
                   id="payment-method-input"
@@ -180,7 +189,9 @@ const SessionModal = () => {
             </Grid>
             <Grid item xs={12} sm={4}>
               <FormGroup>
-                <InputLabel htmlFor="payment-status-input">Status</InputLabel>
+                <InputLabel htmlFor="payment-status-input">
+                  <Typography variant="caption">Status</Typography>
+                </InputLabel>
                 <RadioGroup
                   row
                   id="payment-status-input"
@@ -201,7 +212,7 @@ const SessionModal = () => {
             </Grid>
           </Grid>
         </form>
-      </Box>
+      </S.OutterBox>
     </ModalBaseLayout>
   );
 };
