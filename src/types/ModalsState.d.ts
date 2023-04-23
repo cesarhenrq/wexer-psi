@@ -6,4 +6,5 @@ type ModalsStateT = {
   isGoalsRequirementsModalOpen: boolean;
   isPersonalNotesModalOpen: boolean;
   isDeleteModalOpen: boolean;
+  isServiceModalOpen: boolean;
 };
