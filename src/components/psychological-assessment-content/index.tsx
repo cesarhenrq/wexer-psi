@@ -16,7 +16,7 @@ const PsychologicalAssessmentContent = () => {
               <Typography color="primary.main">Realizado</Typography>
             </S.TypographyBox>
             <S.ButtonsBox theme={theme}>
-              <EditButton />
+              <EditButton modal={'isAttachmentModalOpen'} />
               <ShowButton />
             </S.ButtonsBox>
           </S.ActionBox>
@@ -29,7 +29,7 @@ const PsychologicalAssessmentContent = () => {
               <Typography color="primary.main">Realizado</Typography>
             </S.TypographyBox>
             <S.ButtonsBox theme={theme}>
-              <EditButton />
+              <EditButton modal={'isAttachmentModalOpen'} />
               <ShowButton />
             </S.ButtonsBox>
           </S.ActionBox>
@@ -44,7 +44,7 @@ const PsychologicalAssessmentContent = () => {
               <Typography color="primary.main">Realizado</Typography>
             </S.TypographyBox>
             <S.ButtonsBox theme={theme}>
-              <EditButton />
+              <EditButton modal={'isAttachmentModalOpen'} />
               <ShowButton />
             </S.ButtonsBox>
           </S.ActionBox>
