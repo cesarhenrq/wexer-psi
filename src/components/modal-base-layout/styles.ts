@@ -48,7 +48,7 @@ export const ModalBox = styled(Box)`
   background-color: ${({ theme }) => theme.palette.background.paper};
   border: ${({ theme }) => `2px solid ${theme.palette.background.paper}`};
   box-shadow: 24px;
-  border-radius: 8px;
+  border-radius: ${({ theme }) => theme.spacing(1)};
   padding: 24px 32px 0 32px;
 `;
 
