@@ -66,6 +66,7 @@ const AttachmentModal = () => {
                 <Typography variant="caption">Data*</Typography>
               </InputLabel>
               <S.AttachmentTextField
+                placeholder="14/06/2021"
                 id="date-input"
                 {...register('date')}
                 error={!!errors.date}
