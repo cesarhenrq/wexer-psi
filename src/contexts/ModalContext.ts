@@ -8,6 +8,7 @@ type ModalType = {
   isGoalsRequirementsModalOpen: boolean;
   isPersonalNotesModalOpen: boolean;
   isDeleteModalOpen: boolean;
+  isServiceModalOpen: boolean;
 };
 
 type ModalContextType = {
@@ -24,6 +25,7 @@ export const ModalContext = createContext<ModalContextType>({
     isGoalsRequirementsModalOpen: false,
     isPersonalNotesModalOpen: false,
     isDeleteModalOpen: false,
+    isServiceModalOpen: false,
   },
   setModalsState: () => null,
 });
