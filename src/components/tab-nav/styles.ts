@@ -15,12 +15,11 @@ export const InnerBox = styled(Box)`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  align-items: center;
 `;
 
 export const StyledTabs = styled(Tabs)`
   margin: ${({ theme }) => theme.spacing(1)};
-  width: 41.8%;
+  width: 42%;
   font-size: 1em;
 `;
 
@@ -39,8 +38,12 @@ export const StyledTab = styled(Tab)`
 export const TabNavTextField = styled(TextField)`
   width: 386px !important;
   height: 48px !important;
-  margin: ${({ theme }) => theme.spacing(1)} !important;
   & ::placeholder {
     font-size: 14px;
   }
+`;
+
+export const TextFieldBox = styled(Box)`
+  height: 48px !important;
+  margin: ${({ theme }) => theme.spacing(1)} !important;
 `;

@@ -1,5 +1,5 @@
 import { useState, SyntheticEvent } from 'react';
-import { InputAdornment, FormControl, useTheme } from '@mui/material';
+import { InputAdornment, useTheme } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { Outlet, useNavigate } from 'react-router-dom';
 import * as S from './styles';
@@ -48,9 +48,8 @@ const TabNav = () => {
               onClick={() => handleClick('prontuário')}
             />
           </S.StyledTabs>
-          <FormControl>
+          <S.TextFieldBox theme={theme}>
             <S.TabNavTextField
-              theme={theme}
               placeholder="O que você está procurando?"
               InputProps={{
                 endAdornment: (
@@ -60,7 +59,7 @@ const TabNav = () => {
                 ),
               }}
             />
-          </FormControl>
+          </S.TextFieldBox>
         </S.InnerBox>
         <TabPanel value={value} index={0}>
           <Outlet />
