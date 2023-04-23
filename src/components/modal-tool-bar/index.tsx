@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { ModalContext } from '../../contexts/ModalContext';
 import { Box, Typography, MenuItem, useTheme } from '@mui/material';
 import * as S from './styles';
@@ -8,9 +8,12 @@ import PinIcon from '../pin-icon';
 import ClipIcon from '../clip-icon';
 import ClipboardIcon from '../clipboard-icon';
 import EditButton from '../edit-button';
+import { SelectChangeEvent } from '@mui/material/Select';
 
 const ModalToolBar = () => {
   const { setModalsState } = useContext(ModalContext);
+
+  const [service, setService] = useState('');
 
   const theme = useTheme();
 
@@ -21,6 +24,14 @@ const ModalToolBar = () => {
     }));
   };
 
+  const handleServiceSelectChange = (event: SelectChangeEvent<unknown>) => {
+    const selectedValue = event.target.value as string;
+    if (selectedValue === 'new-service') {
+      setService(selectedValue);
+      handleClick('isServiceModalOpen');
+    }
+  };
+
   return (
     <S.OutterBox theme={theme}>
       <S.InnerBox>
@@ -29,14 +40,16 @@ const ModalToolBar = () => {
           <S.ServiceSelect
             displayEmpty
             inputProps={{ 'aria-label': 'Without label' }}
+            value={service}
+            onChange={handleServiceSelectChange}
           >
-            <MenuItem value="">None</MenuItem>
+            <MenuItem value="new-service">Novo Serviço</MenuItem>
           </S.ServiceSelect>
         </S.ServiceFormControl>
         <Typography>
           <b>Data inicial:</b> 18/10/2022
         </Typography>
-        <S.ButtonContainer>
+        <S.ButtonContainer theme={theme}>
           <EditButton modal="isSessionModalOpen" />
           <DeleteButton />
         </S.ButtonContainer>
@@ -47,7 +60,6 @@ const ModalToolBar = () => {
           <S.ActionButton
             variant="text"
             startIcon={<SessionIcon filled={true} />}
-
             onClick={() => handleClick('isSessionModalOpen')}
           >
             <S.ActionButtonTypography color="secondary.dark">

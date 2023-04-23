@@ -12,6 +12,7 @@ import {
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  gap: ${({ theme }) => theme.spacing(1)};
 `;
 
 export const OutterBox = styled(Box)`
