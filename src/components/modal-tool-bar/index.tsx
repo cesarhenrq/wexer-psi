@@ -30,6 +30,7 @@ const ModalToolBar = () => {
       setService(selectedValue);
       handleClick('isServiceModalOpen');
     }
+    setService('');
   };
 
   return (
