@@ -17,6 +17,27 @@ const BehavioralObservation = ({ handleNext }: BehavioralObservationProps) => {
     console.log(synthesis);
   };
 
+  const formats = [
+    ['bold', 'italic', 'underline', 'strike'],
+    [{ script: 'sub' }, { script: 'super' }],
+    [{ list: 'ordered' }, { list: 'bullet' }],
+    [{ indent: '-1' }, { indent: '+1' }],
+    [
+      { align: 'left' },
+      { align: 'center' },
+      { align: 'right' },
+      { align: 'justify' },
+    ],
+    ['align'],
+    ['link'],
+  ];
+
+  const modules = {
+    toolbar: {
+      container: formats,
+    },
+  };
+
   return (
     <S.OutterBox theme={theme}>
       <form>
@@ -47,6 +68,7 @@ const BehavioralObservation = ({ handleNext }: BehavioralObservationProps) => {
                 id="behavioral-observation-input"
                 onChange={handleChange}
                 value={synthesis}
+                modules={modules}
               />
             </FormGroup>
           </S.TextGrid>

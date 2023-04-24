@@ -11,6 +11,7 @@ type ModalBaseLayoutProps = {
   modal: ModalsStateKeys;
   buttonTitle: 'Criar' | 'Prosseguir';
   isFieldsRequired?: boolean;
+  onSubmit?: (data: any) => void;
 };
 
 const ModalBaseLayout = ({
@@ -20,6 +21,7 @@ const ModalBaseLayout = ({
   modal,
   buttonTitle,
   isFieldsRequired,
+  onSubmit,
 }: ModalBaseLayoutProps) => {
   const { setModalsState } = useContext(ModalContext);
 
@@ -43,28 +45,37 @@ const ModalBaseLayout = ({
             <CloseIcon />
           </IconButton>
         </S.TitleModalContainer>
-        <div className="modal-content-container">{children}</div>
-        <S.ModalFooterContainer>
-          <S.RequiredTypography
-            isFieldsRequired={isFieldsRequired}
-            color="secondary.dark"
-            variant="caption"
-          >
-            *Campos Obrigatórios
-          </S.RequiredTypography>
-          <div>
-            <Button size="large" onClick={() => handleClose(modal)}>
-              <S.CancelTypography color="secondary.dark">
-                Cancelar
-              </S.CancelTypography>
-            </Button>
-            <S.ActionButton theme={theme} size="large" variant="contained">
-              <S.ActionButtonTypography color="secondary.main">
-                {buttonTitle}
-              </S.ActionButtonTypography>
-            </S.ActionButton>
+        <form onSubmit={onSubmit}>
+          <div className="modal-content-container">
+            {children}
+            <S.ModalFooterContainer>
+              <S.RequiredTypography
+                isFieldsRequired={isFieldsRequired}
+                color="secondary.dark"
+                variant="caption"
+              >
+                *Campos Obrigatórios
+              </S.RequiredTypography>
+              <div>
+                <Button size="large" onClick={() => handleClose(modal)}>
+                  <S.CancelTypography color="secondary.dark">
+                    Cancelar
+                  </S.CancelTypography>
+                </Button>
+                <S.ActionButton
+                  theme={theme}
+                  size="large"
+                  variant="contained"
+                  type="submit"
+                >
+                  <S.ActionButtonTypography color="secondary.main">
+                    {buttonTitle}
+                  </S.ActionButtonTypography>
+                </S.ActionButton>
+              </div>
+            </S.ModalFooterContainer>
           </div>
-        </S.ModalFooterContainer>
+        </form>
       </S.ModalBox>
     </Modal>
   );

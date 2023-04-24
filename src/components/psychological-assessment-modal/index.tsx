@@ -47,43 +47,42 @@ const PsychologicalAssessmentModal = () => {
       modal="isPsychologicalAssessmentModalOpen"
       buttonTitle="Prosseguir"
       isFieldsRequired={true}
+      onSubmit={handleSubmit(onSubmit)}
     >
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid container spacing={2} sx={{ mb: 3 }}>
-          <Grid item xs={12} sm={3}>
-            <FormGroup>
-              <InputLabel htmlFor="date-input">
-                <Typography variant="caption">Data*</Typography>
-              </InputLabel>
-              <TextField
-                id="date-input"
-                {...register('date')}
-                error={Boolean(errors.date)}
-              />
-            </FormGroup>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid
-              item
-              xs={12}
-              sx={{ bgcolor: 'primary.light', borderRadius: 2, p: 2 }}
-            >
-              <Box sx={{ width: '100%' }}>
-                <Typography color="primary" sx={{ fontWeight: 'bold' }}>
-                  Atenção!
-                </Typography>
-                <Typography>
-                  Você será{' '}
-                  <b>
-                    <i>redirecionado para uma nova página</i>
-                  </b>{' '}
-                  onde irá preencher os dados da avaliação psicológica.
-                </Typography>
-              </Box>
-            </Grid>
+      <Grid container spacing={2} sx={{ mb: 3 }}>
+        <Grid item xs={12} sm={3}>
+          <FormGroup>
+            <InputLabel htmlFor="date-input">
+              <Typography variant="caption">Data*</Typography>
+            </InputLabel>
+            <TextField
+              id="date-input"
+              {...register('date')}
+              error={Boolean(errors.date)}
+            />
+          </FormGroup>
+        </Grid>
+        <Grid item xs={12}>
+          <Grid
+            item
+            xs={12}
+            sx={{ bgcolor: 'primary.light', borderRadius: 2, p: 2 }}
+          >
+            <Box sx={{ width: '100%' }}>
+              <Typography color="primary" sx={{ fontWeight: 'bold' }}>
+                Atenção!
+              </Typography>
+              <Typography>
+                Você será{' '}
+                <b>
+                  <i>redirecionado para uma nova página</i>
+                </b>{' '}
+                onde irá preencher os dados da avaliação psicológica.
+              </Typography>
+            </Box>
           </Grid>
         </Grid>
-      </form>
+      </Grid>
     </ModalBaseLayout>
   );
 };

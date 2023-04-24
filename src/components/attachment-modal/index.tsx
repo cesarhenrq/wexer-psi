@@ -57,79 +57,78 @@ const AttachmentModal = () => {
       modal="isAttachmentModalOpen"
       buttonTitle="Criar"
       isFieldsRequired={true}
+      onSubmit={handleSubmit(onSubmit)}
     >
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid container spacing={2} sx={{ mb: 3 }}>
-          <Grid item xs={12} sm={3}>
-            <FormGroup>
-              <InputLabel htmlFor="date-input">
-                <Typography variant="caption">Data*</Typography>
-              </InputLabel>
-              <S.AttachmentTextField
-                placeholder="14/06/2021"
-                id="date-input"
-                {...register('date')}
-                error={!!errors.date}
-              />
-            </FormGroup>
-          </Grid>
-          <Grid item xs={12} sm={9}>
-            <FormGroup>
-              <InputLabel htmlFor="title-input">
-                <Typography variant="caption">Título*</Typography>
-              </InputLabel>
-              <S.AttachmentTextField
-                id="title-input"
-                placeholder="Digite"
-                {...register('title')}
-                error={!!errors.title}
-              />
-            </FormGroup>
-          </Grid>
-          <Grid item xs={12}>
-            <Box sx={{ width: '100%' }}>
-              <FormGroup>
-                <InputLabel htmlFor="description-input">
-                  <Typography variant="caption">Descrição*</Typography>
-                </InputLabel>
-                <S.AttachmentTextField
-                  id="description-input"
-                  multiline
-                  rows={5}
-                  placeholder="Text"
-                  {...register('description')}
-                  error={!!errors.description}
-                />
-              </FormGroup>
-            </Box>
-          </Grid>
-          <Grid item xs={12}>
-            <FormGroup>
-              <InputLabel htmlFor="attachment-input">
-                <Typography variant="caption">Anexar arquivos*</Typography>
-              </InputLabel>
-              <S.ButtonContainer>
-                <S.InputFileButton variant="contained" theme={theme}>
-                  <input
-                    id="attachment-input"
-                    hidden
-                    accept="image/*"
-                    multiple
-                    type="file"
-                    onChange={handleFileUpload}
-                  />
-                  <Typography variant="subtitle1">
-                    Escolher arquivos...
-                  </Typography>
-                </S.InputFileButton>
-                <Typography color="secondary.dark" variant="subtitle1">
-                  {fileName}
-                </Typography>
-              </S.ButtonContainer>
-            </FormGroup>
-          </Grid>
+      <Grid container spacing={2} sx={{ mb: 3 }}>
+        <Grid item xs={12} sm={3}>
+          <FormGroup>
+            <InputLabel htmlFor="date-input">
+              <Typography variant="caption">Data*</Typography>
+            </InputLabel>
+            <S.AttachmentTextField
+              placeholder="14/06/2021"
+              id="date-input"
+              {...register('date')}
+              error={!!errors.date}
+            />
+          </FormGroup>
         </Grid>
-      </form>
+        <Grid item xs={12} sm={9}>
+          <FormGroup>
+            <InputLabel htmlFor="title-input">
+              <Typography variant="caption">Título*</Typography>
+            </InputLabel>
+            <S.AttachmentTextField
+              id="title-input"
+              placeholder="Digite"
+              {...register('title')}
+              error={!!errors.title}
+            />
+          </FormGroup>
+        </Grid>
+        <Grid item xs={12}>
+          <Box sx={{ width: '100%' }}>
+            <FormGroup>
+              <InputLabel htmlFor="description-input">
+                <Typography variant="caption">Descrição*</Typography>
+              </InputLabel>
+              <S.AttachmentTextField
+                id="description-input"
+                multiline
+                rows={5}
+                placeholder="Text"
+                {...register('description')}
+                error={!!errors.description}
+              />
+            </FormGroup>
+          </Box>
+        </Grid>
+        <Grid item xs={12}>
+          <FormGroup>
+            <InputLabel htmlFor="attachment-input">
+              <Typography variant="caption">Anexar arquivos*</Typography>
+            </InputLabel>
+            <S.ButtonContainer>
+              <S.InputFileButton variant="contained" theme={theme}>
+                <input
+                  id="attachment-input"
+                  hidden
+                  accept="image/*"
+                  multiple
+                  type="file"
+                  onChange={handleFileUpload}
+                />
+                <Typography variant="subtitle1">
+                  Escolher arquivos...
+                </Typography>
+              </S.InputFileButton>
+              <Typography color="secondary.dark" variant="subtitle1">
+                {fileName}
+              </Typography>
+            </S.ButtonContainer>
+          </FormGroup>
+        </Grid>
+      </Grid>
     </ModalBaseLayout>
   );
 };

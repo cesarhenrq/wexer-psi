@@ -12,6 +12,27 @@ const GoalsRequirementsModal = () => {
     setText(content);
   };
 
+  const formats = [
+    ['bold', 'italic', 'underline', 'strike'],
+    [{ script: 'sub' }, { script: 'super' }],
+    [{ list: 'ordered' }, { list: 'bullet' }],
+    [{ indent: '-1' }, { indent: '+1' }],
+    [
+      { align: 'left' },
+      { align: 'center' },
+      { align: 'right' },
+      { align: 'justify' },
+    ],
+    ['align'],
+    ['link'],
+  ];
+
+  const modules = {
+    toolbar: {
+      container: formats,
+    },
+  };
+
   return (
     <ModalBaseLayout
       title="Demandas e Objetivos"
@@ -19,7 +40,7 @@ const GoalsRequirementsModal = () => {
       modal="isGoalsRequirementsModalOpen"
       buttonTitle="Criar"
     >
-      <ReactQuill value={text} onChange={handleTextChange} />
+      <ReactQuill value={text} onChange={handleTextChange} modules={modules} />
     </ModalBaseLayout>
   );
 };
