@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Box, Typography, Button } from '@mui/material';
 
 type TypographyProps = {
-  isFieldsRequired: boolean;
+  isFieldsRequired?: boolean;
 };
 
 export const TitleModalContainer = styled.div`
