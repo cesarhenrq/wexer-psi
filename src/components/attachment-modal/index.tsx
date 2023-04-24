@@ -9,6 +9,7 @@ import {
   Box,
   Typography,
   useTheme,
+  TextField,
 } from '@mui/material';
 import { ModalContext } from '../../contexts/ModalContext';
 import ModalBaseLayout from '../modal-base-layout';
@@ -65,7 +66,7 @@ const AttachmentModal = () => {
             <InputLabel htmlFor="date-input">
               <Typography variant="caption">Data*</Typography>
             </InputLabel>
-            <S.AttachmentTextField
+            <TextField
               placeholder="14/06/2021"
               id="date-input"
               {...register('date')}
@@ -78,7 +79,7 @@ const AttachmentModal = () => {
             <InputLabel htmlFor="title-input">
               <Typography variant="caption">Título*</Typography>
             </InputLabel>
-            <S.AttachmentTextField
+            <TextField
               id="title-input"
               placeholder="Digite"
               {...register('title')}
@@ -92,7 +93,7 @@ const AttachmentModal = () => {
               <InputLabel htmlFor="description-input">
                 <Typography variant="caption">Descrição*</Typography>
               </InputLabel>
-              <S.AttachmentTextField
+              <TextField
                 id="description-input"
                 multiline
                 rows={5}

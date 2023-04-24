@@ -33,7 +33,6 @@ export const Buttons = styled(Button)<ButtonProps>`
   color: ${({ theme, color }) =>
     color ? theme.palette[color].main : theme.palette.primary.main};
   background-color: ${({ theme }) => theme.palette.primary.main};
-  text-transform: capitalize !important;
   font-size: 16px !important;
   font-weight: 700 !important;
 `;

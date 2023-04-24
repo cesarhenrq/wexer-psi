@@ -38,9 +38,6 @@ export const StyledTab = styled(Tab)`
 export const TabNavTextField = styled(TextField)`
   width: 386px !important;
   height: 48px !important;
-  & ::placeholder {
-    font-size: 14px;
-  }
 `;
 
 export const TextFieldBox = styled(Box)`

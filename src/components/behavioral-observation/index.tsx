@@ -1,21 +1,32 @@
 import { useTheme, InputLabel, FormGroup, Grid } from '@mui/material';
-import { useState } from 'react';
-import ReactQuill, { QuillChangeHandler } from 'react-quill';
+import { useEffect } from 'react';
+import ReactQuill from 'react-quill';
+import { useForm } from 'react-hook-form';
 import * as S from './styles';
 
-type BehavioralObservationProps = {
-  handleNext: () => void;
+type BehavioralObservationFormData = {
+  observation: string;
 };
 
-const BehavioralObservation = ({ handleNext }: BehavioralObservationProps) => {
+const BehavioralObservation = () => {
   const theme = useTheme();
 
-  const [synthesis, setSynthesis] = useState('');
+  const { register, handleSubmit, setValue, watch } =
+    useForm<BehavioralObservationFormData>();
 
-  const handleChange: QuillChangeHandler = (value: string) => {
-    setSynthesis(value);
-    console.log(synthesis);
+  useEffect(() => {
+    register('observation', { required: true });
+  }, [register]);
+
+  const onEditorStateChange = (editorState: string) => {
+    setValue('observation', editorState);
   };
+
+  const onSubmit = (data: BehavioralObservationFormData) => {
+    console.log(data);
+  };
+
+  const editorContent = watch('observation');
 
   const formats = [
     ['bold', 'italic', 'underline', 'strike'],
@@ -40,7 +51,7 @@ const BehavioralObservation = ({ handleNext }: BehavioralObservationProps) => {
 
   return (
     <S.OutterBox theme={theme}>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <S.TitleBox theme={theme}>
           <S.BoldTypography color="primary.main" variant="h5">
             Observação Comportamental
@@ -50,7 +61,7 @@ const BehavioralObservation = ({ handleNext }: BehavioralObservationProps) => {
               theme={theme}
               color="primary"
               variant="contained"
-              onClick={handleNext}
+              type="submit"
             >
               <S.BoldTypography color="secondary.main">Salvar</S.BoldTypography>
             </S.StyledButton>
@@ -66,15 +77,21 @@ const BehavioralObservation = ({ handleNext }: BehavioralObservationProps) => {
               </InputLabel>
               <ReactQuill
                 id="behavioral-observation-input"
-                onChange={handleChange}
-                value={synthesis}
+                theme="snow"
+                value={editorContent}
+                onChange={onEditorStateChange}
                 modules={modules}
               />
             </FormGroup>
           </S.TextGrid>
           <Grid item xs={12} sm={12}>
             <S.ButtonsBox theme={theme}>
-              <S.StyledButton theme={theme} color="primary" variant="contained">
+              <S.StyledButton
+                theme={theme}
+                color="primary"
+                variant="contained"
+                type="submit"
+              >
                 <S.BoldTypography color="secondary.main">
                   Salvar
                 </S.BoldTypography>

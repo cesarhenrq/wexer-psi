@@ -27,7 +27,6 @@ export const RequiredTypography = styled(Typography)<TypographyProps>`
 `;
 
 export const ActionButtonTypography = styled(Typography)`
-  text-transform: none;
   font-weight: bold !important;
 `;
 

@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { ModalContext } from '../../contexts/ModalContext';
-import { Box, Typography, MenuItem, useTheme } from '@mui/material';
+import { Box, Typography, MenuItem, useTheme, Button } from '@mui/material';
 import * as S from './styles';
 import DeleteButton from '../delete-button';
 import SessionIcon from '../session-icon';
@@ -58,7 +58,7 @@ const ModalToolBar = () => {
       <S.ToolBarDivider theme={theme} />
       <Box>
         <S.ToolBarStack direction="row" spacing={2}>
-          <S.ActionButton
+          <Button
             variant="text"
             startIcon={<SessionIcon filled={true} />}
             onClick={() => handleClick('isSessionModalOpen')}
@@ -66,8 +66,8 @@ const ModalToolBar = () => {
             <S.ActionButtonTypography color="secondary.dark">
               Sessão
             </S.ActionButtonTypography>
-          </S.ActionButton>
-          <S.ActionButton
+          </Button>
+          <Button
             variant="text"
             startIcon={<PinIcon filled={true} />}
             onClick={() => handleClick('isPertinentFactModalOpen')}
@@ -75,8 +75,8 @@ const ModalToolBar = () => {
             <S.ActionButtonTypography color="secondary.dark">
               Fato importante
             </S.ActionButtonTypography>
-          </S.ActionButton>
-          <S.ActionButton
+          </Button>
+          <Button
             variant="text"
             startIcon={<ClipIcon filled={true} />}
             onClick={() => handleClick('isAttachmentModalOpen')}
@@ -84,8 +84,8 @@ const ModalToolBar = () => {
             <S.ActionButtonTypography color="secondary.dark">
               Anexo
             </S.ActionButtonTypography>
-          </S.ActionButton>
-          <S.ActionButton
+          </Button>
+          <Button
             variant="text"
             startIcon={
               <ClipboardIcon color="#EA1E61" width="24" height="29.33" />
@@ -95,7 +95,7 @@ const ModalToolBar = () => {
             <S.ActionButtonTypography color="secondary.dark">
               Avaliação Psicológica
             </S.ActionButtonTypography>
-          </S.ActionButton>
+          </Button>
         </S.ToolBarStack>
       </Box>
     </S.OutterBox>

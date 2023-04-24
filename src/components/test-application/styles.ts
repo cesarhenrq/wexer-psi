@@ -31,7 +31,6 @@ export const ButtonsBox = styled(Box)`
 `;
 
 export const StyledButton = styled(Button)`
-  text-transform: none !important;
   border-radius: ${({ theme }) => theme.spacing(3)} !important;
   padding: ${({ theme }) =>
     `${theme.spacing(1)} ${theme.spacing(4)}`} !important;

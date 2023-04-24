@@ -2,10 +2,16 @@ import { useContext } from 'react';
 import { useForm, DefaultValues } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from './schema';
-import { InputLabel, FormGroup, Grid, Box, Typography } from '@mui/material';
+import {
+  InputLabel,
+  FormGroup,
+  Grid,
+  Box,
+  Typography,
+  TextField,
+} from '@mui/material';
 import { ModalContext } from '../../contexts/ModalContext';
 import ModalBaseLayout from '../modal-base-layout';
-import * as S from './styles';
 
 type PertinentFactFormType = {
   date: string;
@@ -49,7 +55,7 @@ const PertinentFactModal = () => {
             <InputLabel htmlFor="date-input">
               <Typography variant="caption">Data*</Typography>
             </InputLabel>
-            <S.PertinentFactTextField
+            <TextField
               id="date-input"
               {...register('date')}
               error={Boolean(errors.date)}
@@ -61,7 +67,7 @@ const PertinentFactModal = () => {
             <InputLabel htmlFor="title-input">
               <Typography variant="caption">Título*</Typography>
             </InputLabel>
-            <S.PertinentFactTextField
+            <TextField
               id="title-input"
               placeholder="Digite"
               {...register('title')}
@@ -75,7 +81,7 @@ const PertinentFactModal = () => {
               <InputLabel htmlFor="description-input">
                 <Typography variant="caption">Descrição*</Typography>
               </InputLabel>
-              <S.PertinentFactTextField
+              <TextField
                 id="description-input"
                 multiline
                 rows={5}

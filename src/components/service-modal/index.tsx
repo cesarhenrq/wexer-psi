@@ -9,6 +9,7 @@ import {
   Grid,
   Select,
   MenuItem,
+  TextField,
 } from '@mui/material';
 import { ModalContext } from '../../contexts/ModalContext';
 import * as S from './styles';
@@ -102,7 +103,7 @@ const ServiceModal = () => {
                 <InputLabel htmlFor="date-input">
                   <Typography variant="caption">Data*</Typography>
                 </InputLabel>
-                <S.ServiceTextField
+                <TextField
                   id="date-input"
                   placeholder="14/06/2021"
                   {...register('date')}
@@ -136,7 +137,7 @@ const ServiceModal = () => {
                     Demandas e objetivos*
                   </Typography>
                 </InputLabel>
-                <S.ServiceTextField
+                <TextField
                   id="goals-input"
                   multiline
                   rows={5}

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Box, Typography, Button, TextField } from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 
 export const ModalBox = styled(Box)`
   position: absolute;
@@ -25,14 +25,7 @@ export const TitleTypography = styled(Typography)`
   font-weight: bold !important;
 `;
 
-export const ServiceTextField = styled(TextField)`
-  & ::placeholder {
-    font-size: 14px;
-  }
-`;
-
 export const SaveButton = styled(Button)`
-  text-transform: none !important;
   width: 100%;
   height: ${({ theme }) => theme.spacing(6)} !important;
   border-radius: ${({ theme }) => theme.spacing(3)} !important;

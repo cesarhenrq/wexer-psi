@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import {
   Box,
-  Button,
   FormControl,
   Divider,
   Select,
@@ -54,10 +53,6 @@ export const ToolBarDivider = styled(Divider)`
 export const ToolBarStack = styled(Stack)`
   display: flex;
   justify-content: space-between;
-`;
-
-export const ActionButton = styled(Button)`
-  text-transform: none !important;
 `;
 
 export const ActionButtonTypography = styled(Typography)`

@@ -1,24 +1,39 @@
-import { useContext, useState} from 'react';
+import { useContext, useEffect } from 'react';
 import { ModalContext } from '../../contexts/ModalContext';
 import ReactQuill from 'react-quill';
 import ModalBaseLayout from '../modal-base-layout';
+import 'react-quill/dist/quill.snow.css';
+import { useForm } from 'react-hook-form';
+
+type PersonalNotesFormData = {
+  persontalNotes: string;
+};
 
 const PersonalNotesModal = () => {
   const { modalsState } = useContext(ModalContext);
-  const [text, setText] = useState('');
+  const { register, handleSubmit, setValue, watch } =
+    useForm<PersonalNotesFormData>();
+
+  useEffect(() => {
+    register('persontalNotes', { required: true });
+  }, [register]);
+
+  const onEditorStateChange = (editorState: string) => {
+    setValue('persontalNotes', editorState);
+  };
+
+  const onSubmit = (data: PersonalNotesFormData) => {
+    console.log(data);
+  };
+
+  const editorContent = watch('persontalNotes');
 
   const formats = [
     ['bold', 'italic', 'underline', 'strike'],
     [{ script: 'sub' }, { script: 'super' }],
     [{ list: 'ordered' }, { list: 'bullet' }],
     [{ indent: '-1' }, { indent: '+1' }],
-    [
-      { align: 'left' },
-      { align: 'center' },
-      { align: 'right' },
-      { align: 'justify' },
-    ],
-    ['align'],
+    ['align', { align: 'center' }, { align: 'right' }, { align: 'justify' }],
     ['link'],
   ];
 
@@ -34,8 +49,14 @@ const PersonalNotesModal = () => {
       modalState={modalsState.isPersonalNotesModalOpen}
       modal="isPersonalNotesModalOpen"
       buttonTitle="Criar"
+      onSubmit={handleSubmit(onSubmit)}
     >
-      <ReactQuill value={text} onChange={setText} modules={modules} />
+      <ReactQuill
+        theme="snow"
+        value={editorContent}
+        onChange={onEditorStateChange}
+        modules={modules}
+      />
     </ModalBaseLayout>
   );
 };

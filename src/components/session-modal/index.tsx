@@ -15,6 +15,7 @@ import {
   Radio,
   Typography,
   useTheme,
+  TextField,
 } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import ModalBaseLayout from '../modal-base-layout';
@@ -102,7 +103,7 @@ const SessionModal = () => {
               <InputLabel htmlFor="date-input">
                 <Typography variant="caption">Data*</Typography>
               </InputLabel>
-              <S.SessionTextField
+              <TextField
                 id="date-input"
                 {...register('date')}
                 error={Boolean(errors.date)}
@@ -114,7 +115,7 @@ const SessionModal = () => {
               <InputLabel htmlFor="initial-hour-input">
                 <Typography variant="caption">Hora de início*</Typography>
               </InputLabel>
-              <S.SessionTextField
+              <TextField
                 id="initial-hour-input"
                 {...register('initialHour')}
                 error={Boolean(errors.initialHour)}
@@ -126,7 +127,7 @@ const SessionModal = () => {
               <InputLabel htmlFor="final-hour-input">
                 <Typography variant="caption">Hora fim*</Typography>
               </InputLabel>
-              <S.SessionTextField
+              <TextField
                 id="final-hour-input"
                 {...register('finalHour')}
                 error={Boolean(errors.finalHour)}
@@ -147,7 +148,7 @@ const SessionModal = () => {
               <InputLabel htmlFor="title-input">
                 <Typography variant="caption">Título*</Typography>
               </InputLabel>
-              <S.SessionTextField
+              <TextField
                 id="title-input"
                 {...register('title')}
                 error={Boolean(errors.title)}
@@ -160,7 +161,7 @@ const SessionModal = () => {
                 <InputLabel htmlFor="session-resume-input">
                   <Typography variant="caption">Resumo da sessão*</Typography>
                 </InputLabel>
-                <S.SessionTextField
+                <TextField
                   id="session-resume-input"
                   multiline
                   rows={5}
@@ -185,7 +186,7 @@ const SessionModal = () => {
               <InputLabel htmlFor="price-input">
                 <Typography variant="caption">Valor</Typography>
               </InputLabel>
-              <S.SessionTextField
+              <TextField
                 id="price-input"
                 {...register('price')}
                 error={Boolean(errors.price)}

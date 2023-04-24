@@ -78,7 +78,7 @@ const PsychologicalAssessment = () => {
       {activeStep === 1 && (
         <TestApplication handleNext={handleNext} handleSkip={handleSkip} />
       )}
-      {activeStep === 2 && <BehavioralObservation handleNext={handleNext} />}
+      {activeStep === 2 && <BehavioralObservation />}
     </S.StepperBox>
   );
 };
