@@ -34,6 +34,9 @@ const theme = createTheme({
     },
     MuiButton: {
       styleOverrides: {
+        root: {
+          textTransform: 'none',
+        },
         containedSecondary: {
           '&:hover': {
             backgroundColor: '#F5F5F5',
