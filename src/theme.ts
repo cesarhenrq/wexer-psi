@@ -32,6 +32,34 @@ const theme = createTheme({
         },
       },
     },
+    MuiStepIcon: {
+      styleOverrides: {
+        root: {
+          '&.Mui-completed': {
+            color: '#C5F2E0',
+          },
+        },
+      },
+    },
+    MuiFormControlLabel: {
+      styleOverrides: {
+        label: {
+          fontSize: '14px',
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          '& .MuiInputBase-input': {
+            fontSize: '14px',
+          },
+          '& .MuiInputLabel-root': {
+            fontSize: '14px',
+          },
+        },
+      },
+    },
   },
 });
 
