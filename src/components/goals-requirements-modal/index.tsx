@@ -1,32 +1,14 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { ModalContext } from '../../contexts/ModalContext';
 import ModalBaseLayout from '../modal-base-layout';
-import { useForm } from 'react-hook-form';
-
-type GoalsRequirementsFormData = {
-  goals: string;
-};
+import useQuill from '../../hooks/use-quill';
 
 const GoalsRequirementsModal = () => {
   const { modalsState } = useContext(ModalContext);
-  const { register, handleSubmit, setValue, watch } =
-    useForm<GoalsRequirementsFormData>();
-
-  useEffect(() => {
-    register('goals', { required: true });
-  }, [register]);
-
-  const onEditorStateChange = (editorState: string) => {
-    setValue('goals', editorState);
-  };
-
-  const onSubmit = (data: GoalsRequirementsFormData) => {
-    console.log(data);
-  };
-
-  const editorContent = watch('goals');
+  const { onSubmit, handleSubmit, onEditorStateChange, editorContent } =
+    useQuill({ field: 'goals' });
 
   const formats = [
     ['bold', 'italic', 'underline', 'strike'],

@@ -1,32 +1,14 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { ModalContext } from '../../contexts/ModalContext';
 import ReactQuill from 'react-quill';
 import ModalBaseLayout from '../modal-base-layout';
 import 'react-quill/dist/quill.snow.css';
-import { useForm } from 'react-hook-form';
-
-type PersonalNotesFormData = {
-  persontalNotes: string;
-};
+import useQuill from '../../hooks/use-quill';
 
 const PersonalNotesModal = () => {
   const { modalsState } = useContext(ModalContext);
-  const { register, handleSubmit, setValue, watch } =
-    useForm<PersonalNotesFormData>();
-
-  useEffect(() => {
-    register('persontalNotes', { required: true });
-  }, [register]);
-
-  const onEditorStateChange = (editorState: string) => {
-    setValue('persontalNotes', editorState);
-  };
-
-  const onSubmit = (data: PersonalNotesFormData) => {
-    console.log(data);
-  };
-
-  const editorContent = watch('persontalNotes');
+  const { onSubmit, handleSubmit, onEditorStateChange, editorContent } =
+    useQuill({ field: 'personalNotes' });
 
   const formats = [
     ['bold', 'italic', 'underline', 'strike'],

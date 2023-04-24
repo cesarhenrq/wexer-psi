@@ -1,32 +1,13 @@
 import { useTheme, InputLabel, FormGroup, Grid } from '@mui/material';
-import { useEffect } from 'react';
 import ReactQuill from 'react-quill';
-import { useForm } from 'react-hook-form';
 import * as S from './styles';
-
-type BehavioralObservationFormData = {
-  observation: string;
-};
+import useQuill from '../../hooks/use-quill';
 
 const BehavioralObservation = () => {
   const theme = useTheme();
 
-  const { register, handleSubmit, setValue, watch } =
-    useForm<BehavioralObservationFormData>();
-
-  useEffect(() => {
-    register('observation', { required: true });
-  }, [register]);
-
-  const onEditorStateChange = (editorState: string) => {
-    setValue('observation', editorState);
-  };
-
-  const onSubmit = (data: BehavioralObservationFormData) => {
-    console.log(data);
-  };
-
-  const editorContent = watch('observation');
+  const { onSubmit, handleSubmit, onEditorStateChange, editorContent } =
+    useQuill({ field: 'observation' });
 
   const formats = [
     ['bold', 'italic', 'underline', 'strike'],
