@@ -1,30 +1,26 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
+import { useState, useCallback } from 'react';
+import { useTheme } from '@mui/material';
 import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-
-const steps = [
-  'Select campaign settings',
-  'Create an ad group',
-  'Create an ad',
-];
+import PsychologicalInterview from '../psychological-interview';
+import * as S from './styles';
+import TestApplication from '../test-application';
+import BehavioralObservation from '../behavioral-observation';
 
 const PsychologicalAssessment = () => {
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [skipped, setSkipped] = React.useState(new Set<number>());
+  const theme = useTheme();
+  const [activeStep, setActiveStep] = useState(0);
+  const [skipped, setSkipped] = useState(new Set<number>());
+  const [completedStep, setCompletedStep] = useState([false, false, false]);
 
-  const isStepOptional = (step: number) => {
-    return step === 1;
-  };
+  const isStepSkipped = useCallback(
+    (step: number) => {
+      return skipped.has(step);
+    },
+    [skipped]
+  );
 
-  const isStepSkipped = (step: number) => {
-    return skipped.has(step);
-  };
-
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
@@ -33,87 +29,57 @@ const PsychologicalAssessment = () => {
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
-  };
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
+    const newCompletedStep = [...completedStep];
+    newCompletedStep[activeStep] = true;
+    setCompletedStep(newCompletedStep);
+  }, [activeStep, completedStep, isStepSkipped, skipped]);
 
-  const handleSkip = () => {
-    if (!isStepOptional(activeStep)) {
-      throw new Error("You can't skip a step that isn't optional.");
-    }
-
+  const handleSkip = useCallback(() => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped((prevSkipped) => {
       const newSkipped = new Set(prevSkipped.values());
       newSkipped.add(activeStep);
       return newSkipped;
     });
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-  };
+  }, [activeStep]);
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Stepper activeStep={activeStep}>
-        {steps.map((label, index) => {
-          const stepProps: { completed?: boolean } = {};
-          const labelProps: {
-            optional?: React.ReactNode;
-          } = {};
-          if (isStepOptional(index)) {
-            labelProps.optional = (
-              <Typography variant="caption">Optional</Typography>
-            );
-          }
-          if (isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
-            </Step>
-          );
-        })}
+    <S.StepperBox theme={theme}>
+      <Stepper activeStep={activeStep} connector={<div></div>}>
+        <S.FirstStep
+          theme={theme}
+          completed={completedStep[0]}
+          active={activeStep === 0}
+        >
+          <StepLabel>Entrevista Psicológica</StepLabel>
+        </S.FirstStep>
+        <S.MiddleStep
+          theme={theme}
+          completed={completedStep[1]}
+          active={activeStep === 1}
+        >
+          <StepLabel>Aplicação de Teste</StepLabel>
+        </S.MiddleStep>
+        <S.LastStep
+          theme={theme}
+          completed={completedStep[2]}
+          active={activeStep === 2}
+        >
+          <StepLabel>Observação Comportamental</StepLabel>
+        </S.LastStep>
       </Stepper>
-      {activeStep === steps.length ? (
-        <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - you&apos;re finished
-          </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-            <Box sx={{ flex: '1 1 auto' }} />
-            <Button onClick={handleReset}>Reset</Button>
-          </Box>
-        </React.Fragment>
-      ) : (
-        <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-            <Button
-              color="inherit"
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              sx={{ mr: 1 }}
-            >
-              Back
-            </Button>
-            <Box sx={{ flex: '1 1 auto' }} />
-            {isStepOptional(activeStep) && (
-              <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
-                Skip
-              </Button>
-            )}
-            <Button onClick={handleNext}>
-              {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-            </Button>
-          </Box>
-        </React.Fragment>
+      {activeStep === 0 && (
+        <PsychologicalInterview
+          handleNext={handleNext}
+          handleSkip={handleSkip}
+        />
       )}
-    </Box>
+      {activeStep === 1 && (
+        <TestApplication handleNext={handleNext} handleSkip={handleSkip} />
+      )}
+      {activeStep === 2 && <BehavioralObservation handleNext={handleNext} />}
+    </S.StepperBox>
   );
 };
 
