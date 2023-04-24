@@ -41,53 +41,52 @@ const PertinentFactModal = () => {
       modal="isPertinentFactModalOpen"
       buttonTitle="Criar"
       isFieldsRequired={true}
+      onSubmit={handleSubmit(onSubmit)}
     >
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid container spacing={2} sx={{ mb: 3 }}>
-          <Grid item xs={12} sm={3}>
-            <FormGroup>
-              <InputLabel htmlFor="date-input">
-                <Typography variant="caption">Data*</Typography>
-              </InputLabel>
-              <S.PertinentFactTextField
-                id="date-input"
-                {...register('date')}
-                error={Boolean(errors.date)}
-              />
-            </FormGroup>
-          </Grid>
-          <Grid item xs={12} sm={9}>
-            <FormGroup>
-              <InputLabel htmlFor="title-input">
-                <Typography variant="caption">Título*</Typography>
-              </InputLabel>
-              <S.PertinentFactTextField
-                id="title-input"
-                placeholder="Digite"
-                {...register('title')}
-                error={Boolean(errors.title)}
-              />
-            </FormGroup>
-          </Grid>
-          <Grid item xs={12}>
-            <Box sx={{ width: '100%' }}>
-              <FormGroup>
-                <InputLabel htmlFor="description-input">
-                  <Typography variant="caption">Descrição*</Typography>
-                </InputLabel>
-                <S.PertinentFactTextField
-                  id="description-input"
-                  multiline
-                  rows={5}
-                  placeholder="Text"
-                  {...register('description')}
-                  error={Boolean(errors.description)}
-                />
-              </FormGroup>
-            </Box>
-          </Grid>
+      <Grid container spacing={2} sx={{ mb: 3 }}>
+        <Grid item xs={12} sm={3}>
+          <FormGroup>
+            <InputLabel htmlFor="date-input">
+              <Typography variant="caption">Data*</Typography>
+            </InputLabel>
+            <S.PertinentFactTextField
+              id="date-input"
+              {...register('date')}
+              error={Boolean(errors.date)}
+            />
+          </FormGroup>
         </Grid>
-      </form>
+        <Grid item xs={12} sm={9}>
+          <FormGroup>
+            <InputLabel htmlFor="title-input">
+              <Typography variant="caption">Título*</Typography>
+            </InputLabel>
+            <S.PertinentFactTextField
+              id="title-input"
+              placeholder="Digite"
+              {...register('title')}
+              error={Boolean(errors.title)}
+            />
+          </FormGroup>
+        </Grid>
+        <Grid item xs={12}>
+          <Box sx={{ width: '100%' }}>
+            <FormGroup>
+              <InputLabel htmlFor="description-input">
+                <Typography variant="caption">Descrição*</Typography>
+              </InputLabel>
+              <S.PertinentFactTextField
+                id="description-input"
+                multiline
+                rows={5}
+                placeholder="Text"
+                {...register('description')}
+                error={Boolean(errors.description)}
+              />
+            </FormGroup>
+          </Box>
+        </Grid>
+      </Grid>
     </ModalBaseLayout>
   );
 };
