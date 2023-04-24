@@ -32,6 +32,15 @@ const theme = createTheme({
         },
       },
     },
+    MuiButton: {
+      styleOverrides: {
+        containedSecondary: {
+          '&:hover': {
+            backgroundColor: '#F5F5F5',
+          },
+        },
+      },
+    },
     MuiStepIcon: {
       styleOverrides: {
         root: {
