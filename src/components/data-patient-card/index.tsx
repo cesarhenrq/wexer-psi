@@ -6,27 +6,33 @@ import CalendarIcon from '../calendar-icon';
 import SuitcaseIcon from '../suitcase-icon';
 import BookMarkIcon from '../bookmark-icon';
 import * as S from './styles';
+import usePatientData from '../../hooks/use-patient-data';
+import formatDate from '../../utils/functions/format-date';
 
-const DataPatientCard = () => (
-  <S.CardContainer>
-    <CardContent>
-      <S.Title>
-        <Typography variant="h6">Identificação do Paciente</Typography>
-      </S.Title>
-      <DataPatient label="Paciente" data="Ana Ester Resende">
-        <PersonIcon />
-      </DataPatient>
-      <DataPatient label="Nascimento" data="31/03/1998">
-        <CalendarIcon />
-      </DataPatient>
-      <DataPatient label="Profissão" data="Designer">
-        <SuitcaseIcon />
-      </DataPatient>
-      <DataPatient label="Escolaridade" data="Superior incompleto">
-        <BookMarkIcon />
-      </DataPatient>
-    </CardContent>
-  </S.CardContainer>
-);
+const DataPatientCard = () => {
+  const { name, birthdate, profession, schooling } = usePatientData();
+
+  return (
+    <S.CardContainer>
+      <CardContent>
+        <S.Title>
+          <Typography variant="h6">Identificação do Paciente</Typography>
+        </S.Title>
+        <DataPatient label="Paciente" data={name}>
+          <PersonIcon />
+        </DataPatient>
+        <DataPatient label="Nascimento" data={formatDate(birthdate)}>
+          <CalendarIcon />
+        </DataPatient>
+        <DataPatient label="Profissão" data={profession}>
+          <SuitcaseIcon />
+        </DataPatient>
+        <DataPatient label="Escolaridade" data={schooling}>
+          <BookMarkIcon />
+        </DataPatient>
+      </CardContent>
+    </S.CardContainer>
+  );
+};
 
 export default DataPatientCard;

@@ -5,9 +5,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { SideBarContext } from '../../contexts/SideBarContext';
 import * as S from './styles';
+import useUserData from '../../hooks/use-user-data';
 
 const TopBar = () => {
   const { setIsOpen } = useContext(SideBarContext);
+
+  const userData = useUserData();
 
   const handleMenuButtonClick = () => {
     setIsOpen(true);
@@ -21,7 +24,7 @@ const TopBar = () => {
         </IconButton>
         <IconButton>
           <Typography color="primary">
-            Bem-vindo(a), <b>Daniel</b>
+            Bem-vindo(a), <b>{userData.name}</b>
           </Typography>
           <ArrowDropDownIcon />
         </IconButton>

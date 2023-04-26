@@ -1,20 +1,15 @@
-import { useState } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { ModalContext } from './contexts/ModalContext';
 import { Normalize } from 'styled-normalize';
 import Router from './routes';
 import theme from './theme';
+import useModal from './hooks/use-modal';
+import { login } from './services/user';
 
 function App() {
-  const [modalsState, setModalsState] = useState({
-    isSessionModalOpen: false,
-    isPertinentFactModalOpen: false,
-    isAttachmentModalOpen: false,
-    isPsychologicalAssessmentModalOpen: false,
-    isGoalsRequirementsModalOpen: false,
-    isPersonalNotesModalOpen: false,
-    isDeleteModalOpen: false,
-  });
+  login();
+
+  const { modalsState, setModalsState } = useModal();
 
   return (
     <ThemeProvider theme={theme}>
