@@ -12,6 +12,7 @@ export const Grid = styled.div`
 export const CardContainer = styled.div`
   grid-area: card-container;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   gap: 20px;
 `;
