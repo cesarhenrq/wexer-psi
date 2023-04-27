@@ -1,11 +1,13 @@
 import Typography from '@mui/material/Typography';
 
 type PertinentFactContentProps = {
-  content: string;
+  data: PertinentFactType;
 };
 
-const PertinentFactContent = ({ content }: PertinentFactContentProps) => (
-  <Typography variant="body1">{content}</Typography>
+const PertinentFactContent = ({ data }: PertinentFactContentProps) => (
+  <Typography variant="body1" mt={1}>
+    {data.content}
+  </Typography>
 );
 
 export default PertinentFactContent;
