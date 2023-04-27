@@ -4,32 +4,12 @@ import 'react-quill/dist/quill.snow.css';
 import { ModalContext } from '../../contexts/ModalContext';
 import ModalBaseLayout from '../modal-base-layout';
 import useQuill from '../../hooks/use-quill';
+import { MODULES } from '../../utils/constants';
 
 const GoalsRequirementsModal = () => {
   const { modalsState } = useContext(ModalContext);
   const { onSubmit, handleSubmit, onEditorStateChange, editorContent } =
-    useQuill({ field: 'goals' });
-
-  const formats = [
-    ['bold', 'italic', 'underline', 'strike'],
-    [{ script: 'sub' }, { script: 'super' }],
-    [{ list: 'ordered' }, { list: 'bullet' }],
-    [{ indent: '-1' }, { indent: '+1' }],
-    [
-      { align: 'left' },
-      { align: 'center' },
-      { align: 'right' },
-      { align: 'justify' },
-    ],
-    ['align'],
-    ['link'],
-  ];
-
-  const modules = {
-    toolbar: {
-      container: formats,
-    },
-  };
+    useQuill('demands');
 
   return (
     <ModalBaseLayout
@@ -43,7 +23,7 @@ const GoalsRequirementsModal = () => {
         theme="snow"
         value={editorContent}
         onChange={onEditorStateChange}
-        modules={modules}
+        modules={MODULES}
       />
     </ModalBaseLayout>
   );
