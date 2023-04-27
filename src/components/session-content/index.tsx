@@ -1,11 +1,13 @@
 import Typography from '@mui/material/Typography';
 
 type SessionContentProps = {
-  content: string;
+  data: SessionType;
 };
 
-const SessionContent = ({ content }: SessionContentProps) => (
-  <Typography variant="body1">{content}</Typography>
+const SessionContent = ({ data }: SessionContentProps) => (
+  <Typography variant="body1" mt={1}>
+    {data.content}
+  </Typography>
 );
 
 export default SessionContent;
