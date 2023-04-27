@@ -1,7 +1,4 @@
-type PertinentFactType = {
-  timelineId?: string;
-  createdOn: string;
-  title: string;
-  date: string;
-  content: string;
-};
+type PertinentFactType = Pick<
+  OccurrenceType,
+  '_id' | 'type' | 'title' | 'content' | 'createdOn' | 'timelineId'
+>;
