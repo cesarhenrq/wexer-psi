@@ -1,17 +1,45 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Typography, MenuItem, useTheme } from '@mui/material';
 import TimeLineItem from '../time-line-item';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import * as S from './styles';
 import TopButton from '../top-button';
+import { ServiceContext } from '../../contexts/ServiceContext';
+import { OccurrencesContext } from '../../contexts/OccurrencesContext';
+import useOccurrences from '../../hooks/use-occurrences';
+import { getOccurrences } from '../../services/occurrence';
 
 const PacientTimeLine = () => {
   const [selectedFilter, setSelectedFilter] = useState('all');
 
+  const { service } = useContext(ServiceContext);
+
+  const {
+    sessionOccurrences,
+    attachmentOccurrences,
+    pertinentFactOccurrences,
+    psychologicalAssessmentOccurrences,
+  } = useOccurrences();
+
+  const { occurrences, setOccurrences } = useContext(OccurrencesContext);
+
   const theme = useTheme();
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setSelectedFilter(event.target.value);
+  const handleChange = async (event: SelectChangeEvent) => {
+    const { value } = event.target;
+    if (value === 'session') {
+      setOccurrences(sessionOccurrences);
+    } else if (value === 'relevant_fact') {
+      setOccurrences(pertinentFactOccurrences);
+    } else if (value === 'attachment') {
+      setOccurrences(attachmentOccurrences);
+    } else if (value === 'assessment') {
+      setOccurrences(psychologicalAssessmentOccurrences);
+    } else {
+      const occurrences = await getOccurrences(service._id);
+      setOccurrences(occurrences);
+    }
+    setSelectedFilter(value);
   };
   return (
     <S.OutterBox theme={theme}>
@@ -25,20 +53,23 @@ const PacientTimeLine = () => {
           <MenuItem value="session">
             <b>Sessão</b>
           </MenuItem>
-          <MenuItem value="relevant-fact">
+          <MenuItem value="relevant_fact">
             <b>Fato Relevante</b>
           </MenuItem>
           <MenuItem value="attachment">
             <b>Anexo</b>
           </MenuItem>
-          <MenuItem value="psychological-assesment">
+          <MenuItem value="assessment">
             <b>Avialiação Psigológica</b>
           </MenuItem>
         </Select>
       </S.InnerBox>
+      <>
+        {occurrences.map((data, index) => (
+          <TimeLineItem data={data} key={index} index={index} />
+        ))}
+      </>
 
-      <TimeLineItem type="attachment" />
-      <TimeLineItem type="psychological-assessment" />
       <TopButton />
     </S.OutterBox>
   );
