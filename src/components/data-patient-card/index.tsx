@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import DataPatient from '../data-patient';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -6,11 +7,13 @@ import CalendarIcon from '../calendar-icon';
 import SuitcaseIcon from '../suitcase-icon';
 import BookMarkIcon from '../bookmark-icon';
 import * as S from './styles';
-import usePatientData from '../../hooks/use-patient-data';
 import formatDate from '../../utils/functions/format-date';
+import { PatientDataContext } from '../../contexts/PatientDataContext';
 
 const DataPatientCard = () => {
-  const { name, birthdate, profession, schooling } = usePatientData();
+  const {
+    patientData: { name, birthdate, profession, schooling },
+  } = useContext(PatientDataContext);
 
   return (
     <S.CardContainer>
