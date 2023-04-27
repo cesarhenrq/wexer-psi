@@ -1,5 +1,6 @@
 import { api } from './api';
 import { TOKEN_KEY } from '../utils/constants';
+import getToken from '../utils/functions/get-token';
 
 export const login = async (): Promise<string> => {
   try {
@@ -17,8 +18,7 @@ export const login = async (): Promise<string> => {
 
 export const getUserData = async (): Promise<UserType> => {
   try {
-    const token = localStorage.getItem(TOKEN_KEY);
-    if (!token) throw new Error('No token found');
+    const token = getToken();
     const result = await api.get('/user', {
       headers: { Authorization: token },
     });
