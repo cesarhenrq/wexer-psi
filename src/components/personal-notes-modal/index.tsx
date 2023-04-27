@@ -4,26 +4,12 @@ import ReactQuill from 'react-quill';
 import ModalBaseLayout from '../modal-base-layout';
 import 'react-quill/dist/quill.snow.css';
 import useQuill from '../../hooks/use-quill';
+import { MODULES } from '../../utils/constants';
 
 const PersonalNotesModal = () => {
   const { modalsState } = useContext(ModalContext);
   const { onSubmit, handleSubmit, onEditorStateChange, editorContent } =
-    useQuill({ field: 'personalNotes' });
-
-  const formats = [
-    ['bold', 'italic', 'underline', 'strike'],
-    [{ script: 'sub' }, { script: 'super' }],
-    [{ list: 'ordered' }, { list: 'bullet' }],
-    [{ indent: '-1' }, { indent: '+1' }],
-    ['align', { align: 'center' }, { align: 'right' }, { align: 'justify' }],
-    ['link'],
-  ];
-
-  const modules = {
-    toolbar: {
-      container: formats,
-    },
-  };
+    useQuill('personalAnnotations');
 
   return (
     <ModalBaseLayout
@@ -37,7 +23,7 @@ const PersonalNotesModal = () => {
         theme="snow"
         value={editorContent}
         onChange={onEditorStateChange}
-        modules={modules}
+        modules={MODULES}
       />
     </ModalBaseLayout>
   );
