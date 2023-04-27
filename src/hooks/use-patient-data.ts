@@ -37,7 +37,7 @@ const usePatientData = () => {
     fetchPatientData();
   }, []);
 
-  return patientData;
+  return { patientData, setPatientData };
 };
 
 export default usePatientData;
