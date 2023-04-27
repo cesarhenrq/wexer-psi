@@ -1,5 +1,6 @@
 import { Card, CardContent, Typography } from '@mui/material';
 import EditButton from '../edit-button';
+import removeHTMLTags from '../../utils/functions/remove-html-tags';
 import * as S from './styles';
 
 type GenericCardProps = {
@@ -16,7 +17,7 @@ const GenericCard = ({ title, content, modal }: GenericCardProps) => {
           <Typography variant="h6">{title}</Typography>
           <EditButton modal={modal} />
         </S.Title>
-        <Typography variant="body1"> {content}</Typography>
+        <Typography variant="body1"> {removeHTMLTags(content)}</Typography>
       </CardContent>
     </Card>
   );
