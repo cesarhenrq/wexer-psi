@@ -3,15 +3,18 @@ import { ModalContext } from '../../contexts/ModalContext';
 import { Modal, IconButton, Button, useTheme } from '@mui/material';
 import CloseIcon from '../close-icon';
 import * as S from './styles';
+import { SubmitingContext } from '../../contexts/SubmitingContext';
+import { EditingContext } from '../../contexts/EditingContext';
 
 type ModalBaseLayoutProps = {
   title: string;
   children: ReactNode;
   modalState: boolean;
   modal: ModalsStateKeys;
-  buttonTitle: 'Criar' | 'Prosseguir';
+  buttonTitle: 'Criar' | 'Prosseguir' | 'Editar';
   isFieldsRequired?: boolean;
   onSubmit?: (data: any) => void;
+  resetForm?: () => void;
 };
 
 const ModalBaseLayout = ({
@@ -22,8 +25,13 @@ const ModalBaseLayout = ({
   buttonTitle,
   isFieldsRequired,
   onSubmit,
+  resetForm,
 }: ModalBaseLayoutProps) => {
   const { setModalsState } = useContext(ModalContext);
+
+  const { isSubmiting } = useContext(SubmitingContext);
+
+  const { setIsEditing } = useContext(EditingContext);
 
   const theme = useTheme();
 
@@ -32,6 +40,8 @@ const ModalBaseLayout = ({
       ...prevValue,
       [key]: false,
     }));
+    resetForm && resetForm();
+    setIsEditing(false);
   };
 
   return (
@@ -67,6 +77,7 @@ const ModalBaseLayout = ({
                   size="large"
                   variant="contained"
                   type="submit"
+                  disabled={isSubmiting}
                 >
                   <S.ActionButtonTypography color="secondary.main">
                     {buttonTitle}
