@@ -6,6 +6,9 @@ import { ModalContext } from './contexts/ModalContext';
 import { ServicesContext } from './contexts/ServicesContext';
 import { ServiceContext } from './contexts/ServiceContext';
 import { OccurrencesContext } from './contexts/OccurrencesContext';
+import { OccurrenceContext } from './contexts/OccurrenceContext';
+import { EditingContext } from './contexts/EditingContext';
+import { SubmitingContext } from './contexts/SubmitingContext';
 import usePatientData from './hooks/use-patient-data';
 import useServices from './hooks/use-services';
 import useModal from './hooks/use-modal';
@@ -26,23 +29,44 @@ function App() {
 
   const [occurrences, setOccurrences] = useState<OccurrenceType[]>([]);
 
+  const [occurrence, setOccurrence] = useState<OccurrenceType>({
+    _id: '',
+    title: '',
+    type: 'session',
+    createdOn: '',
+  });
+
+  const [isEditing, setIsEditing] = useState(false);
+
+  const [isSubmiting, setIsSubmiting] = useState(false);
+
   return (
     <ThemeProvider theme={theme}>
       <ModalContext.Provider value={{ setModalsState, modalsState }}>
-        <PatientDataContext.Provider value={{ patientData, setPatientData }}>
-          <ServicesContext.Provider value={{ services, setServices }}>
-            <ServiceContext.Provider value={{ service, setService }}>
-              <OccurrencesContext.Provider
-                value={{ occurrences, setOccurrences }}
-              >
-                <div className="App">
-                  <Normalize />
-                  <Router />
-                </div>
-              </OccurrencesContext.Provider>
-            </ServiceContext.Provider>
-          </ServicesContext.Provider>
-        </PatientDataContext.Provider>
+        <EditingContext.Provider value={{ isEditing, setIsEditing }}>
+          <SubmitingContext.Provider value={{ isSubmiting, setIsSubmiting }}>
+            <PatientDataContext.Provider
+              value={{ patientData, setPatientData }}
+            >
+              <ServicesContext.Provider value={{ services, setServices }}>
+                <ServiceContext.Provider value={{ service, setService }}>
+                  <OccurrencesContext.Provider
+                    value={{ occurrences, setOccurrences }}
+                  >
+                    <OccurrenceContext.Provider
+                      value={{ occurrence, setOccurrence }}
+                    >
+                      <div className="App">
+                        <Normalize />
+                        <Router />
+                      </div>
+                    </OccurrenceContext.Provider>
+                  </OccurrencesContext.Provider>
+                </ServiceContext.Provider>
+              </ServicesContext.Provider>
+            </PatientDataContext.Provider>
+          </SubmitingContext.Provider>
+        </EditingContext.Provider>
       </ModalContext.Provider>
     </ThemeProvider>
   );
