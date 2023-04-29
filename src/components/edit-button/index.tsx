@@ -6,9 +6,10 @@ import { useTheme } from '@mui/material';
 
 type EditButtonProps = {
   modal: ModalsStateKeys;
+  isDisabled: boolean;
 };
 
-const EditButton = ({ modal }: EditButtonProps) => {
+const EditButton = ({ modal, isDisabled }: EditButtonProps) => {
   const { setModalsState } = useContext(ModalContext);
 
   const theme = useTheme();
@@ -21,7 +22,11 @@ const EditButton = ({ modal }: EditButtonProps) => {
   };
 
   return (
-    <Button onClick={() => handleClick(modal)} theme={theme}>
+    <Button
+      onClick={() => handleClick(modal)}
+      theme={theme}
+      disabled={isDisabled}
+    >
       <EditIcon />
     </Button>
   );
