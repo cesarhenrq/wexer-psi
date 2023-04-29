@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   Modal,
   useTheme,
@@ -18,6 +18,18 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import { useForm, DefaultValues } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from './schema';
+import { PatientDataContext } from '../../contexts/PatientDataContext';
+import {
+  createNewService,
+  editService,
+  getServices,
+} from '../../services/service';
+import { ServicesContext } from '../../contexts/ServicesContext';
+import { EditingContext } from '../../contexts/EditingContext';
+import { ServiceContext } from '../../contexts/ServiceContext';
+import { getPacientData, updatePacientData } from '../../services/pacient';
+import formatDate from '../../utils/functions/format-date';
+import { SubmitingContext } from '../../contexts/SubmitingContext';
 
 type ServiceModalFormType = {
   date: string;
@@ -34,11 +46,32 @@ const defaultValues: DefaultValues<ServiceModalFormType> = {
 const ServiceModal = () => {
   const theme = useTheme();
 
-  const [service, setService] = useState('default');
+  const [serv, setServ] = useState('');
+
+  const { services, setServices } = useContext(ServicesContext);
+
+  const { service } = useContext(ServiceContext);
+
+  const { isEditing } = useContext(EditingContext);
+
+  const { setPatientData } = useContext(PatientDataContext);
+
+  const {
+    modalsState: { isServiceModalOpen },
+    setModalsState,
+  } = useContext(ModalContext);
+
+  const {
+    patientData: { name },
+  } = useContext(PatientDataContext);
+
+  const { setIsSubmiting } = useContext(SubmitingContext);
 
   const {
     handleSubmit,
     register,
+    reset,
+    setValue,
     formState: { errors },
   } = useForm<ServiceModalFormType>({
     defaultValues,
@@ -46,35 +79,62 @@ const ServiceModal = () => {
     mode: 'onBlur',
   });
 
-  const onSubmit = (data: ServiceModalFormType) => {
-    console.log(data);
-  };
-
   const handleServiceSelectChange = async (
-    event: SelectChangeEvent<unknown>
+    event: SelectChangeEvent<string>
   ) => {
-    const selectedValue = event.target.value as string;
-    const eventObj = {
-      target: {
-        name: 'service',
-        value: selectedValue,
-      },
-      type: 'change',
-    };
-    await register('service').onChange(eventObj);
-    setService(selectedValue);
+    const selectedValue = event.target.value;
+    await setValue('service', selectedValue);
+    setServ(selectedValue);
   };
 
-  const {
-    modalsState: { isServiceModalOpen },
-    setModalsState,
-  } = useContext(ModalContext);
+  const resetForm = () => {
+    reset(defaultValues);
+  };
 
   const handleClose = () => {
     setModalsState((prevValue) => ({
       ...prevValue,
       isServiceModalOpen: false,
     }));
+    !isEditing && resetForm();
+  };
+
+  useEffect(() => {
+    async function fetchData() {
+      const selectedService = services.find((s) => s._id === service._id);
+      if (isEditing === true && selectedService) {
+        const { demands } = await getPacientData();
+        await setValue('service', selectedService.serviceName);
+        await setServ(selectedService.serviceName);
+        await setValue('goals', demands);
+        setValue('date', formatDate(selectedService.createdOn));
+      } else {
+        await setValue('service', '');
+        await setServ('');
+        await setValue('goals', '');
+        setValue('date', '');
+      }
+    }
+
+    fetchData();
+  }, [isEditing, service._id, services]);
+
+  const onSubmit = async (data: ServiceModalFormType) => {
+    await setIsSubmiting(true);
+    const selectedService = services.find((s) => s.serviceName === serv);
+    if (isEditing === true && selectedService) {
+      await editService(service._id, serv);
+    } else {
+      await createNewService(serv);
+    }
+    await updatePacientData('demands', data.goals);
+
+    const updatedServices = await getServices();
+    await setServices(updatedServices);
+
+    const patientData = await getPacientData();
+    await setPatientData(patientData);
+    setIsSubmiting(false);
   };
 
   return (
@@ -82,7 +142,7 @@ const ServiceModal = () => {
       <S.ModalBox theme={theme}>
         <S.TitleModalContainer theme={theme}>
           <S.TitleTypography variant="h5" color="primary.main">
-            Novo serviço
+            {isEditing ? 'Editar serviço' : 'Novo serviço'}
           </S.TitleTypography>
           <IconButton onClick={handleClose}>
             <CloseIcon />
@@ -90,7 +150,7 @@ const ServiceModal = () => {
         </S.TitleModalContainer>
         <Typography color="primary.main">Paciente</Typography>
         <Typography variant="h6" mb={2} color="secondary.dark">
-          Ana Ester Resende
+          {name}
         </Typography>
         <Typography color="primary.main">CPF</Typography>
         <Typography variant="h6" mb={2} color="secondary.dark">
@@ -118,14 +178,15 @@ const ServiceModal = () => {
                   <Typography variant="caption">Serviço*</Typography>
                 </InputLabel>
                 <Select
-                  value={service}
+                  value={serv}
                   onChange={handleServiceSelectChange}
                   error={!!errors.service}
                 >
-                  <MenuItem value="default" disabled>
+                  <MenuItem value="" disabled>
                     Selecione uma opção
                   </MenuItem>
-                  <MenuItem value="carrying-weapon">Porte de arma</MenuItem>
+                  <MenuItem value="Porte de arma">Porte de arma</MenuItem>
+                  <MenuItem value="Atestado">Atestado</MenuItem>
                 </Select>
               </FormGroup>
             </Grid>
