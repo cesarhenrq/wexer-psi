@@ -2,12 +2,11 @@ import { useForm } from 'react-hook-form';
 import { useContext, useEffect } from 'react';
 import { updatePacientData } from '../services/pacient';
 import { PatientDataContext } from '../contexts/PatientDataContext';
+import { SubmitingContext } from '../contexts/SubmitingContext';
 
-type FieldType = 'demands' | 'personalAnnotations' | 'observation';
-
-const useQuill = (field: FieldType) => {
+const useQuill = () => {
   const { register, handleSubmit, setValue, watch } = useForm<{
-    [key in FieldType]: string;
+    personalAnnotations: string;
   }>();
 
   const {
@@ -15,32 +14,28 @@ const useQuill = (field: FieldType) => {
     setPatientData,
   } = useContext(PatientDataContext);
 
+  const { setIsSubmiting } = useContext(SubmitingContext);
+
   useEffect(() => {
-    switch (field) {
-      case 'demands':
-        setValue(field, demands);
-        break;
-      case 'personalAnnotations':
-        setValue(field, personalAnnotations);
-        break;
-      default:
-        break;
-    }
-    register(field, { required: true });
-  }, [register, field, setValue, demands, personalAnnotations]);
+    setValue('personalAnnotations', personalAnnotations);
+
+    register('personalAnnotations', { required: true });
+  }, [register, setValue, demands, personalAnnotations]);
 
   const onEditorStateChange = (editorState: string) => {
-    setValue(field, editorState);
+    setValue('personalAnnotations', editorState);
   };
 
-  const editorContent = watch(field);
+  const editorContent = watch('personalAnnotations');
 
-  const onSubmit = (data: { [key in FieldType]: string }) => {
-    updatePacientData(field, data[field]);
+  const onSubmit = (data: { personalAnnotations: string }) => {
+    setIsSubmiting(true);
+    updatePacientData('personalAnnotations', data.personalAnnotations);
     setPatientData((prevPatientData) => ({
       ...prevPatientData,
-      [field]: data[field],
+      personalAnnotations: data.personalAnnotations,
     }));
+    setIsSubmiting(false);
   };
 
   return { onSubmit, handleSubmit, onEditorStateChange, editorContent };
