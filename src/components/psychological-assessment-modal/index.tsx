@@ -29,6 +29,7 @@ const PsychologicalAssessmentModal = () => {
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors },
   } = useForm<PsychologicalAssessmentFormType>({
     defaultValues,
@@ -40,6 +41,10 @@ const PsychologicalAssessmentModal = () => {
     return data;
   };
 
+  const resetForm = () => {
+    reset(defaultValues);
+  };
+
   return (
     <ModalBaseLayout
       title="Nova Avaliação Psicológica"
@@ -48,6 +53,7 @@ const PsychologicalAssessmentModal = () => {
       buttonTitle="Prosseguir"
       isFieldsRequired={true}
       onSubmit={handleSubmit(onSubmit)}
+      resetForm={resetForm}
     >
       <Grid container spacing={2} sx={{ mb: 3 }}>
         <Grid item xs={12} sm={3}>
