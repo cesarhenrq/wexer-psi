@@ -37,6 +37,24 @@ export const createNewService = async (serviceName: string): Promise<void> => {
   }
 };
 
+export const editService = async (
+  serviceId: string,
+  serviceName: string
+): Promise<void> => {
+  try {
+    const token = getToken();
+    await api.put(
+      `/timeline/${serviceId}`,
+      { serviceName },
+      {
+        headers: { Authorization: token },
+      }
+    );
+  } catch (error) {
+    throw new Error('Failed to delete service');
+  }
+};
+
 export const deleteService = async (serviceId: string): Promise<void> => {
   try {
     const token = getToken();
