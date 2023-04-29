@@ -6,7 +6,6 @@ const useModal = () => {
     isPertinentFactModalOpen: false,
     isAttachmentModalOpen: false,
     isPsychologicalAssessmentModalOpen: false,
-    isGoalsRequirementsModalOpen: false,
     isPersonalNotesModalOpen: false,
     isDeleteModalOpen: false,
     isServiceModalOpen: false,
