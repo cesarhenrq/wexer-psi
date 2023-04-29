@@ -12,8 +12,12 @@ import {
   TextField,
 } from '@mui/material';
 import { ModalContext } from '../../contexts/ModalContext';
+import { ServiceContext } from '../../contexts/ServiceContext';
+import { OccurrencesContext } from '../../contexts/OccurrencesContext';
+import { postOccurrence, getOccurrences } from '../../services/occurrence';
 import ModalBaseLayout from '../modal-base-layout';
 import * as S from './styles';
+import { SubmitingContext } from '../../contexts/SubmitingContext';
 
 type AttachmentModalFormType = {
   date: string;
@@ -30,18 +34,29 @@ const defaultValues: DefaultValues<AttachmentModalFormType> = {
 const AttachmentModal = () => {
   const { modalsState } = useContext(ModalContext);
 
-  const [fileName, setFileName] = useState('');
+  const { service } = useContext(ServiceContext);
+
+  const { setOccurrences } = useContext(OccurrencesContext);
+
+  const { setIsSubmiting } = useContext(SubmitingContext);
+
+  const [files, setFiles] = useState<{ name: string; size: number }[]>([]);
 
   const theme = useTheme();
 
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
-    setFileName(files ? files[0].name : '');
+    const fileList = Array.from(files).map((file) => ({
+      name: file.name,
+      size: file.size,
+    }));
+    setFiles(fileList);
   };
 
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors },
   } = useForm<AttachmentModalFormType>({
     defaultValues,
@@ -49,7 +64,39 @@ const AttachmentModal = () => {
     mode: 'onBlur',
   });
 
-  const onSubmit = (data: AttachmentModalFormType) => data;
+  const onSubmit = async (data: AttachmentModalFormType) => {
+    setIsSubmiting(true);
+    await postOccurrence({
+      type: 'attachment',
+      timelineId: service._id,
+      title: data.title,
+      content: data.description,
+      files: files,
+    });
+    const occurrences = await getOccurrences(service._id);
+    setOccurrences(occurrences);
+    setIsSubmiting(false);
+  };
+
+  const handleFileButtonClick = () => {
+    document.getElementById('attachment-input')?.click();
+  };
+
+  const resetForm = () => {
+    reset(defaultValues);
+    setFiles([]);
+  };
+
+  const handleError = (name: keyof Partial<AttachmentModalFormType>) => {
+    return (
+      errors &&
+      errors[name] && (
+        <Typography variant="body2" color="error">
+          {errors[name].message}
+        </Typography>
+      )
+    );
+  };
 
   return (
     <ModalBaseLayout
@@ -59,6 +106,7 @@ const AttachmentModal = () => {
       buttonTitle="Criar"
       isFieldsRequired={true}
       onSubmit={handleSubmit(onSubmit)}
+      resetForm={resetForm}
     >
       <Grid container spacing={2} sx={{ mb: 3 }}>
         <Grid item xs={12} sm={3}>
@@ -72,6 +120,7 @@ const AttachmentModal = () => {
               {...register('date')}
               error={!!errors.date}
             />
+            {handleError('date')}
           </FormGroup>
         </Grid>
         <Grid item xs={12} sm={9}>
@@ -85,6 +134,7 @@ const AttachmentModal = () => {
               {...register('title')}
               error={!!errors.title}
             />
+            {handleError('title')}
           </FormGroup>
         </Grid>
         <Grid item xs={12}>
@@ -101,6 +151,7 @@ const AttachmentModal = () => {
                 {...register('description')}
                 error={!!errors.description}
               />
+              {handleError('description')}
             </FormGroup>
           </Box>
         </Grid>
@@ -110,12 +161,16 @@ const AttachmentModal = () => {
               <Typography variant="caption">Anexar arquivos*</Typography>
             </InputLabel>
             <S.ButtonContainer>
-              <S.InputFileButton variant="contained" theme={theme}>
+              <S.InputFileButton
+                variant="contained"
+                theme={theme}
+                onClick={handleFileButtonClick}
+              >
                 <input
                   id="attachment-input"
-                  hidden
-                  accept="image/*"
+                  accept="application/pdf"
                   multiple
+                  hidden
                   type="file"
                   onChange={handleFileUpload}
                 />
@@ -123,9 +178,13 @@ const AttachmentModal = () => {
                   Escolher arquivos...
                 </Typography>
               </S.InputFileButton>
-              <Typography color="secondary.dark" variant="subtitle1">
-                {fileName}
-              </Typography>
+              {files.map((file, index) => (
+                <div style={{ flex: 1 }} key={index}>
+                  <Typography color="secondary.dark" variant="subtitle1">
+                    {file.name}
+                  </Typography>
+                </div>
+              ))}
             </S.ButtonContainer>
           </FormGroup>
         </Grid>
@@ -135,3 +194,4 @@ const AttachmentModal = () => {
 };
 
 export default AttachmentModal;
+//
