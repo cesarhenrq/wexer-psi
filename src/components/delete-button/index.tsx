@@ -4,7 +4,11 @@ import { Button } from './styles';
 import { useTheme } from '@mui/material';
 import DeleteIcon from '../delete-icon';
 
-const DeleteButton = () => {
+type DeleteButtonProps = {
+  isDisabled: boolean;
+};
+
+const DeleteButton = ({ isDisabled }: DeleteButtonProps) => {
   const { setModalsState } = useContext(ModalContext);
 
   const theme = useTheme();
@@ -17,7 +21,7 @@ const DeleteButton = () => {
   };
 
   return (
-    <Button onClick={handleDeleteClick} theme={theme}>
+    <Button onClick={handleDeleteClick} theme={theme} disabled={isDisabled}>
       <DeleteIcon />
     </Button>
   );

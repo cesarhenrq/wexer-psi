@@ -13,4 +13,10 @@ export const Button = styled.button`
   box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.15);
   border-radius: 8px;
   cursor: pointer;
+
+  &:hover {
+    background-color: ${(props) => props.theme.palette.error.main};
+    border-color: ${(props) => props.theme.palette.error.dark};
+    color: #ffffff;
+  }
 `;
