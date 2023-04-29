@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Card, CardContent, Menu, MenuItem, Typography } from '@mui/material';
 import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material';
 import SessionContent from '../session-content';
@@ -10,35 +10,38 @@ import MenuEditIcon from '../menu-edit-icon';
 import MenuDeleteIcon from '../menu-delete-icon';
 import MenuExportIcon from '../menu-export-icon';
 import PsychologicalAssessmentContent from '../psychological-assessment-content';
-
-type TimeLineItemType =
-  | 'session'
-  | 'attachment'
-  | 'pertinent-fact'
-  | 'psychological-assessment';
+import changeDate from '../../utils/functions/change-date';
+import { deleteOccurrence, getOccurrences } from '../../services/occurrence';
+import { ServiceContext } from '../../contexts/ServiceContext';
+import { OccurrencesContext } from '../../contexts/OccurrencesContext';
+import { EditingContext } from '../../contexts/EditingContext';
+import { ModalContext } from '../../contexts/ModalContext';
+import { OccurrenceContext } from '../../contexts/OccurrenceContext';
 
 type TimeLineItemProps = {
-  type: TimeLineItemType;
+  data:
+    | SessionType
+    | PertinentFactType
+    | AttachmentType
+    | PsychologicalAssessmentType;
+  index: number;
 };
 
-const TimeLineItem = ({ type }: TimeLineItemProps) => {
-  const handleColor = () => {
-    switch (type) {
-      case 'session':
-        return '#00995D';
-      case 'attachment':
-        return '#9D28AC';
-      case 'pertinent-fact':
-        return '#2F80ED';
-      case 'psychological-assessment':
-        return '#EA1E61';
-      default:
-        return '#00995D';
-    }
-  };
-
+const TimeLineItem = ({ data, index }: TimeLineItemProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+
   const open = Boolean(anchorEl);
+
+  const { service } = useContext(ServiceContext);
+
+  const { setOccurrences } = useContext(OccurrencesContext);
+
+  const { setOccurrence } = useContext(OccurrenceContext);
+
+  const { setIsEditing } = useContext(EditingContext);
+
+  const { setModalsState } = useContext(ModalContext);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -46,16 +49,53 @@ const TimeLineItem = ({ type }: TimeLineItemProps) => {
     setAnchorEl(null);
   };
 
+  const handleDelete = async () => {
+    await deleteOccurrence(service._id, data._id);
+    const occurrences = await getOccurrences(service._id);
+    setOccurrences(occurrences);
+  };
+
+  const handleEdit = async (type: TimeLineItemType) => {
+    setIsEditing(true);
+    setOccurrence(data);
+    if (type === 'session') {
+      setModalsState((prevState) => ({
+        ...prevState,
+        isSessionModalOpen: true,
+      }));
+    } else if (type === 'relevant_fact') {
+      setModalsState((prevState) => ({
+        ...prevState,
+        isPertinentFactModalOpen: true,
+      }));
+    }
+  };
+
   const renderContent = () => {
-    switch (type) {
+    switch (data.type) {
       case 'session':
-        return <SessionContent content="it works" />;
+        return <SessionContent data={data} />;
       case 'attachment':
-        return <AttachmentContent text="text" numberOfAttachments={2} />;
-      case 'pertinent-fact':
-        return <PertinentFactContent content="it works 3!" />;
-      case 'psychological-assessment':
+        return <AttachmentContent data={data} />;
+      case 'relevant_fact':
+        return <PertinentFactContent data={data} />;
+      case 'assessment':
         return <PsychologicalAssessmentContent />;
+      default:
+        return '#00995D';
+    }
+  };
+
+  const handleColor = () => {
+    switch (data.type) {
+      case 'session':
+        return '#00995D';
+      case 'attachment':
+        return '#9D28AC';
+      case 'relevant_fact':
+        return '#2F80ED';
+      case 'assessment':
+        return '#EA1E61';
       default:
         return '#00995D';
     }
@@ -63,7 +103,7 @@ const TimeLineItem = ({ type }: TimeLineItemProps) => {
 
   return (
     <S.TimeLineItemContainer>
-      <VerticalDivider color={handleColor()} type={type} />
+      <VerticalDivider color={handleColor()} type={data.type} index={index} />
       <Card sx={{ borderLeft: `4px solid ${handleColor()}`, pt: 2 }}>
         <CardContent>
           <Typography
@@ -74,7 +114,7 @@ const TimeLineItem = ({ type }: TimeLineItemProps) => {
               justifyContent: 'space-between',
             }}
           >
-            Sessão 02
+            {data.title}
             <S.MoreButton onClick={handleClick}>
               <MoreHorizIcon />
             </S.MoreButton>
@@ -91,13 +131,13 @@ const TimeLineItem = ({ type }: TimeLineItemProps) => {
                 horizontal: 'right',
               }}
             >
-              <MenuItem onClick={handleClose}>
+              <MenuItem onClick={() => handleEdit(data.type)}>
                 <MenuEditIcon />{' '}
                 <Typography ml={1} color="info.main">
                   Editar
                 </Typography>
               </MenuItem>
-              <MenuItem onClick={handleClose}>
+              <MenuItem onClick={handleDelete}>
                 <MenuDeleteIcon />{' '}
                 <Typography ml={1} color="error.main">
                   Excluir
@@ -112,7 +152,7 @@ const TimeLineItem = ({ type }: TimeLineItemProps) => {
             </Menu>
           </Typography>
           <Typography variant="caption" color="secondary.dark">
-            22 de setembro de 2022
+            {changeDate(data.createdOn)}
           </Typography>
           {renderContent()}
         </CardContent>
