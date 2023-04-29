@@ -3,32 +3,30 @@ import * as S from './styles';
 import PdfIcon from '../pdf-icon';
 
 type AttachmentContentProps = {
-  text: string;
-  numberOfAttachments: number;
+  data: AttachmentType;
 };
 
-const AttachmentContent = ({
-  text,
-  numberOfAttachments,
-}: AttachmentContentProps) => {
+const AttachmentContent = ({ data }: AttachmentContentProps) => {
   const theme = useTheme();
-  const filePath = 'caminho_do_arquivo.pdf';
-  const fileSize = '233 KB';
 
   return (
     <Box>
       <S.TextTypography variant="body1" theme={theme}>
-        {text}
+        {data.content}
       </S.TextTypography>
       <S.AttachmentTypography variant="caption" theme={theme}>
-        {`${numberOfAttachments} Anexos`}
+        {`${data.files ? data.files.length : 0} Anexos`}
       </S.AttachmentTypography>
-      <S.FileLink href={filePath} download theme={theme}>
-        <PdfIcon />
-        <S.FileNameTypography variant="subtitle2" theme={theme}>
-          {`${filePath} (${fileSize})`}
-        </S.FileNameTypography>
-      </S.FileLink>
+      {data.files
+        ? data.files.map((file, index) => (
+            <S.FileLink href={file.name} download theme={theme} key={index}>
+              <PdfIcon />
+              <S.FileNameTypography variant="subtitle2" theme={theme}>
+                {`${file.name} (${file.size})`}
+              </S.FileNameTypography>
+            </S.FileLink>
+          ))
+        : null}
     </Box>
   );
 };
