@@ -9,7 +9,7 @@ import { MODULES } from '../../utils/constants';
 const PersonalNotesModal = () => {
   const { modalsState } = useContext(ModalContext);
   const { onSubmit, handleSubmit, onEditorStateChange, editorContent } =
-    useQuill('personalAnnotations');
+    useQuill();
 
   return (
     <ModalBaseLayout
