@@ -1,4 +1,3 @@
-import GoalsRequirementsModal from '../../components/goals-requirements-modal';
 import PersonalNotesModal from '../../components/personal-notes-modal';
 import SessionModal from '../../components/session-modal';
 import AttachmentModal from '../../components/attachment-modal';
@@ -13,7 +12,6 @@ const Modals = () => (
     <PertinentFactModal />
     <AttachmentModal />
     <PsychologicalAssessmentModal />
-    <GoalsRequirementsModal />
     <PersonalNotesModal />
     <DeleteModal />
     <ServiceModal />
