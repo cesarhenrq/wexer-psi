@@ -2,33 +2,13 @@ import { useTheme, InputLabel, FormGroup, Grid } from '@mui/material';
 import ReactQuill from 'react-quill';
 import * as S from './styles';
 import useQuill from '../../hooks/use-quill';
+import { MODULES } from '../../utils/constants';
 
 const BehavioralObservation = () => {
   const theme = useTheme();
 
   const { onSubmit, handleSubmit, onEditorStateChange, editorContent } =
-    useQuill({ field: 'observation' });
-
-  const formats = [
-    ['bold', 'italic', 'underline', 'strike'],
-    [{ script: 'sub' }, { script: 'super' }],
-    [{ list: 'ordered' }, { list: 'bullet' }],
-    [{ indent: '-1' }, { indent: '+1' }],
-    [
-      { align: 'left' },
-      { align: 'center' },
-      { align: 'right' },
-      { align: 'justify' },
-    ],
-    ['align'],
-    ['link'],
-  ];
-
-  const modules = {
-    toolbar: {
-      container: formats,
-    },
-  };
+    useQuill('observation');
 
   return (
     <S.OutterBox theme={theme}>
@@ -61,7 +41,7 @@ const BehavioralObservation = () => {
                 theme="snow"
                 value={editorContent}
                 onChange={onEditorStateChange}
-                modules={modules}
+                modules={MODULES}
               />
             </FormGroup>
           </S.TextGrid>
