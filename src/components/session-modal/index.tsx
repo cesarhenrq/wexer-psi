@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useForm, DefaultValues } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from './schema';
@@ -22,6 +22,17 @@ import ModalBaseLayout from '../modal-base-layout';
 import Circle from '../circle';
 import GroupLabelContainer from '../form-label-group-container';
 import * as S from './styles';
+import {
+  postOccurrence,
+  getOccurrences,
+  editOccurrence,
+} from '../../services/occurrence';
+import { ServiceContext } from '../../contexts/ServiceContext';
+import { OccurrencesContext } from '../../contexts/OccurrencesContext';
+import { SubmitingContext } from '../../contexts/SubmitingContext';
+import { EditingContext } from '../../contexts/EditingContext';
+import formatDate from '../../utils/functions/format-date';
+import { OccurrenceContext } from '../../contexts/OccurrenceContext';
 
 type SessionFormType = {
   date: string;
@@ -29,7 +40,7 @@ type SessionFormType = {
   finalHour: string;
   title: string;
   sessionResume: string;
-  price: string;
+  price: number;
   paymentMethod: string;
   paymentStatus: string;
 };
@@ -40,13 +51,23 @@ const defaultValues: DefaultValues<SessionFormType> = {
   finalHour: '',
   title: '',
   sessionResume: '',
-  price: '',
+  price: 0,
   paymentMethod: '',
   paymentStatus: '',
 };
 
 const SessionModal = () => {
   const { modalsState } = useContext(ModalContext);
+
+  const { service } = useContext(ServiceContext);
+
+  const { setOccurrences } = useContext(OccurrencesContext);
+
+  const { occurrence } = useContext(OccurrenceContext);
+
+  const { setIsSubmiting } = useContext(SubmitingContext);
+
+  const { isEditing } = useContext(EditingContext);
 
   const [paymentMethod, setPaymentMethod] = useState('pix');
 
@@ -55,12 +76,33 @@ const SessionModal = () => {
   const {
     handleSubmit,
     register,
+    setValue,
+    reset,
     formState: { errors },
   } = useForm<SessionFormType>({
     defaultValues,
     resolver: yupResolver(schema),
     mode: 'onBlur',
   });
+
+  useEffect(() => {
+    const setFormData = () => {
+      setValue('title', occurrence.title);
+      setValue('date', formatDate(occurrence.createdOn));
+      occurrence.content && setValue('sessionResume', occurrence.content);
+      if (occurrence.payment) {
+        occurrence.payment.value && setValue('price', occurrence.payment.value);
+        occurrence.payment.method &&
+          setValue('paymentMethod', occurrence.payment.method);
+        occurrence.payment.status &&
+          setValue('paymentStatus', occurrence.payment.status);
+      }
+    };
+
+    if (isEditing) {
+      setFormData();
+    }
+  }, [isEditing]);
 
   const handlePaymentMethodSelectChange = async (
     event: SelectChangeEvent<unknown>
@@ -77,18 +119,58 @@ const SessionModal = () => {
     setPaymentMethod(selectedValue);
   };
 
-  const onSubmit = (data: SessionFormType) => {
-    console.log(data);
+  const onSubmit = async (data: SessionFormType) => {
+    setIsSubmiting(true);
+    isEditing
+      ? await editOccurrence(
+          {
+            title: data.title,
+            content: data.sessionResume,
+            payment: {
+              value: data.price,
+              method: data.paymentMethod,
+              status: data.paymentStatus,
+            },
+          },
+          occurrence._id
+        )
+      : await postOccurrence({
+          type: 'session',
+          timelineId: service._id,
+          title: data.title,
+          content: data.sessionResume,
+          payment: {
+            value: data.price,
+            method: data.paymentMethod,
+            status: data.paymentStatus,
+          },
+        });
+    const occurrences = await getOccurrences(service._id);
+    setOccurrences(occurrences);
+    setIsSubmiting(false);
+  };
+
+  const resetForm = () => {
+    reset(defaultValues);
+  };
+
+  const handleError = (name: keyof Partial<SessionFormType>) => {
+    return errors && errors[name] ? (
+      <Typography variant="body2" color="error">
+        {errors[name].message}
+      </Typography>
+    ) : null;
   };
 
   return (
     <ModalBaseLayout
-      title="Nova Sessão"
+      title={`${isEditing ? 'Editar' : 'Nova'} Sessão`}
       modalState={modalsState.isSessionModalOpen}
       modal="isSessionModalOpen"
-      buttonTitle="Criar"
+      buttonTitle={isEditing ? 'Editar' : 'Criar'}
       isFieldsRequired={true}
       onSubmit={handleSubmit(onSubmit)}
+      resetForm={resetForm}
     >
       <S.OutterBox>
         <GroupLabelContainer>
@@ -108,6 +190,7 @@ const SessionModal = () => {
                 {...register('date')}
                 error={Boolean(errors.date)}
               />
+              {handleError('date')}
             </FormGroup>
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -120,6 +203,7 @@ const SessionModal = () => {
                 {...register('initialHour')}
                 error={Boolean(errors.initialHour)}
               />
+              {handleError('initialHour')}
             </FormGroup>
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -132,6 +216,7 @@ const SessionModal = () => {
                 {...register('finalHour')}
                 error={Boolean(errors.finalHour)}
               />
+              {handleError('finalHour')}
             </FormGroup>
           </Grid>
         </Grid>
@@ -153,6 +238,7 @@ const SessionModal = () => {
                 {...register('title')}
                 error={Boolean(errors.title)}
               />
+              {handleError('title')}
             </FormGroup>
           </Grid>
           <Grid item xs={12}>
@@ -169,6 +255,7 @@ const SessionModal = () => {
                   {...register('sessionResume')}
                   error={Boolean(errors.sessionResume)}
                 />
+                {handleError('sessionResume')}
               </FormGroup>
             </Box>
           </Grid>
@@ -188,6 +275,7 @@ const SessionModal = () => {
               </InputLabel>
               <TextField
                 id="price-input"
+                type="number"
                 {...register('price')}
                 error={Boolean(errors.price)}
               />
@@ -216,16 +304,15 @@ const SessionModal = () => {
               <RadioGroup
                 row
                 id="payment-status-input"
-                defaultValue="notPayed"
                 {...register('paymentStatus')}
               >
                 <FormControlLabel
-                  value="payed"
+                  value="Pago"
                   control={<Radio />}
                   label="Pago"
                 />
                 <FormControlLabel
-                  value="notPayed"
+                  value="Não pago"
                   control={<Radio />}
                   label="Não pago"
                 />

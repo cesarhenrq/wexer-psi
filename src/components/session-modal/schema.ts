@@ -10,21 +10,21 @@ export const schema = yup.object().shape({
     ),
   initialHour: yup
     .string()
-    .required()
+    .required('Hora inicial é obrigatória')
     .matches(
       /^([01]\d|2[0-3]):([0-5]\d)$/,
       'Hora inválida, use o formato hh:mm'
     ),
   finalHour: yup
     .string()
-    .required()
+    .required('Hora final é obrigatória')
     .matches(
       /^([01]\d|2[0-3]):([0-5]\d)$/,
       'Hora inválida, use o formato hh:mm'
     ),
-  title: yup.string().required(),
-  sessionResume: yup.string().required(),
-  price: yup.string(),
+  title: yup.string().required('O título é obrigatório'),
+  sessionResume: yup.string().required('Resumo da sessão é obrigatório'),
+  price: yup.number(),
   paymentMethod: yup.string(),
   paymentStatus: yup.string(),
 });
