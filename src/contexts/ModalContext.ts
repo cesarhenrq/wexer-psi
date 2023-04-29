@@ -1,19 +1,18 @@
 import { createContext, Dispatch, SetStateAction } from 'react';
 
-type ModalType = {
+type ModalsStateType = {
   isSessionModalOpen: boolean;
   isPertinentFactModalOpen: boolean;
   isAttachmentModalOpen: boolean;
   isPsychologicalAssessmentModalOpen: boolean;
-  isGoalsRequirementsModalOpen: boolean;
   isPersonalNotesModalOpen: boolean;
   isDeleteModalOpen: boolean;
   isServiceModalOpen: boolean;
 };
 
 type ModalContextType = {
-  modalsState: ModalType;
-  setModalsState: Dispatch<SetStateAction<ModalType>>;
+  modalsState: ModalsStateType;
+  setModalsState: Dispatch<SetStateAction<ModalsStateType>>;
 };
 
 export const ModalContext = createContext<ModalContextType>({
@@ -22,7 +21,6 @@ export const ModalContext = createContext<ModalContextType>({
     isPertinentFactModalOpen: false,
     isAttachmentModalOpen: false,
     isPsychologicalAssessmentModalOpen: false,
-    isGoalsRequirementsModalOpen: false,
     isPersonalNotesModalOpen: false,
     isDeleteModalOpen: false,
     isServiceModalOpen: false,
