@@ -9,5 +9,5 @@ export const schema = yup.object().shape({
       'Data inválida, use o formato dd/mm/yyyy'
     ),
   service: yup.string().required('Serviço é obrigatório'),
-  goals: yup.string().required(),
+  goals: yup.string().required('Demandas e objetivos são obrigatórias'),
 });
