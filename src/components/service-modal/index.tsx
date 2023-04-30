@@ -102,7 +102,7 @@ const ServiceModal = () => {
   useEffect(() => {
     async function fetchData() {
       const selectedService = services.find((s) => s._id === service._id);
-      if (isEditing === true && selectedService) {
+      if (isEditing && selectedService) {
         const { demands } = await getPacientData();
         await setValue('service', selectedService.serviceName);
         await setServ(selectedService.serviceName);
@@ -168,6 +168,7 @@ const ServiceModal = () => {
                   placeholder="14/06/2021"
                   {...register('date')}
                   error={!!errors.date}
+                  disabled={isEditing}
                 />
               </FormGroup>
             </Grid>
