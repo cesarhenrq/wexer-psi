@@ -1,4 +1,4 @@
-import { useContext, useState, ChangeEvent } from 'react';
+import { useContext, useState, ChangeEvent, useEffect } from 'react';
 import { useForm, DefaultValues } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from './schema';
@@ -14,21 +14,30 @@ import {
 import { ModalContext } from '../../contexts/ModalContext';
 import { ServiceContext } from '../../contexts/ServiceContext';
 import { OccurrencesContext } from '../../contexts/OccurrencesContext';
-import { postOccurrence, getOccurrences } from '../../services/occurrence';
+import {
+  postOccurrence,
+  getOccurrences,
+  editOccurrence,
+} from '../../services/occurrence';
 import ModalBaseLayout from '../modal-base-layout';
 import * as S from './styles';
 import { SubmitingContext } from '../../contexts/SubmitingContext';
+import { EditingContext } from '../../contexts/EditingContext';
+import { OccurrenceContext } from '../../contexts/OccurrenceContext';
+import formatDate from '../../utils/functions/format-date';
 
 type AttachmentModalFormType = {
   date: string;
   title: string;
   description: string;
+  files: { filename: string; filesize: number }[];
 };
 
 const defaultValues: DefaultValues<AttachmentModalFormType> = {
   date: '',
   title: '',
   description: '',
+  files: [],
 };
 
 const AttachmentModal = () => {
@@ -38,24 +47,22 @@ const AttachmentModal = () => {
 
   const { setOccurrences } = useContext(OccurrencesContext);
 
+  const { occurrence } = useContext(OccurrenceContext);
+
   const { setIsSubmiting } = useContext(SubmitingContext);
 
-  const [files, setFiles] = useState<{ name: string; size: number }[]>([]);
+  const { isEditing } = useContext(EditingContext);
+
+  const [files, setFiles] = useState<{ filename: string; filesize: number }[]>(
+    []
+  );
 
   const theme = useTheme();
-
-  const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    const fileList = Array.from(files).map((file) => ({
-      name: file.name,
-      size: file.size,
-    }));
-    setFiles(fileList);
-  };
 
   const {
     handleSubmit,
     register,
+    setValue,
     reset,
     formState: { errors },
   } = useForm<AttachmentModalFormType>({
@@ -64,15 +71,50 @@ const AttachmentModal = () => {
     mode: 'onBlur',
   });
 
+  useEffect(() => {
+    const setFormData = () => {
+      setValue('title', occurrence.title);
+      setValue('date', formatDate(occurrence.createdOn));
+      occurrence.content && setValue('description', occurrence.content);
+      if (occurrence.files) {
+        setValue('files', occurrence.files);
+        setFiles(occurrence.files);
+      }
+    };
+
+    if (isEditing) {
+      setFormData();
+    }
+  }, [isEditing, occurrence]);
+
+  const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    const fileList = Array.from(files).map((file) => ({
+      filename: file.name,
+      filesize: file.size,
+    }));
+    setFiles(fileList);
+    setValue('files', fileList);
+  };
+
   const onSubmit = async (data: AttachmentModalFormType) => {
     setIsSubmiting(true);
-    await postOccurrence({
-      type: 'attachment',
-      timelineId: service._id,
-      title: data.title,
-      content: data.description,
-      files: files,
-    });
+    isEditing
+      ? await editOccurrence(
+          {
+            title: data.title,
+            content: data.description,
+            files: files,
+          },
+          occurrence._id
+        )
+      : await postOccurrence({
+          type: 'attachment',
+          timelineId: service._id,
+          title: data.title,
+          content: data.description,
+          files: files,
+        });
     const occurrences = await getOccurrences(service._id);
     setOccurrences(occurrences);
     setIsSubmiting(false);
@@ -100,10 +142,10 @@ const AttachmentModal = () => {
 
   return (
     <ModalBaseLayout
-      title="Novo Anexo"
+      title={`${isEditing ? 'Editar' : 'Novo'} Anexo`}
       modalState={modalsState.isAttachmentModalOpen}
       modal="isAttachmentModalOpen"
-      buttonTitle="Criar"
+      buttonTitle={isEditing ? 'Editar' : 'Criar'}
       isFieldsRequired={true}
       onSubmit={handleSubmit(onSubmit)}
       resetForm={resetForm}
@@ -119,6 +161,7 @@ const AttachmentModal = () => {
               id="date-input"
               {...register('date')}
               error={!!errors.date}
+              disabled={isEditing}
             />
             {handleError('date')}
           </FormGroup>
@@ -178,14 +221,15 @@ const AttachmentModal = () => {
                   Escolher arquivos...
                 </Typography>
               </S.InputFileButton>
-              {files.map((file, index) => (
-                <div style={{ flex: 1 }} key={index}>
-                  <Typography color="secondary.dark" variant="subtitle1">
-                    {file.name}
-                  </Typography>
-                </div>
-              ))}
             </S.ButtonContainer>
+            {files.map((file, index) => (
+              <div style={{ flex: 1 }} key={index}>
+                <Typography color="secondary.dark" variant="subtitle1">
+                  {file.filename}
+                </Typography>
+              </div>
+            ))}
+            {handleError('files')}
           </FormGroup>
         </Grid>
       </Grid>

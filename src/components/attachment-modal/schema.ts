@@ -10,4 +10,5 @@ export const schema = yup.object().shape({
     ),
   title: yup.string().required('Título é obrigatório'),
   description: yup.string().required('Descrição é obrigatória'),
+  files: yup.array().min(1, 'Ao menos um arquivo é necessário'),
 });
