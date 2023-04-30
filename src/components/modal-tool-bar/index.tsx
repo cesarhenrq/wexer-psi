@@ -26,13 +26,13 @@ const ModalToolBar = () => {
 
   const { setOccurrences } = useContext(OccurrencesContext);
 
-  const { setIsEditing } = useContext(EditingContext);
+  const { isEditing, setIsEditing } = useContext(EditingContext);
 
   useEffect(() => {
     if (service.serviceName !== '') {
       setIsEditing(true);
     }
-  }, [service.serviceName]);
+  }, [service.serviceName, isEditing]);
 
   const handleClick = async <Keys extends ModalsStateKeys>(key: Keys) => {
     setModalsState((prevValue) => ({
