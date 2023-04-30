@@ -102,7 +102,7 @@ const SessionModal = () => {
     if (isEditing) {
       setFormData();
     }
-  }, [isEditing]);
+  }, [isEditing, occurrence]);
 
   const handlePaymentMethodSelectChange = async (
     event: SelectChangeEvent<unknown>
@@ -189,6 +189,7 @@ const SessionModal = () => {
                 id="date-input"
                 {...register('date')}
                 error={Boolean(errors.date)}
+                disabled={isEditing}
               />
               {handleError('date')}
             </FormGroup>
