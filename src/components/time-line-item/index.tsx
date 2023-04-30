@@ -56,19 +56,15 @@ const TimeLineItem = ({ data, index }: TimeLineItemProps) => {
   };
 
   const handleEdit = async (type: TimeLineItemType) => {
-    setIsEditing(true);
-    setOccurrence(data);
-    if (type === 'session') {
-      setModalsState((prevState) => ({
-        ...prevState,
-        isSessionModalOpen: true,
-      }));
-    } else if (type === 'relevant_fact') {
-      setModalsState((prevState) => ({
-        ...prevState,
-        isPertinentFactModalOpen: true,
-      }));
-    }
+    await setIsEditing(true);
+    await setOccurrence(data);
+    const modals = {
+      session: 'isSessionModalOpen',
+      relevant_fact: 'isPertinentFactModalOpen',
+      attachment: 'isAttachmentModalOpen',
+      assessment: 'isPsychologicalAssessmentModalOpen',
+    };
+    setModalsState((prevState) => ({ ...prevState, [modals[type]]: true }));
   };
 
   const renderContent = () => {
