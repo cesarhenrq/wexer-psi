@@ -8,21 +8,21 @@ type AttachmentContentProps = {
 
 const AttachmentContent = ({ data }: AttachmentContentProps) => {
   const theme = useTheme();
-
+  const { files } = data;
   return (
     <Box>
       <S.TextTypography variant="body1" theme={theme}>
         {data.content}
       </S.TextTypography>
       <S.AttachmentTypography variant="caption" theme={theme}>
-        {`${data.files ? data.files.length : 0} Anexos`}
+        {`${files ? files.length : 0} Anexos`}
       </S.AttachmentTypography>
       {data.files
         ? data.files.map((file, index) => (
-            <S.FileLink href={file.name} download theme={theme} key={index}>
+            <S.FileLink href={file.filename} download theme={theme} key={index}>
               <PdfIcon />
               <S.FileNameTypography variant="subtitle2" theme={theme}>
-                {`${file.name} (${file.size})`}
+                {`${file.filename} (${file.filesize} KB)`}
               </S.FileNameTypography>
             </S.FileLink>
           ))
