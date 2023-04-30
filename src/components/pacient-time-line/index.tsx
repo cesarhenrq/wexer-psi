@@ -2,6 +2,7 @@ import { useContext, useState } from 'react';
 import { Typography, MenuItem, useTheme } from '@mui/material';
 import TimeLineItem from '../time-line-item';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { FormControl } from '@mui/material';
 import * as S from './styles';
 import TopButton from '../top-button';
 import { ServiceContext } from '../../contexts/ServiceContext';
@@ -46,23 +47,25 @@ const PacientTimeLine = () => {
       <S.InnerBox theme={theme}>
         <S.TimeLineDivider theme={theme} />
         <Typography color="secondary.dark">Filtrar por: </Typography>
-        <Select value={selectedFilter} onChange={handleChange}>
-          <MenuItem value="all">
-            <b>Todos</b>
-          </MenuItem>
-          <MenuItem value="session">
-            <b>Sessão</b>
-          </MenuItem>
-          <MenuItem value="relevant_fact">
-            <b>Fato Relevante</b>
-          </MenuItem>
-          <MenuItem value="attachment">
-            <b>Anexo</b>
-          </MenuItem>
-          <MenuItem value="assessment">
-            <b>Avialiação Psigológica</b>
-          </MenuItem>
-        </Select>
+        <FormControl variant="standard" sx={{ ml: 1 }}>
+          <Select value={selectedFilter} onChange={handleChange}>
+            <MenuItem value="all">
+              <b>Todos</b>
+            </MenuItem>
+            <MenuItem value="session">
+              <b>Sessão</b>
+            </MenuItem>
+            <MenuItem value="relevant_fact">
+              <b>Fato Relevante</b>
+            </MenuItem>
+            <MenuItem value="attachment">
+              <b>Anexo</b>
+            </MenuItem>
+            <MenuItem value="assessment">
+              <b>Avialiação Psigológica</b>
+            </MenuItem>
+          </Select>
+        </FormControl>
       </S.InnerBox>
       <>
         {occurrences.map((data, index) => (
