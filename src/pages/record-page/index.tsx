@@ -28,7 +28,7 @@ const RecordPage = () => {
 
   useEffect(() => {
     const reFetchData = async () => {
-      if (occurrenceName === '') {
+      if (occurrenceName === '' && service.serviceName !== '') {
         const occurrences = await getOccurrences(service._id);
         setOccurrences(occurrences);
       }
@@ -38,7 +38,7 @@ const RecordPage = () => {
       occurrence.title.toLowerCase().includes(occurrenceName.toLowerCase())
     );
     setOccurrences(filteredOccurrences);
-  }, [occurrenceName, occurrences]);
+  }, [occurrenceName]);
 
   const a11yProps = (index: number) => ({
     id: `tab-${index}`,
