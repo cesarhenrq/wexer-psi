@@ -71,7 +71,7 @@ const PertinentFactModal = () => {
     if (isEditing) {
       setFormData();
     }
-  }, [isEditing]);
+  }, [isEditing, occurrence]);
 
   const onSubmit = async (data: PertinentFactFormType) => {
     setIsSubmiting(true);
@@ -131,6 +131,7 @@ const PertinentFactModal = () => {
               id="date-input"
               {...register('date')}
               error={Boolean(errors.date)}
+              disabled={isEditing}
             />
             {handleError('date')}
           </FormGroup>
