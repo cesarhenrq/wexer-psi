@@ -4,7 +4,7 @@ import EditButton from '../edit-button';
 import ShowButton from '../show-button';
 import ConfirmIcon from '../confirm-icon';
 
-const PsychologicalAssessmentContent = () => {
+const PsychologicalAssessmentContent = (data: PsychologicalAssessmentType) => {
   const theme = useTheme();
   return (
     <Box>
@@ -13,10 +13,12 @@ const PsychologicalAssessmentContent = () => {
           <Typography color="secondary.dark">Entrevista Psicológica</Typography>
           <S.ActionBox>
             <S.TypographyBox theme={theme}>
-              <Typography color="primary.main">Realizado</Typography>
+              <Typography color="primary.main">
+                {data.interview ? 'Realizado' : 'Não Realizado'}
+              </Typography>
             </S.TypographyBox>
             <S.ButtonsBox theme={theme}>
-              <EditButton modal={'isAttachmentModalOpen'} />
+              <EditButton modal={'isAttachmentModalOpen'} isDisabled={false} />
               <ShowButton />
             </S.ButtonsBox>
           </S.ActionBox>
@@ -26,10 +28,12 @@ const PsychologicalAssessmentContent = () => {
           <Typography color="secondary.dark">Aplicação de teste</Typography>
           <S.ActionBox>
             <S.TypographyBox theme={theme}>
-              <Typography color="primary.main">Realizado</Typography>
+              <Typography color="primary.main">
+                {data.tests ? 'Realizado' : 'Não Realizado'}
+              </Typography>
             </S.TypographyBox>
             <S.ButtonsBox theme={theme}>
-              <EditButton modal={'isAttachmentModalOpen'} />
+              <EditButton modal={'isAttachmentModalOpen'} isDisabled={false} />
               <ShowButton />
             </S.ButtonsBox>
           </S.ActionBox>
@@ -41,10 +45,12 @@ const PsychologicalAssessmentContent = () => {
           </Typography>
           <S.ActionBox>
             <S.TypographyBox theme={theme}>
-              <Typography color="primary.main">Realizado</Typography>
+              <Typography color="primary.main">
+                {data.observation !== '' ? 'Realizado' : 'Não Realizado'}
+              </Typography>
             </S.TypographyBox>
             <S.ButtonsBox theme={theme}>
-              <EditButton modal={'isAttachmentModalOpen'} />
+              <EditButton modal={'isAttachmentModalOpen'} isDisabled={false} />
               <ShowButton />
             </S.ButtonsBox>
           </S.ActionBox>
