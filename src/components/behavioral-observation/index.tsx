@@ -8,7 +8,7 @@ const BehavioralObservation = () => {
   const theme = useTheme();
 
   const { onSubmit, handleSubmit, onEditorStateChange, editorContent } =
-    useQuill('observation');
+    useQuill();
 
   return (
     <S.OutterBox theme={theme}>
