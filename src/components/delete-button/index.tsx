@@ -6,22 +6,27 @@ import DeleteIcon from '../delete-icon';
 
 type DeleteButtonProps = {
   isDisabled: boolean;
+  handleDelete?: () => void;
 };
 
-const DeleteButton = ({ isDisabled }: DeleteButtonProps) => {
+const DeleteButton = ({ isDisabled, handleDelete }: DeleteButtonProps) => {
   const { setModalsState } = useContext(ModalContext);
 
   const theme = useTheme();
 
-  const handleDeleteClick = () => {
+  const handleOpen = () => {
     setModalsState((prevValue) => ({
       ...prevValue,
       isDeleteModalOpen: !prevValue.isDeleteModalOpen,
     }));
   };
 
+  const handleClick = () => {
+    handleDelete ? handleDelete() : handleOpen();
+  };
+
   return (
-    <Button onClick={handleDeleteClick} theme={theme} disabled={isDisabled}>
+    <Button onClick={handleClick} theme={theme} disabled={isDisabled}>
       <DeleteIcon />
     </Button>
   );
