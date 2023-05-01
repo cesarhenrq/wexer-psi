@@ -14,6 +14,7 @@ import { ServiceContext } from '../../contexts/ServiceContext';
 import { OccurrencesContext } from '../../contexts/OccurrencesContext';
 import { getOccurrences } from '../../services/occurrence';
 import { EditingContext } from '../../contexts/EditingContext';
+import formatDate from '../../utils/functions/format-date';
 
 const ModalToolBar = () => {
   const theme = useTheme();
@@ -48,13 +49,17 @@ const ModalToolBar = () => {
     const selectedValue = event.target.value as string;
     if (selectedValue === 'new-service') {
       handleClick('isServiceModalOpen');
-      await setService({ serviceName: '', _id: '' });
+      await setService({ serviceName: '', _id: '', createdOn: '' });
       setIsEditing(false);
     }
   };
 
-  const handleOccurrences = async (serviceName: string, _id: string) => {
-    await setService({ serviceName, _id });
+  const handleOccurrences = async (
+    serviceName: string,
+    _id: string,
+    createdOn: string
+  ) => {
+    await setService({ serviceName, _id, createdOn });
     const occurrences = await getOccurrences(_id);
     setOccurrences(occurrences);
   };
@@ -73,11 +78,11 @@ const ModalToolBar = () => {
             onChange={handleServiceSelectChange}
           >
             <MenuItem value={'new-service'}>Novo Serviço</MenuItem>
-            {services.map(({ serviceName, _id }, index) => (
+            {services.map(({ serviceName, _id, createdOn }, index) => (
               <MenuItem
                 value={serviceName}
                 key={index}
-                onClick={() => handleOccurrences(serviceName, _id)}
+                onClick={() => handleOccurrences(serviceName, _id, createdOn)}
               >
                 {serviceName}
               </MenuItem>
@@ -85,7 +90,8 @@ const ModalToolBar = () => {
           </S.ServiceSelect>
         </S.ServiceFormControl>
         <Typography>
-          <b>Data inicial:</b> 18/10/2022
+          <b>Data inicial:</b>{' '}
+          {service.serviceName !== '' && formatDate(service.createdOn)}
         </Typography>
         <S.ButtonContainer theme={theme}>
           <EditButton modal="isServiceModalOpen" isDisabled={toggleButton()} />
