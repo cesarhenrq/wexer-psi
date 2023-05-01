@@ -13,7 +13,7 @@ type OccurrenceType = {
   assessments?: {
     interview?: string;
     tests?: string;
-    observation?: strin;
+    observation?: string;
   };
   createdOn: string;
   modifiedOn?: string;
