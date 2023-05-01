@@ -16,7 +16,7 @@ import { OccurrencesContext } from '../../contexts/OccurrencesContext';
 import { getOccurrences } from '../../services/occurrence';
 
 const RecordPage = () => {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(1);
 
   const theme = useTheme();
 
@@ -34,8 +34,10 @@ const RecordPage = () => {
       }
     };
     reFetchData();
-    const filteredOccurrences = occurrences.filter((occurrence) =>
-      occurrence.title.toLowerCase().includes(occurrenceName.toLowerCase())
+    const filteredOccurrences = occurrences.filter(
+      (occurrence) =>
+        occurrence.title &&
+        occurrence.title.toLowerCase().includes(occurrenceName.toLowerCase())
     );
     setOccurrences(filteredOccurrences);
   }, [occurrenceName]);
