@@ -25,7 +25,11 @@ function App() {
 
   const { services, setServices } = useServices();
 
-  const [service, setService] = useState({ serviceName: '', _id: '' });
+  const [service, setService] = useState({
+    serviceName: '',
+    _id: '',
+    createdOn: '',
+  });
 
   const [occurrences, setOccurrences] = useState<OccurrenceType[]>([]);
 
