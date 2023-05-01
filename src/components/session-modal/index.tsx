@@ -98,7 +98,7 @@ const SessionModal = () => {
           setValue('paymentStatus', occurrence.payment.status);
       }
     };
-
+    reset();
     if (isEditing) {
       setFormData();
     }
@@ -303,7 +303,6 @@ const SessionModal = () => {
                 <Typography variant="caption">Status</Typography>
               </InputLabel>
               <RadioGroup
-                row
                 id="payment-status-input"
                 {...register('paymentStatus')}
               >
