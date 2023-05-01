@@ -140,10 +140,9 @@ const AttachmentModal = () => {
 
   const handleError = (name: keyof Partial<AttachmentModalFormType>) => {
     return (
-      errors &&
-      errors[name] && (
+      errors?.[name] && (
         <Typography variant="body2" color="error">
-          {errors[name].message}
+          {errors[name]?.message}
         </Typography>
       )
     );
