@@ -4,7 +4,13 @@ import EditButton from '../edit-button';
 import ShowButton from '../show-button';
 import ConfirmIcon from '../confirm-icon';
 
-const PsychologicalAssessmentContent = (data: PsychologicalAssessmentType) => {
+type PsychologicalAssessmentContentProps = {
+  data: PsychologicalAssessmentType;
+};
+
+const PsychologicalAssessmentContent = ({
+  data,
+}: PsychologicalAssessmentContentProps) => {
   const theme = useTheme();
   return (
     <Box>
@@ -14,7 +20,7 @@ const PsychologicalAssessmentContent = (data: PsychologicalAssessmentType) => {
           <S.ActionBox>
             <S.TypographyBox theme={theme}>
               <Typography color="primary.main">
-                {data.interview ? 'Realizado' : 'Não Realizado'}
+                {data.assessments?.interview ? 'Realizado' : 'Não Realizado'}
               </Typography>
             </S.TypographyBox>
             <S.ButtonsBox theme={theme}>
@@ -29,7 +35,7 @@ const PsychologicalAssessmentContent = (data: PsychologicalAssessmentType) => {
           <S.ActionBox>
             <S.TypographyBox theme={theme}>
               <Typography color="primary.main">
-                {data.tests ? 'Realizado' : 'Não Realizado'}
+                {data.assessments?.tests ? 'Realizado' : 'Não Realizado'}
               </Typography>
             </S.TypographyBox>
             <S.ButtonsBox theme={theme}>
@@ -46,7 +52,9 @@ const PsychologicalAssessmentContent = (data: PsychologicalAssessmentType) => {
           <S.ActionBox>
             <S.TypographyBox theme={theme}>
               <Typography color="primary.main">
-                {data.observation !== '' ? 'Realizado' : 'Não Realizado'}
+                {data.assessments?.observation !== ''
+                  ? 'Realizado'
+                  : 'Não Realizado'}
               </Typography>
             </S.TypographyBox>
             <S.ButtonsBox theme={theme}>
