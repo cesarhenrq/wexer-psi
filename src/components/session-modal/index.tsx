@@ -157,7 +157,7 @@ const SessionModal = () => {
   const handleError = (name: keyof Partial<SessionFormType>) => {
     return errors && errors[name] ? (
       <Typography variant="body2" color="error">
-        {errors[name].message}
+        {errors[name]?.message}
       </Typography>
     ) : null;
   };
