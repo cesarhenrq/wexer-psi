@@ -81,7 +81,7 @@ const AttachmentModal = () => {
         setFiles(occurrence.files);
       }
     };
-
+    reset();
     if (isEditing) {
       setFormData();
     }
@@ -89,12 +89,21 @@ const AttachmentModal = () => {
 
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
-    const fileList = Array.from(files).map((file) => ({
-      filename: file.name,
-      filesize: file.size,
-    }));
-    setFiles(fileList);
-    setValue('files', fileList);
+    if (files) {
+      const fileList = Array.from(files).map((file) => ({
+        filename: file.name,
+        filesize: file.size,
+      }));
+      if (isEditing) {
+        setFiles((prevValue) => {
+          setValue('files', [...prevValue, ...fileList]);
+          return [...prevValue, ...fileList];
+        });
+      } else {
+        setFiles(fileList);
+        setValue('files', fileList);
+      }
+    }
   };
 
   const onSubmit = async (data: AttachmentModalFormType) => {
