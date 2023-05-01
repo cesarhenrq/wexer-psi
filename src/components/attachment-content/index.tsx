@@ -11,7 +11,11 @@ const AttachmentContent = ({ data }: AttachmentContentProps) => {
   const { files } = data;
   return (
     <Box>
-      <S.TextTypography variant="body1" theme={theme}>
+      <S.TextTypography
+        variant="body1"
+        theme={theme}
+        sx={{ textAlign: 'justify' }}
+      >
         {data.content}
       </S.TextTypography>
       <S.AttachmentTypography variant="caption" theme={theme}>
