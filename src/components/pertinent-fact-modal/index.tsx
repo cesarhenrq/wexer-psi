@@ -106,7 +106,7 @@ const PertinentFactModal = () => {
       errors &&
       errors[name] && (
         <Typography variant="body2" color="error">
-          {errors[name].message}
+          {errors[name]?.message}
         </Typography>
       )
     );
