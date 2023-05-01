@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, ChangeEvent } from 'react';
 import { useForm, DefaultValues } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from './schema';
@@ -52,8 +52,8 @@ const defaultValues: DefaultValues<SessionFormType> = {
   title: '',
   sessionResume: '',
   price: 0,
-  paymentMethod: '',
-  paymentStatus: '',
+  paymentMethod: 'PIX',
+  paymentStatus: 'Não pago',
 };
 
 const SessionModal = () => {
@@ -69,7 +69,9 @@ const SessionModal = () => {
 
   const { isEditing } = useContext(EditingContext);
 
-  const [paymentMethod, setPaymentMethod] = useState('pix');
+  const [paymentMethod, setPaymentMethod] = useState('PIX');
+
+  const [paymentStatus, setPaymentStatus] = useState('PAGO');
 
   const theme = useTheme();
 
@@ -85,6 +87,11 @@ const SessionModal = () => {
     mode: 'onBlur',
   });
 
+  const resetForm = () => {
+    reset(defaultValues);
+    setPaymentMethod('PIX');
+  };
+
   useEffect(() => {
     const setFormData = () => {
       setValue('title', occurrence.title);
@@ -92,13 +99,18 @@ const SessionModal = () => {
       occurrence.content && setValue('sessionResume', occurrence.content);
       if (occurrence.payment) {
         occurrence.payment.value && setValue('price', occurrence.payment.value);
-        occurrence.payment.method &&
+        if (occurrence.payment.method) {
           setValue('paymentMethod', occurrence.payment.method);
-        occurrence.payment.status &&
+          setPaymentMethod(occurrence.payment.method);
+        }
+
+        if (occurrence.payment.status) {
           setValue('paymentStatus', occurrence.payment.status);
+          setPaymentStatus(occurrence.payment.status);
+        }
       }
     };
-    reset();
+    resetForm();
     if (isEditing) {
       setFormData();
     }
@@ -117,6 +129,23 @@ const SessionModal = () => {
     };
     await register('paymentMethod').onChange(eventObj);
     setPaymentMethod(selectedValue);
+    setValue('paymentMethod', selectedValue);
+  };
+
+  const handlePaymentStatusChange = async (
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
+    const selectedValue = event.target.value as string;
+    const eventObj = {
+      target: {
+        name: 'paymentStatus',
+        value: selectedValue,
+      },
+      type: 'change',
+    };
+    await register('paymentStatus').onChange(eventObj);
+    setPaymentStatus(selectedValue);
+    setValue('paymentStatus', selectedValue);
   };
 
   const onSubmit = async (data: SessionFormType) => {
@@ -148,10 +177,6 @@ const SessionModal = () => {
     const occurrences = await getOccurrences(service._id);
     setOccurrences(occurrences);
     setIsSubmiting(false);
-  };
-
-  const resetForm = () => {
-    reset(defaultValues);
   };
 
   const handleError = (name: keyof Partial<SessionFormType>) => {
@@ -293,7 +318,8 @@ const SessionModal = () => {
                 onChange={handlePaymentMethodSelectChange}
                 error={!!errors.paymentMethod}
               >
-                <MenuItem value="pix">PIX</MenuItem>
+                <MenuItem value="PIX">PIX</MenuItem>
+                <MenuItem value="Cartão de crédito">Cartão de crédito</MenuItem>
               </Select>
             </FormGroup>
           </Grid>
@@ -304,7 +330,8 @@ const SessionModal = () => {
               </InputLabel>
               <RadioGroup
                 id="payment-status-input"
-                {...register('paymentStatus')}
+                value={paymentStatus}
+                onChange={handlePaymentStatusChange}
               >
                 <FormControlLabel
                   value="Pago"
