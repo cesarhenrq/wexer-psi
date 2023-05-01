@@ -5,7 +5,7 @@ type PertinentFactContentProps = {
 };
 
 const PertinentFactContent = ({ data }: PertinentFactContentProps) => (
-  <Typography variant="body1" mt={1}>
+  <Typography variant="body1" mt={1} sx={{ textAlign: 'justify' }}>
     {data.content}
   </Typography>
 );
