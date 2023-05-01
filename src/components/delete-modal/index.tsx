@@ -26,7 +26,7 @@ const DeleteModal = () => {
     await deleteService(service._id);
     const updatedServices = await getServices();
     setServices(updatedServices);
-    setService({ serviceName: '', _id: '' });
+    setService({ serviceName: '', _id: '', createdOn: '' });
     setIsSubmiting(false);
   };
 
