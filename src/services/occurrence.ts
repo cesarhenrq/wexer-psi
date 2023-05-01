@@ -12,7 +12,16 @@ export const getOccurrences = async (
     const {
       timeline: { occurrences },
     } = result.data;
-    return occurrences;
+
+    const sortedOccurrences = occurrences.sort(
+      (a: OccurrenceType, b: OccurrenceType) => {
+        const dateA = new Date(a.createdOn);
+        const dateB = new Date(b.createdOn);
+        return dateB.getTime() - dateA.getTime();
+      }
+    );
+
+    return sortedOccurrences;
   } catch (error) {
     throw new Error('Failed to get occurrences');
   }
