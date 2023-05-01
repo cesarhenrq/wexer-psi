@@ -68,6 +68,7 @@ const PertinentFactModal = () => {
       occurrence.content && setValue('description', occurrence.content);
     };
 
+    reset();
     if (isEditing) {
       setFormData();
     }
