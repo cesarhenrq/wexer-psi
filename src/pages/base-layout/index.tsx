@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 import Header from '../../components/header';
 import SideBar from '../../components/side-bar';
 import SideBarDrawer from '../../components/side-bar-drawer';
@@ -8,6 +8,12 @@ import * as S from './styles';
 
 const BaseLayout = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate('/prontuário');
+  }, []);
 
   return (
     <SideBarContext.Provider value={{ setIsOpen, isOpen }}>
