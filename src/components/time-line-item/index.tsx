@@ -76,7 +76,7 @@ const TimeLineItem = ({ data, index }: TimeLineItemProps) => {
       case 'relevant_fact':
         return <PertinentFactContent data={data} />;
       case 'assessment':
-        return <PsychologicalAssessmentContent />;
+        return <PsychologicalAssessmentContent data={data} />;
       default:
         return '#00995D';
     }
@@ -110,7 +110,7 @@ const TimeLineItem = ({ data, index }: TimeLineItemProps) => {
               justifyContent: 'space-between',
             }}
           >
-            {data.title}
+            {data.type === 'assessment' ? 'Entrevista Psicológica' : data.title}
             <S.MoreButton onClick={handleClick}>
               <MoreHorizIcon />
             </S.MoreButton>
