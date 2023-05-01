@@ -31,7 +31,7 @@ const ModalBaseLayout = ({
 
   const { isSubmiting } = useContext(SubmitingContext);
 
-  const { setIsEditing } = useContext(EditingContext);
+  const { isEditing, setIsEditing } = useContext(EditingContext);
 
   const theme = useTheme();
 
@@ -40,8 +40,8 @@ const ModalBaseLayout = ({
       ...prevValue,
       [key]: false,
     }));
+    isEditing ? setIsEditing(false) : setIsEditing(true);
     resetForm && resetForm();
-    setIsEditing(false);
   };
 
   return (
