@@ -15,7 +15,11 @@ const GenericCard = ({ title, content, modal }: GenericCardProps) => {
       <CardContent>
         <S.Title>
           <Typography variant="h6">{title}</Typography>
-          <EditButton modal={modal} isDisabled={false} />
+          <EditButton
+            modal={modal}
+            isDisabled={false}
+            willEdit={modal === 'isServiceModalOpen' ? true : false}
+          />
         </S.Title>
         <Typography variant="body1"> {removeHTMLTags(content)}</Typography>
       </CardContent>

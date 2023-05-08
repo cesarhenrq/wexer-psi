@@ -3,14 +3,18 @@ import { ModalContext } from '../../contexts/ModalContext';
 import { Button } from './styles';
 import EditIcon from '../edit-icon';
 import { useTheme } from '@mui/material';
+import { EditingContext } from '../../contexts/EditingContext';
 
 type EditButtonProps = {
   modal: ModalsStateKeys;
   isDisabled: boolean;
+  willEdit?: boolean;
 };
 
-const EditButton = ({ modal, isDisabled }: EditButtonProps) => {
+const EditButton = ({ modal, isDisabled, willEdit }: EditButtonProps) => {
   const { setModalsState } = useContext(ModalContext);
+
+  const { setIsEditing } = useContext(EditingContext);
 
   const theme = useTheme();
 
@@ -19,6 +23,8 @@ const EditButton = ({ modal, isDisabled }: EditButtonProps) => {
       ...prevValue,
       [key]: true,
     }));
+
+    willEdit && setIsEditing(true);
   };
 
   return (

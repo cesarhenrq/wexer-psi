@@ -94,7 +94,11 @@ const ModalToolBar = () => {
           {service.serviceName !== '' && formatDate(service.createdOn)}
         </Typography>
         <S.ButtonContainer theme={theme}>
-          <EditButton modal="isServiceModalOpen" isDisabled={toggleButton()} />
+          <EditButton
+            modal="isServiceModalOpen"
+            isDisabled={toggleButton()}
+            willEdit={true}
+          />
           <DeleteButton isDisabled={toggleButton()} />
         </S.ButtonContainer>
       </S.InnerBox>
